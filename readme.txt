@@ -1,2 +1,2 @@
-simple adjuster contrast and brightness 
+simple adjuster contrast and brightness on pure javaScript
 
