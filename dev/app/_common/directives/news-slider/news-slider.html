@@ -1,0 +1,47 @@
+
+<div class="project_news">
+    <div class="project_news--wrap" oc-lazy-load="['assets/js/deferred/owl.carousel.all-in-one.js']">
+        <div class="title">{{$ctrl.title}}</div>
+        <div owl-carousel
+             owl-options="::$ctrl.owlOptions"
+             class="project_news--item">
+            <a ui-sref="proj.news.one(::{'id_news':n.id,'id':n.project.id || $ctrl.projId})"
+               owl-item class="project_news--item--wrap"
+               ng-class="{'no-img':!n.image}"
+               ng-repeat="n in $ctrl.value | limitTo:8 track by n.id">
+                <!--style="border-radius:4px 4px 0 0"-->
+                <span class="project_news--img"
+                      ng-if="::n.image"
+                      ng-style="::{'background-image':'url('+$ctrl.baseImgUrl + n.image+')'}">
+                </span>
+
+                <!-- для новостей вне проекта -->
+                <span class="project_news--title-pr" not-if="::$ctrl.projState">
+                    <span class="project_news--title-img">
+                        <img ng-if="::n.project.cover" ng-src="{{$ctrl.baseImgUrl + n.project.cover}}" alt="">
+                    </span>
+                    <span class="project_news--title-name">{{::n.project.name}}</span>
+                </span>
+
+                <div class="project_news--txt">
+                    <div class="project_news--txt--wrap">
+                        <p class="project_news--title">{{::n.header}}</p>
+                        <p class="project_news--date">{{::n.create_date}}</p>
+                        <p class="project_news--content" ng-bind-html="::n.short_body"></p>
+                    </div>
+                </div>
+                <!-- заглушка для выравнивания высоты-->
+                <span class="project_news--img" not-if="::n.image"></span>
+            </a>
+        </div>
+        <!-- для проекта -->
+        <div ng-if="::$ctrl.projState">
+            <br><br>
+            <div class="text-center">
+                <a ui-sref="proj.news.all" class="btn btn-round btn-success"
+                   ng-if="project.news.allCount>8">Все новости</a>
+            </div>
+        </div>
+
+    </div>
+</div>

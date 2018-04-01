@@ -1,0 +1,54 @@
+<!--инициализирую модель либо как редактор либо просмотр ng-init="ue=u.isNotEditor==1?u:ue"-->
+<div class="carousel slide" id="projetcs" data-ride="carousel" data-interval="false" data-keyboard="false"
+     ng-init="ue=u.isNotEditor==1?u:ue" >
+
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="carousel-indicators list" ng-if="ue.isOwnUserState">
+                <div data-target="#projetcs" data-slide-to="0" class="active">Мои проекты</div>
+                <!--<div data-target="#projetcs" data-slide-to="1">Участвую</div>-->
+                <div data-target="#projetcs" data-slide-to="1">Договоренности</div>
+                <a ui-sref="projectEditorZero" class="btn btn-success"
+                   ng-if="ue.isCS">Создать проект</a>
+                <a ui-sref="projectEditor.about({'id':'new','type_id':1})"
+                   not-if="ue.isCS" class="btn btn-success">Создать проект</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="carousel-inner" role="listbox">
+        <!-- мои проекты -->
+        <div class="item active">
+            <label class="alert alert-info" ng-show="ue.projects" ng-if="!ue.projects.length && ue.isOwnUserState">
+                <i class="fa fa-exclamation-triangle"></i> У вас еще нет ни одного проекта. Присоединяйтесь к сообществу
+                инициаторов - создайте свой проект.
+            </label>
+            <label class="alert alert-info" ng-show="ue.projects" ng-if="!ue.projects.length && !ue.isOwnUserState">
+                <i class="fa fa-exclamation-triangle"></i> У пользователя еще нет ни одного проекта.
+            </label>
+            <constart-project url="{{ue.urlForUsersProject}}"></constart-project>
+        </div>
+        <!-- мои проекты end -->
+        <!-- участвую -->
+        <!--<div class="item">
+            <label class="alert alert-info" ng-show="ue.projects" ng-if="!ue.projectsNotMy.length && ue.isOwnUserState">
+                <i class="fa fa-exclamation-triangle"></i> Вы не участвуете ни в одном проекте.
+            </label>
+            <label class="alert alert-info" ng-show="ue.projects" ng-if="!ue.projectsNotMy.length && !ue.isOwnUserState">
+                <i class="fa fa-exclamation-triangle"></i> Пользователь не участвуете ни в одном проекте.
+            </label>
+            <constart-project value="ue.projectsNotMy"></constart-project>
+        </div>-->
+        <!-- участвую end -->
+
+
+        <!-- договоренности -->
+        <div class="item" ng-if="ue.isOwnUserState">
+            <constart-agreement value="user"></constart-agreement>
+        </div>
+    </div>
+</div>
+
+

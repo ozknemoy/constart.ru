@@ -1,0 +1,44 @@
+
+
+<button type="button" class="close" ng-click="$dismiss()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<div class="modal-header text-center">
+    <div class="title" ng-if="!ue.openPhoneInput">Внимание</div>
+    <div class="title" ng-if="ue.openPhoneInput">Введите новый номер телефона</div>
+</div>
+<p class="modal-body text-center" ng-if="!ue.openPhoneInput">
+    Телефон будет изменен. <br>Изменить?</p>
+<div class="modal-body text-center" ng-if="ue.openPhoneInput">
+
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+        <input autofocus type="text" class="form-control" name="phone" required
+               ng-model="ue.phone_num" ui-mask="7(999) 999 99 99">
+    </div>
+    <div ng-if="ue.phoneVerifySmsIsSend">
+        <p>На ваш мобильный телефон отправлено сообщение с паролем для подтверждения.
+            Пароль действует 15 минут. Введите его в форму ниже:</p>
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="ue.PhoneCodeReverify">
+        </div>
+        <p>Вы можете запросить код повторно через <span><i class="fa fa-clock-o"></i> 10 минут</span></p>
+
+    </div>
+</div>
+<div class="modal-footer text-center">
+    <button class="btn btn-success"
+            ng-if="ue.phoneVerifySmsIsSend"
+            ng-disabled="ue.phoneForm.$invalid"
+            ng-click="ue.sentCodeSMS('phone-verify',ue.PhoneCodeReverify)">Отправить код</button>
+    <button class="btn btn-success"
+            ng-if="!ue.openPhoneInput"
+            ng-click="ue.openPhoneInput=1;ue.u.phone_num=null">Подтвердить
+    </button>
+    <button class="btn btn-success"
+            ng-if="ue.openPhoneInput"
+            ng-disabled="ue.phoneForm.$invalid"
+            ng-click="ue.savePhone(1)">Запросить смс
+    </button>
+    <button class="btn btn-danger" ng-click="$dismiss()" aria-label="Close">
+        Закрыть
+    </button>
+</div>

@@ -1,0 +1,4 @@
+<!-- модалка для отправки письма о вакансии  владельцу проекта-->
+<button type="button" class="close" ng-click="$dismiss()"><span
+        aria-hidden="true">&times;</span></button>
+<email-to-user subject="vacancy" value="$ctrl.value.vacId" text-header="Откликнуться на вакансию"></email-to-user>

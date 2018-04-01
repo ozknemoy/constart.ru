@@ -1,0 +1,6 @@
+contract-tmpl договор
+oferta-tmpl  оферта 
+kl ki kf
+
+contract-tmpl-kl-1-1  первое число это физик ИП или юрик. физик = undefined (contract-tmpl-kl--1) ИП=1 юрик = 2  (contract-tmpl-kl-2-1)
+второе число номер договора

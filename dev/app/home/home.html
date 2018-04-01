@@ -1,0 +1,350 @@
+<section class="section page1">
+    <div class="bg_main"></div>
+    <!--видео в контроллере-->
+    <div class="video_div"
+         ng-show="home.showVideoDefer"
+         ng-bind-html="::home.video">
+    </div>
+    <div class="section_wrap">
+<!-- first page - section 1 -->
+<div class="page1--section1">
+    <div class="heading-text" id="heading-text2">
+        <h1>проекты, меняющие мир</h1>
+        <p>CONSTART – это первая глобальная краудcорсинг-платформа, <br>
+            в которой идеи, инвесторы и профессионалы находят друг друга. <br>
+            Мы создаем новую ценность: партнерство, объединенное общей идеей. </p>
+    </div>
+    <div class="create-prj-wrap">
+        <a ui-sref="projectEditorZero"
+           onclick="yaCounter40097510.reachGoal('home-click-create-project')"
+           ng-if="::home.isAuthenticated"
+           class="btn btn-info">Создать проект</a>
+        <login-button
+           onclick="yaCounter40097510.reachGoal('home-click-create-project')"
+           ng-if="::!home.isAuthenticated"
+           class="btn btn-info">Создать проект</login-button>
+        <div class="playback"
+             onclick="yaCounter40097510.reachGoal('home-click-watch-video')"
+             modal-open="app/_common/modals/home-video.html"
+             window-top-class="video">
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle text-success fa-stack-2x"></i>
+                <i class="fa fa-play fa-stack-1x fa-inverse"></i>
+            </span>
+            <span>Посмотреть видео о &nbsp;</span>CONSTART
+        </div>
+    </div>
+</div>
+
+<div class="page1--section2">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <div class="input-group">
+                    <ui-select class="select"
+                               search-enabled="false"
+                               ng-model="home.filtered">
+                        <ui-select-match placeholder="Выберите направление">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="o.id as o in home.directions">
+                            <span>{{::o.name}}</span>
+                        </ui-select-choices>
+                    </ui-select>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default"
+                                onclick="yaCounter40097510.reachGoal('home-click-search-project')"
+                                ui-sref="projects(::{'category':home.filtered})">Найти проект
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--
+<div class="page1--section3">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-lg-3">
+            <a ui-sref="projects" class="main_page--block">
+                <span class="main_page--title">Проекты</span>
+                <span class="main_page--title_sec">Знакомьтесь с проектами</span>
+                <span class="main_page--icon icon--1"></span>
+                <span class="main_page--description">
+                    Каждая идея «упакована» по единым стандартам CONSTART. Вы легко сможете понять ее суть и выгоду,
+                    увидев реальные финансовые показатели.
+                </span>
+                <span class="btn btn-success btn-sm">Искать проекты</span>
+            </a>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-3">
+            <a  ui-sref="users" class="main_page--block">
+                <span class="main_page--title">Участники</span>
+                <span class="main_page--title_sec">Ищите поддержку</span>
+                <span class="main_page--icon icon--2"></span>
+                <span class="main_page--description">
+                   База пользователей, готовых поддержать интересный проект своими экспертными знаниями и опытом,
+                    которые могут оказаться ценнее финансовых вложений. Найдите их или презентуйте себя.
+                </span>
+                <span class="btn btn-success btn-sm">Познакомиться с людьми</span>
+            </a>
+        </div>
+        <div ui-sref="about" class="col-xs-12 col-sm-6 col-lg-3">
+            <a href="" class="main_page--block">
+                <span class="main_page--title">CONSTART</span>
+                <span class="main_page--title_sec">Используйте все возможности</span>
+                <span class="main_page--icon icon--3"></span>
+                <span class="main_page--description">
+                    Краудфандинг, краудинвестинг, краудлендинг и краудхантинг на единой платформе. Узнайте,
+                    зачем еще вам нужен CONSTART. Больше возможностей – больше выгода.
+                </span>
+                <span class="btn btn-success btn-sm">Узнать о CONSTART</span>
+            </a>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lg-3" ng-if="::!home.isAuthenticated">
+            <login-button class="main_page--block"
+                onclick="yaCounter40097510.reachGoal('home-click-joinus')">
+                <span class="main_page--title">Присоединяйтесь</span>
+                <span class="main_page--title_sec">Присоединяйтесь к команде</span>
+                <span class="main_page--icon icon--4"></span>
+                <span class="main_page--description">
+                    Вы можете создать проект на любом этапе или присоединиться в любой роли: инициатора,
+                    инвестора, спонсора, эксперта. Зарегистрируйтесь сейчас!
+                </span>
+                <span class="btn btn-success btn-sm">Стать одним из нас</span>
+            </login-button>
+        </div>
+    </div>
+</div>-->
+</div>
+</section>
+
+<!-------------------------------- проекты на главной -------------------------------->
+<section class="section page3">
+    <div class="section_wrap">
+        <div class="container-fluid projects_main">
+            <a class="title" ui-sref="projects">Новые проекты</a>
+
+
+            <constart-project empty="2" view="1" url="project/get-main-page-last-projects?limit=4"></constart-project>
+
+
+        </div>
+
+    </div>
+</section>
+<section class="section">
+    <div class="section_wrap">
+        <div class="container-fluid projects_main projects_main--new">
+            <a class="title" ui-sref="projects">Популярные проекты</a>
+            <div class="title--description">Самые актуальные проекты, меняющие мир сегодня. Примите в них участие –
+                инвестициями, опытом, активами – и получите свою выгоду.</div>
+
+
+            <constart-project empty="1" view="1" url="project/get-main-page-projects?limit=4"></constart-project>
+
+
+        </div>
+    </div>
+</section>
+<!-------------------------------- end проекты на главной -------------------------------->
+
+<section class="section">
+    <div class="section_wrap">
+
+            <news-slider ng-if="::home.news"
+                         value="::home.news" title="Новости проектов"></news-slider>
+
+    </div>
+</section>
+<br>
+<!--------------------------------  Направления -------------------------------->
+
+<section class="section page2">
+    <div class="section_wrap">
+        <div class="container-fluid directions">
+            <div class="title">Направления</div>
+            <div class="title--description">Здесь вы можете найти проект в любом направлении и стадии реализации: от идеи
+                мобильного кафе до настоящего мощного завода.</div>
+            <div angular-grid="home.masonry"
+                 ag-id="gallery"
+                 page-size="auto" ag-css-grid="true"
+                 ag-gutter-size="1" class="masonry">
+                <div ng-repeat="m in home.masonry track by $index" ng-class="::m.class" class="masonry--item col-xs-6">
+                    <a ui-sref="projects(::{'category':m.direction})" class="directions_link"
+                       afkl-lazy-image="{{::m.url}}"
+                       afkl-lazy-image-options="{'background': true,'offset':300}">
+                       <!--ng-style="::{'background-image': 'url('+m.url+')'}"-->
+                        <!--<div afkl-lazy-image="app/{{m.url}}"
+                             afkl-lazy-image-options="{'background': true}">-->
+                        <span class="directions_link--title">
+                            <span class="table">
+                                <span class="table-cell">
+                                    {{::m.name}}
+                                    <span class="directions_link--count">
+                                        <span>{{::m.cty}}</span>
+                                        <br>
+                                        {{::(m.cty|getNoun:'проект':'проекта':'проектов')}}
+                                    </span>
+                                </span>
+                            </span>
+                        </span>
+                        <!--</div>-->
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section page6">
+    <div class="section_wrap">
+        <div class="m_bnr" oc-lazy-load="['assets/js/deferred/owl.carousel.all-in-one.js']">
+            <owl-carousel owl-options="::home.owl.options">
+                <owl-item ng-repeat="item in home.owl.items track by $index">
+                    <a ng-href="{{::item.url}}" target="{{::item.target}}">
+                        <div afkl-lazy-image="{{::item.image}}" afkl-lazy-image-options="{'offset':200}"></div>
+                    </a>
+                </owl-item>
+            </owl-carousel>
+        </div>
+    </div>
+</section>
+
+<section class="section page4">
+    <div class="section_wrap">
+        <div class="container-fluid">
+            <div class="m_partners">
+                <div class="m_partners--wrap">
+                    <div class="title">Партнеры</div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-4 col-mdl-3">
+                            <div class="m_partners--img">
+                                <div afkl-lazy-image="assets/img/partner_logo--2.png"></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-mdl-3">
+                            <div class="m_partners--img">
+                                <div afkl-lazy-image="assets/img/partner_logo--1.png"></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-mdl-3">
+                            <div class="m_partners--img">
+                                <div afkl-lazy-image="assets/img/partner_logo--3.png"></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-mdl-3">
+                            <div class="m_partners--img">
+                                <div afkl-lazy-image="assets/img/partner_logo--4.png"></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-mdl-3">
+                            <div class="m_partners--img">
+                                <div afkl-lazy-image="assets/img/partner_logo--10.png"></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-mdl-3">
+                            <div class="m_partners--img">
+                                <div afkl-lazy-image="assets/img/partner_logo--5.png"></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-mdl-3">
+                            <div class="m_partners--img">
+                                <div afkl-lazy-image="assets/img/partner_logo--6.png"></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-mdl-3">
+                            <div class="m_partners--img">
+                                <div afkl-lazy-image="assets/img/partner_logo--7.png"></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-4 col-mdl-3">
+                            <div class="m_partners--img">
+                                <div afkl-lazy-image="assets/img/partner_logo--9.png"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="title text-center">Главный информационный партнер</div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-4 col-sm-offset-4">
+                            <div class="m_partners--img">
+                                <div afkl-lazy-image="assets/img/partner_logo--11.png"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section page4">
+    <div class="section_wrap">
+        <div class="title">Ваши возможности</div>
+        <div class="container-fluid capabilities">
+            <div class="row">
+                <div class="absolute-container col-md-12">
+                    <div class="table"
+                         afkl-lazy-image="/assets/img/sidebar_icon_1.png 1120w, assets/img/tbl.png"
+                         afkl-lazy-image-options="{'background': true,'offset':250}">
+                        <div class="tText txt1" rel="text1">Дмитрий<span>инвестор</span></div>
+                        <div class="tText txt2" rel="text2">Артем<span>Пекарь-кулинар</span></div>
+                        <div class="tText txt3" rel="text3">Анна<span>Владелец помещения</span></div>
+                        <div class="tText txt4" rel="text4">Мария<span>Эксперт</span></div>
+                    </div>
+                    <div class="text text1" rel="txt1">
+                        <h3>Инвестируйте</h3>
+                        <p>Имея даже небольшую сумму свободных денег, Дмитрий знает, как не только сохранить их, но и приумножить.</p>
+                        <span>Подробнее</span>
+                        <div class="popup-text hidden col-md-4">
+                            <i class="closePopup"><i class="fa fa-close"></i></i>
+                            <h4>Найдите проект</h4>
+                            <p>Инициаторы размещают на CONSTART только реальные проекты. Вам достаточно ввести интересующие параметры и выбрать подходящий именно вам проект. Вы легко сможете понять его суть и доходность, увидев реальные финансовые показатели. </p>
+                            <h4>Инвестируйте</h4>
+                            <p>Когда проект для вложения ваших инвестиций выбран, мы предложим вам подробный договор. После ознакомления с условиями, вы вносите деньги. В случае спорных вопросов, CONSTART выступает третьим лицом и следит за четким выполнением условий договора.</p>
+                        </div>
+                    </div>
+                    <div class="text text2" rel="txt2">
+                        <h3>Создавайте проекты</h3>
+                        <p>Артем очень любит свежий хлеб, он всегда удивлял своих друзей необычными рецептами. Теперь у него лучшая в городе пекарня.</p>
+                        <span>Подробнее</span>
+                        <div class="popup-text hidden col-md-4">
+                            <i class="closePopup"><i class="fa fa-close"></i></i>
+                            <h4>Создайте свой проект</h4>
+                            <p>Если вы хотите, чтобы ваша идея стала реальностью, просто создайте свой проект на CONSTART. Расскажите о нем - и вы увидите, как к реализации вашей идеи начнут подключаться лояльные пользователи, привнося с собой инвестиции, активы и знания.</p>
+                            <h4>Работайте над проектом</h4>
+                            <p>Как только вы привлекли в проект необходимые ресурсы, наступает время воплощения вашей идеи! Проявляйте решительность и профессионализм, чтобы люди поверили вам. Идите к своей цели, опираясь на помощь команды и лояльной аудитории.</p>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="text text3" rel="txt3">
+                        <h3>Используйте активы</h3>
+                        <p>Помещение, которое Аня никак не могла сдать, помогло Артему воплотить свою мечту о пекарне. Теперь Аня получает высокие дивиденды... и свежий хлеб.</p>
+                        <span>Подробнее</span>
+                        <div class="popup-text hidden col-md-4">
+                            <i class="closePopup"><i class="fa fa-close"></i></i>
+                            <p>Актив на CONSTART – это все, что способно приносить полезный эффект, от старого грузовичка до производственной линии завода. Размещайте свои Активы на CONSTART и получайте выгодные предложения по их использованию. Находите нужные вам Активы, заинтересовывайте их владельца и развивайте свой проект быстрее.</p>
+                        </div>
+                    </div>
+                    <div class="text text4" rel="txt4">
+                        <h3>Вложите свой опыт</h3>
+                        <p>Вы профессионал своего дела? Вложите экспертный опыт в идею, которая вас вдохновляет, и станьте совладельцем общего проекта!</p>
+                        <span>Подробнее</span>
+                        <div class="popup-text popup-right hidden">
+                            <i class="closePopup"><i class="fa fa-close"></i></i>
+                            <p>Инвестиции на CONSTART – это не только вложение денег. Вы можете поддержать интересный вам проект своими знаниями, экспертностью, опытом. Для многих инициаторов всё это может оказаться ценнее финансовых вложений. Благодаря вашей помощи, проект быстрее станет успешным, а вы будете его полноправным совладельцем, наряду с инвесторами.</p>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="text-center col-md-12">
+                    <login-button class="btn btn-danger"
+                            onclick="yaCounter40097510.reachGoal('home-click-joinus-button-in-footer')"
+                            ng-if="!home.isAuthenticated">Присоединиться</login-button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

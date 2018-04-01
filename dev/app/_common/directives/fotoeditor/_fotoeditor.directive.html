@@ -1,0 +1,28 @@
+<!--<div id="__{{fe.modalParentId}}"></div>-->
+<!--<button id="open-fotomodal" type="button" data-toggle="modal" data-target="#{{fe.modalParentId}}"></button>-->
+<label for="_{{fe.modalParentId}}"><!--style="visibility:hidden"-->
+<input id="_{{fe.modalParentId}}"  style="opacity:0"  accept="image/*" class="imageForOpen"
+       data-ng-click="fe.addListener($event)" type="file"></label>
+
+<!-- в принципе ест немного ресурсов по не активен-->
+<div class="fotoeditor" ng-if="fe.modalFotoIsOpen">
+    <div class="cropArea" ng-style="fe.styleH">
+        <img-crop image="fe.myImage"
+                  area-type="{{fe.areaType || 'rectangle'}}"
+                  result-image="fe.myCroppedImage"
+                  area-min-size='150'
+                  aspect-ratio="fe.fotoW/fe.fotoH"
+                  result-image-size='{w: fe.fotoW,h: fe.fotoH}'>
+        </img-crop>
+    </div>
+    <br>
+    <div class="modal-footer text-center">
+        <button class="btn btn-success btn-animated"
+                ng-class="{'animated':fe.pendUpload}"
+                data-ng-click="fe.uploadImg(fe.myCroppedImage)"
+                ng-disabled="fe.pendUpload">
+            <span class="btn-visible">Сохранить</span>
+            <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+        </button>
+    </div>
+</div>

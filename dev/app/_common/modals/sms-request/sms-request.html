@@ -1,0 +1,28 @@
+
+<button class="close" ng-click="$dismiss()"><span>&times;</span></button>
+
+<div class="modal-header text-center">
+    <div class="title">{{::sms.header}}</div>
+</div>
+<div class="modal-body text-center">
+    <p>На ваш мобильный телефон отправлено сообщение с паролем для подтверждения. Пароль
+        действует 15 минут. Введите его в форму ниже:</p>
+    <div class="form-group">
+        <form name="sms.codeForm">
+            <input autofocus name="code" type="text" class="form-control" mask="99999?" ng-model="sms.code">
+        </form>
+    </div>
+    <p>
+        Вы можете запросить код повторно через
+        <span><i class="fa fa-clock-o"></i> 10 минут</span>
+    </p>
+</div>
+<div class="modal-footer text-center">
+    <button class="btn btn-success btn-animated"
+            ng-disabled="sms.pend || sms.codeForm.$invalid"
+            ng-class="{'animated':sms.pend}"
+            ng-click="sms.send(sms.code)">
+        <span class="btn-visible">Подтвердить</span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+</div>

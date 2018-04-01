@@ -1,0 +1,104 @@
+<!--
+const STATUS_NOT_SEND = 0;
+                   const STATUS_SEND = 1;
+const STATUS_ACCEPTED = 2;
+                   const STATUS_REJECT = 3;
+             const STATUS_EXPIRE = 4;
+const STATUS_DELETED = 5-->
+<!-- project users filter -->
+
+
+<!--<div ng-repeat="u in project.ret | filter:project.filterByStatus">
+    {{u.name}}
+</div>
+
+<div ng-repeat="u in project.ret | filter:project.teamF.status">
+    {{u.name}}
+</div>-->
+<!--<div class="project&#45;&#45;users&#45;&#45;filter" ng-if="::project.proj.isCurrentUserProject">
+    <div class="row">
+        <div class="col-xs-12">
+            <button class="btn btn-success" data-toggle="modal" data-target="#modalAddUser">
+                <i class="fa fa-user"></i> Добавить пользователя</button>
+        </div>
+    </div>
+</div>-->
+
+
+<div class="project--users--main">
+    <div class="row">
+        <!-- владелец -->
+        <div class="masonry--item col-xs-12 col-sm-6 col-lg-4 col-lgs-3">
+            <a class="user" ui-sref="user.about({'id':project.proj.owner.id})">
+                <span class="user--image">
+                    <!--<img src="assets/img/blank-user.png" alt=""
+                         base="{{::project.baseImgUrl}}" ozk-img="{{::project.proj.owner.foto}}">-->
+                    <img ozk-img="{{::project.proj.owner.foto}}"
+                         base="{{::project.baseImgUrl}}"
+                         sex="{{::project.proj.owner.sex}}"
+                         src="assets/_img/blank_profile--male.png"
+                         f-src="assets/_img/blank_profile--female.png" alt="">
+                </span>
+                <span class="user--descr">
+                    <span class="user--name">{{project.proj.owner.name+' '+project.proj.owner.surname}}</span>
+                    <span class="user--title">Инициатор проекта</span>
+                </span>
+                <span class="user--location" ng-if="::project.proj.owner.country_id">
+                        <i class="fa fa-map-marker"></i>&nbsp;
+                        {{project.getCountryAndRegion(project.proj.owner.country_id,project.proj.owner.region_id)}}
+                </span>
+            </a>
+        </div>
+
+        <!-- команда -->
+        <invite-view value="project.proj.projectTeam"
+                     type="team"
+                     is-own="{{project.proj.isCurrentUserProject}}"
+                     posted-date="{{::project.proj.posted_date}}"></invite-view>
+
+    </div>
+</div>
+<!-- приглашенные -->
+<!-- project users filter -->
+<div class="project--users--filter"
+     ng-if="project.proj.projectTeamInvite.length && project.proj.isCurrentUserProject">
+    <div class="title">Приглашения</div>
+    <div class="row" ><!--ng-if="project.proj.posted_date"-->
+        <div class="col-xs-12">
+            <label class="checkbox default">
+                <input type="checkbox" ng-model="project.teamF.status[1]">
+                <span></span>
+                Высланы приглашения
+            </label>
+            <label class="checkbox default">
+                <input type="checkbox" ng-model="project.teamF.status[0]">
+                <span></span>
+                Приглашения не высланы
+            </label>
+            <label class="checkbox default">
+                <input type="checkbox" ng-model="project.teamF.status[3]">
+                <span></span>
+                Отклоненные приглашения
+            </label>
+            <label class="checkbox default">
+                <input type="checkbox" ng-model="project.teamF.status[4]">
+                <span></span>
+                Срок приглашения истек
+            </label>
+        </div>
+    </div>
+</div>
+<!-- project users filter end -->
+
+<div class="project--users--main" not-if="::project.isEnded">
+    <div class="row">
+        <invite-view ng-if="::project.proj.isCurrentUserProject"
+                      value="project.proj.projectTeamInvite"
+                     status-filter="project.teamF.status"
+                     type="teamInv"
+                     posted-date="{{::project.proj.posted_date}}"></invite-view>
+    </div>
+</div>
+
+<!--кнопка для мобилок-->
+<div class="project_support text-center" ng-include="'app/_common/tmpl/project-support-n-like.html'"></div>

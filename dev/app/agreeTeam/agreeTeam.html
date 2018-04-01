@@ -1,0 +1,35 @@
+
+
+<section class="section">
+    <div class="section_wrap">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+                    <div class="project_pay">
+                        <p class="alert alert-info" ng-if="at.type==='0'">
+                            <i class="fa fa-info-circle"></i>
+                            Вы отказались от участия в &nbsp;
+                            <a ui-sref="proj.about({'id':at.project_id})" target="_blank">проекте</a>
+                        </p>
+                        <p class="alert alert-info" ng-if="at.type==1">
+                            <i class="fa fa-info-circle"></i>
+                            Вы подтвердили участие в &nbsp;
+                            <a ui-sref="proj.about({'id':at.project_id})" target="_blank">проекте</a>
+                        </p>
+                        <br>
+                        <div class="alert alert-danger" ng-if="at.error">{{at.error}}</div>
+                        <div class="text-center" ng-if="at.notLogin">
+                            <!--<login-button class="btn btn-success"
+                                          onclick="yaCounter40097510.reachGoal('header-click-login-button')">
+                                <i class="fa fa-lg fa-sign-in"></i>&nbsp;Войти</login-button>-->
+                            <reg-button class="btn btn-primary ml5"
+                                        onclick="yaCounter40097510.reachGoal('header-click-registration-button')">
+                                <i class="fa fa-lg fa-user-plus"></i>&nbsp;Зарегистрироваться</reg-button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

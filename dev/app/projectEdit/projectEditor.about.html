@@ -1,0 +1,283 @@
+
+<div class="project_edit--step">
+    <div class="row">
+        <div class="col-xs-12 ">
+            <form name="pe.aboutForm">
+                <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-5 col-lg-3 col-lgs-2">
+                    <photo-editor class="form-group"
+                                  callback="pe.setFotoUrl(id,url)"
+                                  foto-id="{{pe.idCover}}"
+                                  foto-w='300'
+                                  foto-h='300'><!--ng-click="pe.openModalFoto(pe.idCover)"-->
+                        <label class="project_edit--title">Аватарка проекта:</label>
+                        <label class="file_uploader">
+                            <span class="preview">
+                               <img src="assets/img/blank_image--small.png" alt="" ng-if="!pe.p.cover">
+                               <img ng-src="{{pe.baseImgUrl+pe.p.cover}}" alt="" ng-if="pe.p.cover">
+                            </span>
+                            <span class="description">
+                                <span class="description--title">Загрузить изображение</span>
+                                <span class="restriction">
+                                    JPEG, JPG, PNG или BMP. Максимальный размер файла 10 МБ.
+                                    <br>
+                                    Минимальное разрешение 300x300 пикселей (4x4).
+                                </span>
+                            </span>
+                        </label>
+                    </photo-editor>
+                </div>
+
+                <div class="col-xs-12 col-sm-8 col-md-7 col-lg-9 col-lgs-10">
+                    <div class="project_edit--field">
+                        <div class="form-group">
+                            <label class="project_edit--title">Название проекта: <span
+                                    class="validation text-danger">*</span></label>
+
+                            <div class="input-group">
+                                <input type="text" class="form-control" tabindex="0" name="name"
+                                       pattern=(.){3,35}
+                                       minlength="3"
+                                       maxlength="35"
+                                       required
+                                       ng-model="pe.p.name">
+                                <span class="input-group-addon">{{pe.p.name.length||0}}/35</span>
+                            </div>
+                            <div class="alert alert-danger" ng-if="pe.aboutForm.name.$invalid&& pe.aboutForm.name.$touched">
+                                <small>Имя проекта должно содержать от 3 до 35 символов</small>
+                            </div>
+                            <label class="project_edit--title_descr">Укажите название проекта без кавычек. Нужно, чтобы
+                                название проекта было везде одинаковым - в соц.сетях, в СМИ, на Вашем сайте. Это
+                                упростит его поиск.</label>
+                        </div>
+                    </div>
+
+                    <div class="project_edit--field">
+                        <photo-editor class="form-group"
+                                      callback="pe.setFotoUrl(id,url)"
+                                      foto-id="{{pe.idHeader}}"
+                                      foto-w='950'
+                                      foto-h='250'>
+                            <label class="project_edit--title">Обложка проекта:</label>
+                            <label class="file_uploader">
+                                <span class="preview">
+                                    <img src="assets/img/blank_image.png" alt="" ng-if="!pe.p.foto">
+                                    <img ng-src="{{pe.baseImgUrl+pe.p.foto}}" alt=""
+                                         ng-if="pe.p.foto">
+                                </span>
+
+                                <span class="description">
+                                    <span class="description--title">Загрузить изображение</span>
+                                    <span class="restriction">
+                                        JPEG, PNG или BMP. Максимальный размер файла 10 МБ.<br>
+                                        Минимальное разрешение 950x250 пикселей.
+                                    </span>
+                                </span>
+                            </label>
+                        </photo-editor>
+                    </div>
+
+                    <div class="project_edit--field">
+                        <div class="form-group">
+                            <label class="project_edit--title">Страна: <span class="validation text-danger">*</span></label>
+                            <!--<input type="text" class="form-control" tabindex="1" required
+                                   name="country_id"
+                                   ng-model="pe.p.country_id">-->
+                            <ui-select class="select" theme="bootstrap" tabindex="1" required
+                                       name="country_id"
+                                       append-to-body="true"
+                                       ng-model="pe.p.country_id"
+                                       ng-change="pe.changeCountry(true)">
+                                <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="o.id as o in pe.geo | filter: $select.search">
+                                    <span ng-bind="o.name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                            <div class="alert alert-danger" ng-if="pe.aboutForm.country_id.$error.required&& pe.aboutForm.country_id.$touched">
+                                <small>Введите страну</small>
+                            </div>
+                            <label class="project_edit--title_descr">В какой стране предполагается реализация Вашего проекта?</label>
+                        </div>
+                    </div>
+
+                    <div class="project_edit--field">
+                        <div class="form-group">
+                            <label class="project_edit--title">Регион реализации: <span class="validation text-danger">*</span></label>
+                            <!--<input type="text" class="form-control" tabindex="2" required
+                                   name="region_id"
+                                   ng-model="pe.p.region_id">-->
+                            <ui-select class="select" theme="bootstrap" tabindex="2" required
+                                       name="region_id"
+                                       append-to-body="true"
+                                       ng-model="pe.p.region_id"
+                                       ng-disabled="!pe.p.country_id">
+                                <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="o.id as o in pe.regionsOfContry | filter: $select.search">
+                                    <span ng-bind="o.name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                            <div class="alert alert-danger" ng-if="pe.aboutForm.region_id.$error.required&& pe.aboutForm.region_id.$touched">
+                                <small>Введите регион</small>
+                            </div>
+                            <label class="project_edit--title_descr">В каком регионе Вы предполагаете внедрять свой проект?</label>
+                        </div>
+                    </div>
+
+                    <div class="project_edit--field" not-if="pe.p.type_id==3 || pe.isOdvf">
+                        <div class="form-group">
+                            <label class="checkbox default">
+                                <input type="checkbox" ng-model="ue.temp.collResident">
+                                <span></span>
+                                Для проектов-резидентов наших партнеров на CONSTART предусмотрены различные привилегии. Если ваш проект официально поддерживается в статусе резидента – отметьте это.
+                            </label>
+                        </div>
+                        <div uib-collapse="!ue.temp.collResident">
+                            <div class="form-group">
+                                <ui-select class="select"
+                                           append-to-body="true"
+                                           ng-model="pe.p.resident_id" theme="bootstrap">
+                                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="o.id as o in pe.temp.incubators | filter: $select.search">
+                                        <span ng-bind="o.name"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="project_edit--field">
+                        <div class="form-group">
+                            <label class="project_edit--title">Стадия: <span class="validation text-danger">*</span></label>
+                            <ui-select class="select" tabindex="3" required
+                                       name="stage"
+                                       append-to-body="true"
+                                       ng-model="pe.p.stage" theme="bootstrap">
+                                <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="o.id as o in pe.temp.stages | filter: $select.search">
+                                    <span ng-bind="o.name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                            <div class="alert alert-danger" ng-if="pe.p.stage==undefined&& pe.aboutForm.stage.$touched">
+                                <small>Выберите стадию</small>
+                            </div>
+                            <label class="project_edit--title_descr">Обычно проект проживает несколько стадий. Вам нужно выбрать, на какой стадии находится именно ваш проект.</label>
+                        </div>
+                    </div>
+
+                    <div class="project_edit--field" not-if="pe.isOdvf">
+                        <div class="form-group">
+                            <label class="checkbox default">
+                                <input type="checkbox" ng-model="pe.p.is_need_patent"
+                                       ng-true-value="1" ng-false-value="0">
+                                <span></span>
+                                Если вашему проекту нужен патент (сертификация, регистрация товарного знака), специалисты CONSTART могут оказать такую услугу. Если это необходимо – отметьте.
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <div class="project_edit--field" not-if="pe.isOdvf">
+                        <div class="form-group">
+                            <label class="project_edit--title">Направление: <span class="validation text-danger">*</span></label>
+                                <ui-select class="select" theme="bootstrap" tabindex="4" required name="category"
+                                            append-to-body="true"
+                                           ng-change="pe.handleCategory()"
+                                            ng-model="pe.temp.category">
+                                <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="o as o in pe.temp.projCat | filter: $select.search">
+                                    <span ng-bind="o.name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                            <div class="alert alert-danger"
+                                 ng-if="pe.aboutForm.category.$error.required&& pe.aboutForm.category.$touched">
+                                <small>Выберите направление</small>
+                            </div>
+                            <label class="project_edit--title_descr">Выберите общее направление вашего проекта.</label>
+                        </div>
+                    </div>
+
+                    <div class="project_edit--field">
+                        <div class="form-group">
+                            <label class="project_edit--title">Категория: <span class="validation text-danger">*</span></label>
+                            <ui-select class="select" tabindex="5"
+                                       required name="category_sub"
+                                       ng-disabled="!pe.temp.category || pe.temp.categoryWithoutItems"
+                                       append-to-body="true"
+                                       ng-change="pe.handleSubCategory()"
+                                       ng-model="pe.p.category_sub_id">
+                                <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="o.id as o in pe.temp.category.items | filter: $select.search">
+                                    <span ng-bind="::o.name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                            <div class="alert alert-danger" ng-if="pe.aboutForm.category_sub.$error.required&& pe.aboutForm.category_sub.$touched">
+                                <small>Выберите категорию</small>
+                            </div>
+                            <label class="project_edit--title_descr">Выберите, к какой категории относится ваш проект. Если нужной категории нет, поместите его в любую близкую по сути вашего проекта и сообщите вашему проект-менеджеру о необходимости создания новой.</label>
+                        </div>
+                    </div>
+                    <div class="project_edit--field">
+                        <div class="form-group">
+                            <label class="project_edit--title">Подкатегория: </label>
+                            <ui-select class="select" tabindex="5"
+                                       name="category_sub_sub"
+                                       ng-disabled="!pe.temp.category || !pe.p.category_sub_id || pe.temp.catThirdWithoutItems || !pe.temp.categoriesThirdLevel"
+                                       append-to-body="true"
+                                       ng-model="pe.p.category_sub_sub_id">
+                                <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="o.id as o in pe.temp.categoriesThirdLevel | filter: $select.search">
+                                    <span ng-bind="::o.name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+
+
+                    <div class="project_edit--field">
+                        <div class="form-group">
+                            <label class="project_edit--title">Краткое описание: <span class="validation text-danger">*</span></label>
+                            <div class="input-group">
+                                <textarea class="form-control" rows="4" tabindex="6" name="short_descr"
+                                          pattern="[^<>]{1,160}"
+                                          ng-model="pe.p.short_descr"
+                                          required></textarea>
+                                <span class="input-group-addon">{{pe.p.short_descr.length||0}}/160</span>
+                            </div>
+                            <div class="alert alert-danger" ng-show="pe.aboutForm.short_descr.$invalid && pe.aboutForm.short_descr.$touched">
+                                <small>Введите описание. До 160 символов кроме знаков < и ></small>
+                            </div>
+                            <label class="project_edit--title_descr">Опишите основную идею проекта емко и кратко, в двух-трех предложениях, чтобы любой инвестор смог понять его суть.</label>
+                        </div>
+                    </div>
+
+                    <h4> <br>Поля отмеченные <span class="validation text-danger">*
+                    </span> (звездочкой) обязательны для заполнения</h4>
+
+
+                </div>
+                </div>
+             </form>
+
+        </div>
+        <div class="col-xs-12 col-sm-6 col-lgs-5">
+
+        </div>
+    </div>
+
+
+
+</div>
+
+<div class="project_edit--footer text-center">
+    <div class="alert alert-danger" ng-if="pe.temp.saveError">{{pe.temp.saveError}}</div>
+    <button class="btn btn-success btn-animated"
+            ng-disabled="pe.pend.save || pe.aboutForm.$invalid"
+            ng-class="{'animated':pe.pend.save}"
+            ng-click="pe.tryChangeState('desc')">
+        <span class="btn-visible">Описание проекта <i class="fa fa-angle-right"></i></span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+</div>
+
+

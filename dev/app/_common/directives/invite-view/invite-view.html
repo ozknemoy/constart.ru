@@ -1,0 +1,70 @@
+
+<invite-user-add callback="iv.pushUser(u)" class="masonry--item user_add col-xs-12 col-sm-6 col-lg-4 col-lgs-3"
+     ng-if="iv.type=='teamInv'">
+    <div class="user_add--wrap">
+        <div class="user_add--button">
+            <span class="user_add--img">
+                <img src="assets/img/blank-user.png" alt=""></span>
+            <span class="user_add--title">
+                <i class="fa fa-plus"></i><span>Добавить нового пользователя</span></span>
+        </div>
+    </div>
+</invite-user-add>
+
+<div class="masonry--item col-xs-12 col-sm-6 col-lg-4 col-lgs-3"
+     ng-repeat="u in iv.value | checkbox:iv.statusFilter:'status'">
+    <div class="user-actions" ng-if="::iv.type=='team'">
+        <confirm-button class="user--conf bg-danger"
+                        text-body="Действительно удалить участника команды?"
+                callback="iv.deleteInvite(u.id,$index)"
+                ng-if="iv.isOwn=='1'">
+            <i class="fa fa-fw fa-times"></i></confirm-button>
+    </div>
+
+    <!--для инвайтов-->
+    <div class="user-actions" ng-if="::iv.type=='teamInv'">
+        <confirm-button class="user--conf bg-danger"
+                text-body="Действительно удалить приглашение?"
+                callback="iv.deleteInvite(u.id,$index)">
+            <i class="fa fa-fw fa-times"></i></confirm-button>
+        <!--кнопка пригласить заново. слева сверху-->
+        <confirm-button class="user--send bg-warning"
+                text-body="Выслать приглашение повторно?"
+                callback="iv.reInviteUser(u.id,$index)"
+                ng-if="u.status==4">
+            <i class="fa fa-envelope"></i></confirm-button>
+    </div>
+
+    <a class="user" href try-to-see-user="{{u.user.id}}">
+        <span class="user--conf bg-success"><i class="fa fa-fw fa-plus"></i></span>
+        <span class="user--image">
+            <!--<img src="assets/img/blank-user.png" alt=""
+                 base="{{::iv.baseImgUrl}}" ozk-img="{{::u.user.foto}}">-->
+            <img ozk-img="{{::u.user.foto}}"
+                 base="{{::iv.baseImgUrl}}"
+                 sex="{{::u.user.sex}}"
+                 src="assets/_img/blank_profile--male.png"
+                 f-src="assets/_img/blank_profile--female.png" alt="">
+        </span>
+        <span class="user--descr" ng-switch="::u.user.status">
+            <span class="user--name">{{u.user.name+' '+u.user.surname}}</span>
+            <span class="user--title">{{::u.role}}</span>
+            <span class="user--title"
+                  ng-repeat="s in iv.userStatuses(u.user.userStatus)">{{::s}}&nbsp;
+            </span>
+
+            <!--приглашенным-->
+            <span class="user--stat text-info" ng-switch-when="0">Приглашение не отправлено</span>
+            <span class="user--stat text-info" ng-switch-when="1">Приглашение отправлено</span>
+            <span class="user--stat text-danger" ng-switch-when="3">Приглашение отклонено</span>
+            <span class="user--stat text-warning" ng-switch-when="4">Срок приглашения истек</span>
+        </span>
+        <span class="user--location" ng-if="::u.user.country_id">
+            <i class="fa fa-map-marker"></i>&nbsp;
+            {{iv.getCountryAndRegion(u.user.country_id,u.user.region_id)}}
+        </span>
+    </a>
+</div>
+
+<div invite-user="iv.pushUser(addedUser)" ng-if="iv.type=='teamInv'"></div>
+

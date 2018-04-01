@@ -1,0 +1,188 @@
+﻿<br><br>
+
+
+<div uib-tabset active="project.numBudget" type="pills" class="relative tab-pills">
+    <!--<div uib-slide index="0" ng-show="project.total.current_yield">-->
+    <div uib-tab index="0" heading="Инвестиции" ng-if="project.total.current_yield" class="item">
+        <!-- Капитальные затраты -->
+        <div class="estimate">
+            <div class="row">
+                <div class="col-xs-12 col-lg-6">
+                    <div class="numbers">
+                        <span class="num">{{project.total.estimate_capital|myround|thousand}}
+                            <i class="fa fa-rub"></i></span>
+
+                        <p>
+                            <span> в месяц</span>
+                            Выручка проекта
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-lg-6">
+                    <div class="numbers">
+                        <span class="num">{{project.proj.found_payback_period}}</span>
+
+                        <p>
+                            <span>месяцев</span>
+                            До выхода на самоокупаемость:
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="title--small">Необходимая сумма</div>
+
+            <div class="table_block">
+                <table>
+                    <tr>
+                        <td><span>Расходная статья</span></td>
+                        <td><span>Стоимость <i class="fa fa-rub"></i></span></td>
+                        <td><span>Описание</span></td>
+                    </tr>
+                    <tr ng-repeat="i in project.proj.current_yield | deleteEmpty">
+                        <td data-text="Расходная статья">
+                            <p>{{i.item}}</p>
+                        </td>
+                        <td data-text="Стоимость">{{i.amount}}</td>
+                        <td data-text="Описание">
+                            <p>{{i.description}}</p>
+                        </td>
+                    </tr>
+
+                    <tr class="last">
+                        <td></td>
+                        <td>
+                            <div>
+                                Всего: {{project.total.current_yield|myround|thousand}}
+                                <span><i class="fa fa-rub"></i></span>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <!-- Капитальные затраты end -->
+    </div>
+    <!--<div uib-slide index="1" ng-if="project.total.estimate_monthly">-->
+    <div uib-tab index="1" heading="Операционные затраты" ng-if="project.total.estimate_monthly" class="item">
+        <!-- операц затраты -->
+        <div class="estimate">
+            <div class="row">
+                <div class="col-xs-12 col-lg-6">
+                    <div class="numbers">
+                                                <span class="num">{{project.total.estimate_capital|myround|thousand}}
+                                                    <i class="fa fa-rub"></i></span>
+
+                        <p><span>в месяц</span>Выручка проекта</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-lg-6">
+                    <div class="numbers">
+                        <span class="num">{{project.proj.found_payback_period}}</span>
+
+                        <p>
+                            <span>месяцев</span>
+                            До выхода на самоокупаемость:
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="title--small">Операционные затраты в месяц</div>
+
+            <div class="table_block">
+                <table>
+                    <tr>
+                        <td><span>Расходная статья</span></td>
+                        <td><span>Стоимость <i class="fa fa-rub"></i></span></td>
+                        <td><span>Описание</span></td>
+                    </tr>
+                    <tr ng-repeat="i in project.proj.estimate_monthly | deleteEmpty">
+                        <td data-text="Расходная статья"><p>{{i.item}}</p></td>
+                        <td data-text="Стоимость"><p>{{i.amount}}</p></td>
+                        <td data-text="Описание"><p>{{i.description}}</p></td>
+                    </tr>
+                    <tr class="last">
+                        <td></td>
+                        <td>
+                            <div>
+                                Всего: {{project.total.estimate_monthly|thousand}}
+                                <span><i class="fa fa-rub"></i></span>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!-- операц затраты end -->
+    </div>
+    <!--<div uib-slide index="2" ng-if="project.total.estimate_capital">-->
+    <div uib-tab index="2" heading="Выручка" ng-if="project.total.estimate_capital" class="item">
+        <!-- выручка -->
+        <div class="estimate">
+            <div class="row">
+                <div class="col-xs-12 col-lg-6">
+                    <div class="numbers">
+                                                    <span class="num">{{project.total.estimate_capital|thousand}}
+                                                          <i class="fa fa-rub"></i></span>
+
+                        <p>
+                            <span>в месяц</span>
+                            Выручка проекта
+                        </p>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-lg-6">
+                    <div class="numbers">
+                        <span class="num">{{project.proj.found_payback_period}}</span>
+
+                        <p>
+                            <span>месяцев</span>
+                            До выхода на самоокупаемость:
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="title--small">Планируемая выручка в месяц</div>
+
+            <div class="table_block table_block--cols">
+                <table>
+                    <tr>
+                        <td><span>Доходная статья</span></td>
+                        <td><span>Кол-во, <span>ед. изм.</span></span></td>
+                        <td><span>Стоимость, <i class="fa fa-rub"></i></span></td>
+                        <td><span>Итого, <i class="fa fa-rub"></i></span></td>
+                    </tr>
+                    <tr ng-repeat="i in project.proj.estimate_capital | deleteEmpty">
+                        <td data-text="Доходная статья">
+                            {{i.item}}
+                            <p class="small">{{i.description}}</p>
+                        </td>
+                        <td data-text="Кол-во, ед. изм."><p>{{i.count}}</p></td>
+                        <td data-text="Стоимость"><p>{{i.amount}}</p></td>
+                        <td data-text="Итого"><p>{{i.count* i.amount}}</p></td>
+                    </tr>
+                    <tr class="last">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div>
+                                Всего: {{project.total.estimate_capital|thousand}}
+                                <span><i class="fa fa-rub"></i></span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!-- выручка end -->
+    </div>
+</div>
+
+<!--кнопка для мобилок-->
+<div class="project_support text-center" ng-include="'app/_common/tmpl/project-support-n-like.html'"></div>

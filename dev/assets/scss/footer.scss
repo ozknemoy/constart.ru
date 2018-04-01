@@ -1,0 +1,89 @@
+@import 'mixin.scss';
+footer {
+	background: #5a5a5a;
+	position: absolute;
+	overflow: hidden;
+	left: 220px;
+	right: 0;
+	bottom: 0;
+	// margin-top: 86px;
+	z-index: 1002;
+	@include transition(0.2s cubic-bezier(0.645, 0.045, 0.355, 1));
+	.copyright {
+		background: url(../img/footer_logo.png) no-repeat;
+		background-size: 187px 35px;
+		position: absolute;
+		left: 43px;
+		top: 60px;
+		width: 205px;
+		padding: 40px 0 0;
+		color: white;
+		font-size: .7rem;
+		text-transform: uppercase;
+	}
+	.footer_wrap {
+		padding: 15px 15px 15px 30px;
+	}
+	.social {
+		display: none;
+		text-align: center;
+		padding: 15px 0;
+		a {
+			background: darken($white, 5%);
+			width: 25px;
+			height: 26px;
+			text-align: center;
+			line-height: 27px;
+			font-size: 16px;
+			margin: 0 2px;
+			display: inline-block;
+			vertical-align: top;
+			@include border-radius(30px);
+			color: $color-bluedark;
+		}
+	}
+	.minimal-footer & {
+		.copyright {
+			top: 15px;
+		}
+		.footer--links {
+			float: none;
+			margin: 5px 0 0;
+			padding: 0;
+			p {
+				display: inline-block;
+				vertical-align: top;
+				position: relative;
+				&:before {
+					content: '|';
+					display: inline-block;
+					color: white;
+					margin: 0 10px;
+				}
+				&:first-child {
+					&:before {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+}
+
+.footer--links {
+	text-align: center;
+	color: $white;
+	@include font(14px, $ubuntu_light);
+	a {
+		color: $white;
+		@include font(14px, $ubuntu_light);
+		margin: 0 5px;
+	}
+	p {
+		display: inline-block;
+		vertical-align: top;
+		margin: 0;
+	}
+}
+
+

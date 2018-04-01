@@ -1,0 +1,129 @@
+.events {
+	padding: 30px 0 0;
+	&--row {
+		@media (min-width: 1380px) {
+			display: flex;	
+		}
+	}
+	&--col {
+		margin-top: 30px;
+		@media (min-width: 1380px) {
+			flex: 1 0; 
+		}
+	}
+	&_item {
+		background: $white;
+		border: 1px solid $gray-light;
+		padding: 20px 20px 70px 100px;
+		position: relative;
+		line-height: 1.2;
+		height: 100%;
+		@include border-radius(5px);
+		@include box-shadow(0px 5px 6px 0px rgba(0, 0, 0, 0.2));
+		@media (max-width: 450px) {
+			padding-left: 20px;
+			padding-top: 70px;
+		}
+		@media (max-width: 350px) {
+			padding-top: 85px;
+		}
+		&--type {
+			text-transform: uppercase;
+			color: $gray;
+			font-size: 12px;
+			margin-bottom: 5px;
+		}
+		&--date {
+			border-right: 1px solid $gray-light;
+			position: absolute;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			width: 90px;
+			padding: 4px 0 4px 20px;
+			@media (max-width: 450px) {
+				border-right: 0;
+				border-bottom: 1px solid $gray-light;
+				bottom: auto;
+				right: 0;
+				padding: 10px 20px;
+				width: auto;
+
+			}
+			.day {
+				color: $color-bluedark;
+				@include font(24px, $font_sec);
+				@media (max-width: 450px) {
+					display: inline-block;
+					vertical-align: top;
+				}
+				&:after {
+					background: $color-bluedark;
+					content: '';
+					display: block;
+					width: 15px;
+					height: 3px;
+					margin: 5px 0 10px;
+					@media (max-width: 450px) {
+						display: none;
+					}
+				}
+			}
+			.mnt {
+				display: block;
+				color: $color-bluedark;
+				@include font(12px, $ubuntu_bold);
+				@media (max-width: 450px) {
+					display: inline-block;
+					vertical-align: top;
+					margin-top: 8px;
+					text-transform: lowercase;
+				}
+			}
+			.year {
+				@media (max-width: 450px) {
+					display: inline-block;
+					vertical-align: top;
+					margin: 7px 2px 0;
+				}
+			}
+			.time {
+				margin-top: 10px;
+				line-height: 12px;
+				font-size: 12px;
+				@media (max-width: 450px) {
+					display: inline-block;
+					vertical-align: top;
+					margin-top: 9px;
+					font-size: 14px;
+					br {
+						display: none;
+					}
+				}
+			}
+		}
+		&--title {
+			@include font(20px, $font_sec);
+			line-height: 1;
+			margin-bottom: 10px;
+		}
+		&--description {
+			color: $gray;
+			font-size: 12px;
+			text-transform: uppercase;
+			margin: 10px 0;
+			line-height: 1.4;
+		}
+		&--content {
+			margin: 10px 0;
+		}
+		&--footer {
+			position: absolute;
+			bottom: 20px;
+			left: 100px;
+			right: 0;
+		}
+		
+	}
+
+}

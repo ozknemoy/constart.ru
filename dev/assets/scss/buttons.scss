@@ -1,0 +1,351 @@
+@import 'mixin.scss';
+
+.buttons_slide {
+	font-size: 0;
+	position: relative;
+	z-index: 1;
+	.buttons_slide--view {
+		background: $color-green;
+		border: 0;
+		width: 45px;
+		height: 35px;
+		cursor: pointer;
+		display: inline-block;
+		vertical-align: top;
+		position: relative;
+		@include transition(.3s linear);
+		&:hover {
+			background: #00ba00;
+		}
+		&:before {
+			border: 3px solid white;
+			width: 21px;
+			height: 21px;
+			content: '';
+			display: block;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: -12px 0 0 -12px;
+			@include border-radius(20px);
+		}
+		&.collapsed {
+			
+			&:before {
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-width: 11px 11px 0 11px;
+				border-color: #fff transparent transparent transparent;
+				margin: -5px 0 0 -12px;
+				@include border-radius(0);
+			}
+			span {
+				display: none;
+			}
+		}
+		span {
+			background: #fff;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			@include rotate(45);
+			&:first-child {
+				width: 3px;
+				height: 11px;
+				margin: -7px 0 0 -3px;
+			}
+			&:last-child {
+				width: 11px;
+				height: 3px;
+				margin: -3px 0px 0 -7px;
+			}
+		}
+	}
+	.dropdown, .button_green {
+		display: inline-block;
+		vertical-align: top;
+	}
+
+	.btn_support {
+		background: #00dc00;
+		display: inline-block;
+		vertical-align: top;
+		height: 35px;
+		font: 20px/35px $font_sec;
+		padding: 0 25px;
+		color: white;
+		text-decoration: none;
+		@include transition(.3s linear);
+		&:hover {
+			background: #00ba00;
+			text-decoration: none;
+		}
+		&.button_green {
+			@extend .button_green;
+		}
+	}
+	.count {
+		background: $color-gray;
+		display: inline-block;
+		vertical-align: top;
+		height: 35px;
+		font: 20px/35px $font_sec;
+		color: white;
+		padding: 0 10px;
+	}
+}
+
+// collapse button
+.btn_collapse {
+	position: relative;
+	text-align: center;
+	&:before {
+		background: $color-gray-dark;
+		content: '';
+		display: block;
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 50%;
+		height: 1px;
+	}
+	span {
+		background: #f2f2f2;
+		display: inline-block;
+		font-size: 20px;
+		color: $color-gray-dark;
+		padding: 0 20px;
+		position: relative;
+		cursor: pointer;
+		z-index: 1;
+		&:before {
+			content: 'скрыть';
+		}
+	}
+	&.collapsed  {
+		span:before {
+			content: 'показать';
+		}
+		i {
+			border-width: 5px 5px 0 5px;
+			border-color: $color-gray-dark transparent transparent transparent;
+		}
+	}
+	i {
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 5px 5px 5px;
+		border-color: transparent transparent $color-gray-dark transparent;
+		display: inline-block;
+		vertical-align: middle;
+		margin-left: 10px;
+	}
+}
+
+.button_gray {
+	background: $color-gray;
+	border: 0;
+	@include font(21px, $font_sec);
+	color: white;
+	height: 38px;
+	line-height: 38px;
+	text-align: center;
+	display: block;
+	padding: 0 20px;
+	@include transition(.3s linear);
+	&:hover, &.hov {
+		background-color: $color-green-light;
+		text-decoration: none;
+		color: white;
+	}
+	&.inline {
+		display: inline-block;
+		vertical-align: top;
+	}
+}
+
+.button_green {
+	background: $color-green;
+	border: 0;
+	padding: 0;
+	@include font(21px, $font_sec);
+	color: white;
+	height: 38px;
+	line-height: 38px;
+	text-align: center;
+	display: block;
+	padding: 0 20px;
+	@include transition(.3s linear);
+	&:hover {
+		background-color: $color-green-light;
+		text-decoration: none;
+		color: white;
+	}
+	&.small {
+		height: 29px;
+		line-height: 29px;
+		font-size: 20px;
+	}
+	&.inline {
+		display: inline-block;
+		vertical-align: top;
+		width: auto;
+	}
+}
+
+.button_link {
+	border: 0;
+	padding: 0;
+	@include font(16px, $ubuntu_light);	
+	height: 38px;
+	line-height: 38px;
+	text-align: center;
+	display: block;
+	padding: 0 20px;
+	@include transition(.3s linear);
+	&.inline {
+		display: inline-block;
+		vertical-align: top;
+		width: auto;
+	}
+}
+
+.button_danger {
+	background: $color-danger;
+	border: 0;
+	padding: 0;
+	@include font(21px, $font_sec);
+	color: white;
+	height: 38px;
+	line-height: 38px;
+	text-align: center;
+	display: block;
+	padding: 0 20px;
+	opacity: .5;
+
+	@include transition(.3s linear);
+	&:hover {
+		opacity: 1;
+		text-decoration: none;
+		color: white;
+	}
+	&.inline {
+		display: inline-block;
+		vertical-align: top;
+	}
+}
+
+.button_sub--toggle, .button_add {
+	background: none;
+	border: 0;
+	font-size: 20px;
+	display: inline-block;
+	vertical-align: top;
+	cursor: pointer;
+	color: $color-gray-dark;
+	margin: 15px 0;
+	@include transition(.2s linear);
+	i {
+		background-color: $color-gray-dark;
+		width:30px;
+		height: 30px;
+		display: inline-block;
+		vertical-align: top;
+		position: relative;
+		margin: -3px 0 0 0;
+		@include border-radius(30px);
+		@include transition(.2s linear);
+		&:before, &:after {
+			background: white;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			content: '';
+			display: block;
+		}
+		&:before {
+			width: 18px;
+			height: 2px;
+			margin: -1px 0 0 -9px;
+		}
+		&:after {
+			width: 2px;
+			height: 18px;
+			margin: -9px 0 0 -1px;
+		}
+	}
+	&:hover, &:active, &:focus {
+		text-decoration: none;
+		color: $color-green-light;
+		i {
+			background: $color-green-light;
+		}
+	}
+}
+
+.button_delete {
+	color: $color-danger;
+	font-size: 20px;
+	opacity: .5;
+	@include transition(.3s linear);
+	display: inline-block;
+	vertical-align: top;
+	i {
+
+	}
+	&:hover {
+		opacity: 1;
+		text-decoration: none;
+		color: $color-danger;
+	}
+}
+
+button.icon {
+	background-color: transparent;
+	border: 0;
+}
+.button_cross {
+	background: none;
+	border: 0;
+	padding: 0;
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	margin-top: 0 !important;
+}
+.button_round {
+	background: $color-bluedark;
+	height: 20px;
+	line-height: 22px;
+	@include font(14px, $ubuntu_light);
+	display: inline-block;
+	vertical-align: top;
+	padding: 0 10px;
+	color: white;
+	cursor: pointer;
+	margin: -2px 0 0 15px;
+	@include border-radius(20px);
+	@include transition(.3s cubic-bezier(0.54, 0.58, 0.35, 1.26));
+	&:hover {
+		background: $color-blue;
+		color: white;
+	}
+	i {
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 5px 5px 5px;
+		border-color: transparent transparent white transparent;
+		display: inline-block;
+		vertical-align: middle;
+		margin-left: 10px;
+	}
+	&.collapsed {
+		i {
+			border-width: 5px 5px 0 5px;
+			border-color: white transparent transparent;
+		}
+	}
+}

@@ -1,0 +1,150 @@
+.icon {
+	display: inline-block;
+	vertical-align: top;
+	&.form_icon {
+		position: absolute;
+		left: 100%;
+		bottom: 8px;
+	}
+	&.box {
+		@include background-image('icon_box', $size: 46px 50px);
+		width: 46px;
+		height: 50px;
+	}
+	&.box_small {
+		@include background-image('icon_box--small', $size: 37px 40px);
+		width: 37px;
+		height: 40px;
+	}
+	&.user_big {
+		@include background-image('icon_user--big', $size: 41px 48px);
+		width: 41px;
+		height: 48px;
+	}
+	&.hexagon {
+		@include background-image('icon_hexagon', $size: 17px 23px);
+		width: 17px;
+		height: 23px;
+	}
+	&.pointer-blue {
+		@include background-image('icon_pointer-blue', $size: 23px 36px);
+		width: 23px;
+		height: 36px;
+	}
+	&.pointer-gray {
+		@include background-image('icon_pointer', $size: 12px 19px);
+		width: 12px;
+		height: 19px;
+	}
+	&.list {
+		@include background-image('icon_list', $size: 22px 25px);
+		width: 22px;
+		height: 25px;
+	}
+	&.clock {
+		@include background-image('icon_clock', $size: 25px 26px);
+		width: 25px;
+		height: 26px;
+	}
+	&.rub {
+		@include background-image('icon_rub', $size: 12px 12px);
+		width: 12px;
+		height: 12px;	
+	}
+	&.rub_big {
+		@include background-image('icon_rub-big', $size: 26px 30px);
+		width: 26px;
+		height: 30px;	
+	}
+	&.rub_white {
+		@include background-image('icon_rub--white', $size: 18px 21px);
+		width: 18px;
+		height: 21px;	
+	}
+	&.rub_blue {
+		@include background-image('icon_rub-blue', $size: 15px 17px);
+		width: 15px;
+		height: 17px;
+	}
+	&.rub_bluedark {
+		@include background-image('icon_rub-bluedark', $size: 14px 17px);
+		width: 14px;
+		height: 17px;
+	}
+	&.pen {
+		@include background-image('icon_pen', $size: 10px 10px);
+		width: 10px;
+		height: 10px;	
+	}
+	&.pen_blue {
+		@include background-image('icon_pen-blue', $size: 15px 15px);
+		width: 15px;
+		height: 15px;
+	}
+	&.pen_big {
+		@include background-image('icon_pen--big', $size: 25px 25px);
+		width: 25px;
+		height: 25px;	
+	}
+	&.dragndrop {
+		@include background-image('icon_upload', $size: 86px 109px);
+		width: 86px;
+		height: 109px;
+	}
+	&.camera {
+		@include background-image('icon_camera', $size: 38px 28px);
+		width: 38px;
+		height: 28px;
+	}
+	&.camera_white {
+		@include background-image('icon_camera--white', $size: 38px 28px);
+		width: 38px;
+		height: 28px;
+	}
+	&.video {
+		@include background-image('icon_video', $size: 38px 25px);
+		width: 38px;
+		height: 25px;
+	}
+	&.user {
+		@include background-image('icon_user', $size: 55px 64px);
+		width: 55px;
+		height: 64px;
+	}
+	&.delete {
+		@include background-image('cross', $size: 26px 26px);
+		width: 26px;
+		height: 26px;
+	}
+	&.arr_t {
+		@include background-image('arr_t', $size: 9px 13px);
+		width: 9px;
+		height: 13px;	
+	}
+	&.icon_delete {
+		@include background-image('icon_delete', $size: 26px 26px);
+		width: 26px;
+		height: 26px;
+	}
+	&.search {
+		@include background-image('icon_search--white', $size: 23px 22px);
+		width: 23px;
+		height: 22px;
+	}
+	&.tech {
+		@include background-image('icon_tech', $size: 46px 49px);
+		width: 46px;
+		height: 49px;
+	}
+	&.vacancy {
+		@include background-image('icon_vacancy', $size: 26px 21px);
+		width: 26px;
+		height: 21px;
+	}
+	&.team {
+		@include background-image('icon_team', $size: 26px 23px);
+		width: 26px;
+		height: 23px;
+	}
+
+}

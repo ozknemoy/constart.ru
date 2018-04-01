@@ -1,0 +1,16 @@
+
+<button type="button" class="close" ng-click="$dismiss()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<div class="modal-header">
+    <div class="title">Добавление видео</div>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label class="label">Введите адрес видео </label>
+        <input type="text" class="form-control" ng-model="av.value">
+        <p class="project_edit--title_descr">Создайте видео о проекте и выложите его на YouTube, скопируйте ссылку на него. В строку выше вставьте данную ссылку.
+            Идеальная длительность видео о проекте равна примерно 3 минутам. Предлагаем схему: представление, краткое описание проекта, предложение для инвесторов, обозначение нужд проекта, призыв к действию.</p>
+    </div>
+</div>
+<div class="modal-footer text-center">
+    <button class="btn btn-success" ng-click="av.ok()" aria-label="Close">Добавить</button>
+</div>

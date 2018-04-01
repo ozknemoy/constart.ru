@@ -1,0 +1,35 @@
+
+<!--модалка доков КЛ-->
+<!--<div class="modal fade" tabindex="-1" role="dialog" id="modalDoc2">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">-->
+            <button type="button" class="close" ng-click="$dismiss()"><span aria-hidden="true">&times;</span></button>
+            <div class="modal-header">
+                <div class="title">Выбор договора</div>
+            </div>
+            <div class="modal-body">
+                <uib-accordion>
+                    <div class="panel panel-default" uib-accordion-group>
+                        <div uib-accordion-heading ng-click="pe.p.loan_contract_tmpl_id=1">
+                            <h4 class="panel-title">
+                                <label for="cl-doc" class="radio rounded empt">
+                                    <input type="radio" id="cl-doc" name="cl-doc" value="1" ng-model="pe.p.loan_contract_tmpl_id">
+                                    <span></span>&nbsp;
+                                </label>
+                                <a href>Договор #1</a>
+                            </h4>
+                        </div>
+                        <div class="panel-body">
+                            <div ng-include="'upload-static/contract-tmpl-kl-' + pe.temp.legalType + '-1.html'"></div>
+                            <!--<a ng-href="{{pe.httpDocUrl+'contract-tmpl-kl-1.pdf'}}" id="pdfLend"></a>  ng-click="pe.initDocs('#pdfLend');  -->
+                        </div>
+                    </div>
+                </uib-accordion>
+            </div>
+            <div class="modal-footer text-center">
+                <button class="btn btn-success" ng-click="$dismiss()">Выбрать</button>
+            </div>
+<!--        </div>
+    </div>
+</div>-->
+<!--модалка доков КЛ end -->

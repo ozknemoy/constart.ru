@@ -1,0 +1,20 @@
+<!--include для кнопок поддержать и лайкнуть внизу проекта на малых экранах-->
+<div class="btn-group">
+    <button ui-sref="proj.fin"
+            onclick="yaCounter40097510.reachGoal('mobile-project-click-support-button')"
+            class="btn btn-success btn-lg">Поддержать проект</button>
+
+    <like-button class="btn btn-primary btn-lg"
+                 ng-if="project.isAuthenticated"
+                 like="{{project.proj.like}}"
+                 callback="project.proj.like=1;project.proj.like_count=project.proj.like_count+1">
+        <i class="fa fa-heart"></i>&nbsp;
+        <span class="btn btn-primary-darken btn-lg">{{project.proj.like_count || 0}}</span>
+    </like-button>
+    <login-button class="btn btn-primary btn-lg"
+                 not-if="project.isAuthenticated">
+        <i class="fa fa-heart"></i>&nbsp;
+        <span class="btn btn-primary-darken btn-lg">{{project.proj.like_count || 0}}</span>
+    </login-button>
+
+</div>

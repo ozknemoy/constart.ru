@@ -1,0 +1,437 @@
+@import 'mixin.scss';
+
+.user {
+	background: #fff;
+	border: 1px solid rgba(0,0,0,.2);
+	margin: 0 0 25px 0;
+	padding: 15px 15px 0;
+	display: block;
+	position: relative;
+	@include transition(.3s linear);
+	@include border-radius(4px);
+	&:hover {
+		@include box-shadow(0px 0px 5px 0px rgba(0,0,0,0.2));
+		.user--image span {
+			background: $color-gray-dark;
+		}
+		.buttons {
+			display: block;
+		}
+		.user--confirmed {
+			.label-icon {
+				@include box-shadow(0px 0px 0 1px rgba(0,0,0,0.2));
+			}
+			.label-text {
+				width: auto;
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+	}
+	&:after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+	.border {
+		background: #fff;
+		position: absolute;
+		border-left: 1px solid rgba(0,0,0,.2);
+		border-right: 1px solid rgba(0,0,0,.2);
+		border-bottom: 1px solid rgba(0,0,0,.2);
+		left: 3px;
+		right: 3px;
+		height: 3px;
+		bottom: -4px;
+		@include transition(.3s linear);
+		&:after {
+			background: #fff;
+			content: '';
+			display: block;
+			position: absolute;
+			border-left: 1px solid rgba(0,0,0,.2);
+			border-right: 1px solid rgba(0,0,0,.2);
+			border-bottom: 1px solid rgba(0,0,0,.2);
+			left: 3px;
+			right: 3px;
+			height: 3px;
+			bottom: -4px;
+			@include transition(.3s linear);
+		}
+	}
+	&.main {
+		&:before {
+			background: rgba(0,0,0,.2);
+			content: '';
+			display: block;
+			position: absolute;
+			right: -15px;
+			top: 0;
+			bottom: 0;
+			width: 1px;
+		}
+	}
+	&--list {
+		padding: 50px 0;
+	}
+	&--image {
+		margin: 0 auto 15px;
+		float: left;
+		position: relative;
+		width: 90px;
+		height: 90px;
+		overflow: hidden;
+		display: block;
+		z-index: 1;
+		@include border-radius(90px);
+		// @include box-shadow(0 6px 11px 5px rgba(0,0,0,0.2));
+		img {
+			max-width: 100%;
+			max-height: 100%;
+		}
+		&.add {
+			a {
+
+				display: block;
+			}
+		}
+	}
+	&--descr {
+		text-align: left;
+		padding: 15px 0 0 100px;
+		display: block;
+	}
+	&--name {
+		display: inline-block;
+		@include font(18px, $font_sec);
+		color: $color-bluedark;
+		line-height: 90%;
+		position: relative;
+		text-transform: capitalize;
+		&:after {
+			content: '';
+			clear: both;
+			display: block;
+		}
+		a {
+			color: $color-bluedark;
+		}
+		.buttons {
+			position: absolute;
+			right: 0;
+			top: -7px;
+			display: none;
+			.pen_blue {
+				background-repeat: no-repeat;
+				background-position: center;
+				width: 26px;
+				height: 26px;
+				cursor: pointer;
+			}
+			.delete {
+				cursor: pointer;
+			}
+		}
+	}
+	&--location {
+		border-top: 1px solid rgba(0,0,0,.2);
+	    margin: 15px -15px 0;
+	    text-align: center;
+	    padding: 8px 15px;
+		display: block;
+		color: $color-gray-dark;
+		font-size: 12px;
+		font-family: $ubuntu_light;
+		line-height: 100%;
+		clear: both;
+		.fa {
+			font-size: 125%;
+		}
+	}
+	&--post {
+		display: block;
+		color: $color-gray-dark;
+		font-size: 16px;
+		font-family: $ubuntu;
+		line-height: 100%;
+		margin: 10px 0 0px;
+	}
+	&--title {
+		display: block;
+		color: $color-gray-dark;
+		font-size: 14px;
+		font-family: $ubuntu_light;
+		line-height: 100%;
+		margin: 10px 0 0px;
+	}
+	&--projects {
+		display: inline-block;
+		width: 100%;
+		font-size: 16px;
+		color: $color-bluedark;
+		line-height: 90%;
+	}
+	&--conf {
+		border: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		color: $white;
+		padding: 4px 0 0 20px;
+		height: 40px;
+		width: 40px;
+		overflow: hidden;
+		@include transition(.2s linear);
+		.fa {
+			position: absolute;
+			top: 5px;
+			right: 4px;
+		}
+		&:before {
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-width: 40px 0 0 40px;
+			border-color: transparent transparent transparent $white;
+			content: '';
+			display: block;
+			position: absolute;
+			left: 0;
+			bottom: 0;
+		}
+	}
+	&--send {
+		border: 0;
+		position: absolute;
+		left: 0;
+		top: 0;
+		color: $white;
+		padding: 4px 0 0 20px;
+		height: 40px;
+		width: 40px;
+		overflow: hidden;
+		@include transition(.2s linear);
+		.fa {
+			position: absolute;
+			top: 5px;
+			left: 4px;
+		}
+		&:before {
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-width: 0 0 40px 40px;
+			border-color: transparent transparent $white transparent;
+			content: '';
+			display: block;
+			position: absolute;
+			left: 0;
+			bottom: 0;
+		}
+	}
+	&--confirmed {
+		@include font(14px, $ubuntu_light);
+		display: block;
+		position: absolute;
+		left: 10px;
+		top: 5px;
+		color: white;
+		white-space: nowrap;
+		.label-icon {
+			width: 20px;
+			height: 20px;
+			text-align: center;
+			line-height: 22px;
+			display: block;
+			position: relative;
+			@include border-radius(30px);
+			z-index: 1;
+		}
+		.label-text {
+			position: absolute;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			visibility: hidden;
+			opacity: 0;
+			width: 0;
+			padding: 0 10px 0 30px;
+			@include border-radius(30px);
+			@include transition(.3s linear);
+		}
+	}
+	&--status {
+		display: inline-block;
+		vertical-align: top;
+		@include font(14px, $ubuntu_light);
+		color: white;
+		padding: 0 10px;
+		height: 20px;
+		line-height: 20px;
+		&.confirmed {
+			background: $color-green-light;
+		}
+		&.not-confirmed {
+			background: $color-gray-dark;
+		}
+	}
+	&.add {
+		background: none;
+		border: 0;
+		&:hover {
+			@include box-shadow(none);
+		}
+		input.form-control {
+			display: block;
+		}
+		.user--image {
+			span {
+				background: #e8e8e8;
+				display: block;
+				height: 100%;
+				width: 100%;
+				@include transition(.3s linear);
+				&:after, &:before {
+					background: white;
+					content: '';
+					display: block;
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					@include border-radius(2px);
+				}
+				&:before {
+					width: 34px;
+					height: 2px;
+					margin: -1px 0 0 -17px;
+				}
+				&:after {
+					height: 34px;
+					width: 2px;
+					margin: -17px 0 0 -1px;
+				}
+			}
+		}
+		.user--descr {
+			height: auto;
+			.button_gray {
+				display: inline-block;
+			}
+		}
+	}
+	input.form-control {
+		display: none;
+		margin: 0 0 5px;
+	}
+	
+	// edit user
+	&--edit {
+		@include background-opacity($white, .9);
+		position: absolute;
+		left: 15px;
+		top: 0;
+		right: 15px;
+		bottom: 25px;
+		opacity: 0;
+		text-align: center;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		-ms-flex-align: center;
+		align-items: center;
+		-webkit-box-pack: center;
+		-webkit-justify-content: center;
+		-ms-flex-pack: center;
+		justify-content: center;
+		@include transition(.2s linear);
+		z-index: 2;
+		&:hover {
+			opacity: 1;
+		}
+		.text--edit {
+			margin: 0 10px;
+			display: block;
+			input {
+				text-align: center;
+			}
+		}
+	}
+	&_add {
+		position: relative;
+		margin-bottom: 25px;
+		z-index: 13;
+		&.open {
+			.user_add--wrap {
+				background: $white;
+				width: calc(200% + 30px);
+			}
+			.user_add--title {
+				visibility: hidden;
+				opacity: 0;
+			}
+			.user_add--img {
+				margin: 22px 0 21px 30px;
+			}
+			.project--users--form {
+				display: block;
+			}
+		}
+		&--wrap {
+			border: 1px dashed $color-gray;
+			padding: 30px 5px 23px;
+			cursor: pointer;
+			position: relative;
+			@include transition(.3s linear);
+			&:hover {
+				background: $white;
+			}
+			.project--users--form {
+				display: none;
+				position: absolute;
+				top: 15px;
+				right: 15px;
+				left: 140px;
+			}
+
+		}
+		
+		&--button {
+			text-align: center;
+		}
+		&--img {
+			border: 1px solid $color-gray;
+			width: 90px;
+			height: 90px;
+			margin: 0 auto 21px;
+			position: relative;
+			overflow: hidden;
+			display: block;
+			@include border-radius(90px);
+			img {
+				width: 100%;
+			}
+		}
+		&--title {
+			@include font(16px, $font_sec);
+			color: $color-bluedark;
+			margin-top: 10px;
+			.fa {
+				display: block;
+			}
+		}
+	}
+	// actions
+	&-actions {
+		position: absolute;
+		right: 15px;
+		top: 0;
+		left: 15px;
+		z-index: 1;
+		.user--send {
+
+		}
+	}
+}

@@ -1,0 +1,36 @@
+
+<div class="project_news-view">
+    <div class="project_news-view--content">
+        <div class="row">
+            <div class="col-xs-12 col-mdl-5 col-lg-4 col-lgs-3" ng-if="n.news.image">
+                <div class="project_news-view--img text-center"><img ng-src="{{n.baseImgUrl+n.news.image}}" alt=""></div>
+            </div>
+            <div class="col-xs-12" ng-class="{'col-mdl-7 col-lg-8 col-lgs-9':n.news.image}">
+                <div class="project_news-view--header">
+
+                    <div class="title">{{n.news.header}}</div>
+                    <div class="project_news-view--date">{{n.news.create_date}}</div>
+                </div>
+                <div class="wysiwyg" ng-bind-html="n.news.body"></div>
+            </div>
+        </div>
+        <!--<div class="title">{{n.news.header}}</div>
+        <div class="project_news-view&#45;&#45;date">{{n.news.create_date}}</div>
+        <div class="project_news-view&#45;&#45;img text-center" ng-if="n.news.image">
+            <img ng-src="{{n.baseImgUrl+n.news.image}}" alt="">
+        </div>
+        <div class="wysiwyg" ng-bind-html="n.news.body"></div>-->
+    </div>
+
+    <nav ng-if="n.allCount>1">
+        <ul class="pager">
+            <li ng-click="n.prev()" ng-class="{'pointer-none':n.currentPage<1}">
+                <a href><span aria-hidden="true">&larr;</span>&nbsp;Предыдущая</a>
+            </li>
+            <li><a ui-sref="proj.news.all">К списку</a></li>
+            <li ng-click="n.next()" ng-class="{'pointer-none':n.currentPage > n.allCount-2}">
+                <a href>Следующая&nbsp;<span aria-hidden="true">&rarr;</span></a>
+            </li>
+        </ul>
+    </nav>
+</div>

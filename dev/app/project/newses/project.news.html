@@ -1,0 +1,14 @@
+<div class="row">
+    <ui-view class="ui-view-anim col-xs-12" ng-class="project.r.length?'col-sm-8 col-lgm-7':''"></ui-view>
+    <div class="col-xs-12 col-sm-4 col-lgm-5">
+        <div class="project_news-list--awards">
+            <constart-rewards value="::project.r" limit="4" inner-class="col-lgm-6"></constart-rewards>
+        </div>
+        <div class="text-center" ng-if="project.r.length>4">
+            <button class="btn btn-success" ui-sref="proj.fin">Все вознаграждения</button>
+        </div>
+    </div>
+</div>
+
+<!--кнопка для мобилок-->
+<div class="project_support text-center" ng-include="'app/_common/tmpl/project-support-n-like.html'"></div>

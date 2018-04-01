@@ -1,0 +1,620 @@
+<div class="col-xs-12 pull-right col-sm-3 col-lg-2" style="z-index:1">
+    <div class="project_social inner">
+        <div class="project_social--title">Поделиться в:</div>
+        <div class="project_social--content">
+                <a class="btn btn-xs btn-info" href ng-click="project.openSocial('FB')">
+                    <i class="fa fa-fw fa-facebook"></i>
+                </a>
+                <a class="btn btn-xs btn-primary" href ng-click="project.openSocial('VK')">
+                    <i class="fa fa-fw fa-vk"></i>
+                </a>
+                <a class="btn btn-xs btn-warning" href ng-click="project.openSocial('OK')">
+                    <i class="fa fa-fw fa-odnoklassniki"></i>
+                </a>
+            <!-- AddToAny BEGIN -->
+            <!--<div ng-if="project.isCS">
+                <div class="a2a_kit a2a_kit_size_16 a2a_default_style">
+                    <a class="a2a_button_vk"></a>
+                    <a class="a2a_button_facebook"></a>
+                    <a class="a2a_button_odnoklassniki"></a>
+                    <a class="a2a_button_google_plus"></a>
+                    <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                </div>
+                <script>var a2a_config = a2a_config || {};a2a_config.locale = "ru";</script>
+                <script async src="https://static.addtoany.com/menu/page.js"></script>
+            </div>-->
+            <!-- AddToAny END -->
+        </div>
+    </div>
+</div>
+
+<div uib-tabset active="project.num" type="pills" class="relative tab-pills" style="margin-top:-20px">
+    <!-- КФ  -->
+    <div uib-tab index="0" heading="Вознаграждения" class="item" ng-if="::project.proj.reward_found_sum"><!--r.length-->
+        <div class="awards" ng-if="::project.dataGeted">
+            <div class="row">
+                <reward-free-price class="col-xs-12 col-md-4 col-md-4 col-md-push-8"
+                                   not-if="::project.isEnded"></reward-free-price>
+                <div class="col-xs-12" ng-class="{'col-md-8 col-md-pull-4':!project.isEnded}">
+                    <constart-rewards value="::project.r" inner-class="col-xss-6 col-sm-4 col-md-6 col-mdl-4 col-lg-4 col-lgs-3"></constart-rewards>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- КФ end -->
+
+    <!-- investment -->
+    <div uib-tab index="1" heading="Инвестиции" class="item" ng-if="::project.proj.investments_found_sum">
+        <div class="investment">
+            <div class="row">
+                <div class="col-xs-12 col-lg-7">
+                    <div class="investment--block text-center">
+                        <div class="row text-left">
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="project_details--total">
+                                    <span class="project_details--total--collected">
+                                        {{project.proj.investments_collected_sum||0|thousand}}
+                                        <span class="fa fa-rub"></span></span>
+                                    <span class="project_details--total--sub">инвестировано из&nbsp;
+                                        {{::(project.proj.investments_found_sum|thousand)}}
+                                        <span class="fa fa-rub"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="project_details--time">
+                                    <span class="project_details--time--count"><i
+                                            class="fa fa-clock-o"></i>
+                                        {{::project.temp.remain}}
+                                        <span>{{::project.temp._remain}}</span></span>
+                                    до завершения сбора средств
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="progress_wrap">
+                            <div class="progress">
+                                <div class="progress-bar default" role="progressbar"
+                                     aria-valuemin="0" aria-valuemax="100"
+                                     ng-style="{'width': project.details.investments_percent +'%'}"></div>
+                            </div>
+                            <div class="progress-bar--count"
+                                 ng-style="{'left': project.details.investments_percent_100 +'%'}">
+                                {{::project.details.investments_percent}}%
+                            </div>
+                        </div>
+
+                        <div class="project_details--attract-wrap">
+                            <div class="project_details--attract--item">
+                                <span class="table">
+                                    <span class="table-cell">
+                                        Инициатор продает &nbsp;{{::project.proj.investments_share}}% проекта за
+                                        <span class="project_details--attract--item--title">
+                                            {{::(project.proj.investments_found_sum|thousand)}} <i class="fa fa-rub"></i></span>
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div class="project_details--attract--item">
+                                <span class="table">
+                                    <span class="table-cell">Выпущено долей
+                                        <span class="project_details--attract--item--title">
+                                            {{::(project.proj.investments_share_count|thousand)}}
+                                        </span>
+                                    </span>
+                                </span>
+                            </div>
+
+                            <div class="project_details--attract--item">
+                                <span class="table">
+                                    <span class="table-cell">Куплено долей
+                                        <span class="project_details--attract--item--title">
+                                            {{project.proj.investments_collected||0}}
+                                        </span>
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="project_details--attract--item">
+                                <span class="table">
+                                    <span class="table-cell">Осталось долей
+                                        <span class="project_details--attract--item--title">
+                                            {{project.proj.investments_share_count-project.proj.investments_collected|thousand}}
+                                        </span>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="investment--block text-center">
+                        <div class="title">Общий размер привлекаемых инвестиций:</div>
+                        <div class="investment--price">
+                            {{project.proj.investments_found_sum| myround|thousand}}
+                            <i class="fa fa-rub"></i>
+                        </div>
+
+                        <div class="investment_total col">
+                            <div class="row">
+                                <div class="col-xs-12 col-xs-7">
+                                    <p>Годовая доходность инвестиций:</p>
+                                </div>
+                                <div class="col-xs-12 col-sm-5">
+                                    <span class="investment_total--num">
+                                        <span>{{project.temp.ci_invest_profit_per_year||0 |myround}}</span>%.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="investment_total col">
+                            <div class="row">
+                                <div class="col-xs-12 col-xs-7">
+                                    <p>Своих средств в проекте:</p>
+                                </div>
+                                <div class="col-xs-12 col-sm-5">
+                                    <span class="investment_total--num">
+                                        <span>{{project.proj.own_money||0 |myround | thousand}}</span>
+                                        <i class="fa fa-rub"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="investment_total col">
+                            <div class="row">
+                                <div class="col-xs-12 col-xs-7">
+                                    <p>До выхода на самоокупаемость:</p>
+                                </div>
+                                <div class="col-xs-12 col-sm-5">
+                                    <span class="investment_total--num">
+                                        <span>{{project.proj.found_payback_period||0 |myround}} Месяцев</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="investment_total col">
+                            <div class="row">
+                                <div class="col-xs-12 col-xs-7">
+                                    <p>Срок окупаемости инвестиций:</p>
+                                </div>
+                                <div class="col-xs-12 col-sm-5">
+                                    <span class="investment_total--num">
+                                        <span>{{::project.temp.timeCoverExpend}} Месяцев</span>
+                                        <!--<span>{{project.total.payback_period||0 |myround}} Месяцев</span>-->
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <div class="investment_total col">
+                            <div class="row">
+                                <div class="col-xs-12 col-xs-7">
+                                    <p>Минимальная продаваемая доля:</p>
+                                </div>
+                                <div class="col-xs-12 col-sm-5">
+                                    <span class="investment_total--num">
+                                        <span>{{::project.temp.investments_min_share}}</span>%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="investment_total col">
+                            <div class="row">
+                                <div class="col-xs-12 col-xs-7">
+                                    <p>Стоимость минимальной доли:</p>
+                                </div>
+                                <div class="col-xs-12 col-sm-5">
+                                    <span class="investment_total--num">
+                                        <span>{{::(project.proj.investments_min_cost | myround |thousand)}}</span>
+                                        <i class="fa fa-rub"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="investment_total col">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-7">
+                                    <p>Договор на привлечение инвестиций:</p>
+                                </div>
+                                <div class="col-xs-12 col-sm-5">
+                                    <span class="investment_total--num">
+                                        <span><a class="btn-doc"  download target="_blank"
+                                                 ng-href="{{project.baseDocUrl+'contract-tmpl-ki-'+project.temp.selectLegals+'-'+
+                                                 project.proj.investments_contract_tmpl_id+'.pdf'}}">
+                                            <i class="fa fa-file"></i> Договор инвестиций #{{::project.proj.investments_contract_tmpl_id}}</a></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-lg-5">
+                    <div class="investment--block text-center" ng-if="::project.isEnded">
+                        <div class="alert alert-info">
+                            <i class="icon fa fa-lg"
+                               ng-class="{'fa-thumbs-o-up':project.proj.status==8,
+                                          'fa-thumbs-o-down':project.proj.status==9}"
+                               ng-if="i.status>7"></i>
+                            <span>Сбор средств завершен!</span>
+                        </div>
+                    </div>
+                    <div class="investment--block text-center"
+                         not-if="::project.isEnded"
+                         ng-class="{'pointer-none':
+                        project.proj.investments_share_count <= project.proj.investments_collected}">
+                        <div class="investment_total investment_total--actions col">
+                            <div class="investment_total col">
+                                <div class="row">
+                                    <div class="col-xs-7">
+                                        <p>Введите количество долей:</p><!--ng-change="project.notNumber(project.countin.invest,'invest')"-->
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <div class="qty">
+                                            <div class="qty--input">
+                                                <div class="qty--less"
+                                                     ng-class="{'pointer-none':project.countin.invest<2}"
+                                                     ng-click="project.count('invest','minus')"></div>
+                                                <input type="text" ng-model="project.countin.invest"
+                                                       ozk-number min="1"
+                                                       max="{{project.proj.investments_share_count-project.proj.investments_collected}}"
+
+                                                       class="qty--field text-right form-control">
+                                                <div class="qty--more"
+                                                     ng-class="{'pointer-none':project.countin.invest>project.proj.investments_share_count-project.proj.investments_collected-1}"
+                                                     ng-click="project.count('invest','plus')"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="investment_total col">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-7">
+                                        <p>Размер доли:</p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-5">
+                                        <span class="investment_total--num">
+                                            <span>
+                                                {{project.temp.investments_min_share*project.countin.invest |myround:5:'math'}} %
+                                                <!--{{project.temp.ci_min_sell_part_amount*project.countin.invest||0}}-->
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="investment_total col">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-7">
+                                        <p>Стоимость долей:</p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-5">
+                                        <span class="investment_total--num">
+                                            <span>{{project.proj.investments_min_cost*project.countin.invest||0|myround|thousand}}</span>
+                                            <i class="fa fa-rub"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="investment_total col">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-7">
+                                        <p>Дивиденды в год:</p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-5">
+                                        <span class="investment_total--num">
+                                            <span>
+                                                {{(project.temp.dividendsOnOneSharePerYear*project.countin.invest)|myround:1|thousand}}
+                                            </span>
+                                            <i class="fa fa-rub"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--<div class="investment_total col">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-7">
+                                        <p>Общая доля в проекте:</p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-5">
+                                        <span class="investment_total&#45;&#45;num">
+                                            <span>{{project.proj.investments_share||0}} %</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>-->
+
+                            <div class="investment_total col">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-7">
+                                        <p>Обеспечение заявки</p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-5">
+                                        <span class="investment_total--num">
+                                            <span>{{project.proj.investments_min_cost*project.countin.invest/10||0 | myround:0:'math' | thousand}}</span>
+                                            <i class="fa fa-rub"></i>
+                                            <span class="tip" tooltip-placement="left"
+                                                  tooltip-popup-close-delay='500'
+                                                  uib-tooltip="10% от суммы будет замороженно в качестве гаранта инвестиций.
+                                                   Данная сумма будет разморожена после подтверждения договоренности.">?</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center media">
+                            <label class="checkbox styled">
+                                <input type="checkbox" ng-model="project.checkboxInvest">
+                                <span></span>Принимаю условия
+                                <a ng-href="{{project.baseDocUrl+'oferta-tmpl-ki-1.pdf'}}" target="_blank" download>оферты</a>
+                            </label>
+
+                            <pay-button type="invest" amount="{{project.countin.invest}}" price="{{project.proj.investments_min_cost}}"
+                                    ng-class="{'pointer-none':!project.checkboxInvest}" class="btn btn-success"
+                                        onclick="yaCounter40097510.reachGoal('click-ki-buy-button')">
+                                Инвестировать
+                            </pay-button>
+                        </div>
+
+                        <div class="panel text-left panel-primary">
+                            <div class="panel-heading" ng-click="project.temp.collInvHint=!project.temp.collInvHint">
+                                Порядок инвестирования
+                                <div class="panel-heading-icon">
+                                    <i class="fa fa-angle-down"></i>
+                                </div>
+                            </div>
+                            <div class="panel-body" uib-collapse="!project.temp.collInvHint">
+                                <div class="wysiwyg">
+                                    <ol>
+                                        <li>Ознакомьтесь с показателями проекта и прочитайте Договор на привлечение инвестиций (далее – Договор) </li>
+                                        <li>Введите количество долей, которые вы хотите купить, а  CONSTART посчитает Вам размер вашей доли в %, а также ДИВИДЕНДЫ по ней.</li>
+                                        <li>Прочитайте условия Оферты. Если вас устраивают все показатели сделки, принимайте условия Оферты и жмите кнопку «Инвестировать»</li>
+                                        <li>Мы покажем вам модальное окно, в котором будет отражена суть сделки. <br>Обеспечение заявки – это сумма денежных средств, которую CONSTART «замораживает» на вашем виртуальном счете в качестве подтверждения серьезности ваших намерений, после подписания Договора с Инициатором эта сумма вернется на ваш счет, в случае отказа от подписания Договора она будет удержана</li>
+                                        <li>Если вы согласны оплатить «Обеспечение заявки» жмите кнопку «Оплатить»</li>
+                                        <li>После этого в вашем личном кабинете, в разделе Проекты/Договоренности появиться строка с информацией о совершенной сделке и Договор</li>
+                                        <li>Вы можете еще раз прочитать этот Договор, а после того как проект поддержат достаточное количество пользователей, вы должны будите в течение 5 р.д. подписать его своей простой электронной подписью</li>
+                                        <li>Для подписания Договора, вы должны верифицироваться на CONSTART. <a href ui-sref="userEditor.about({'id':project.userId})" class="btn btn-xs btn-primary">Верифицироваться сейчас</a></li>
+                                        <li>После подписания Договора, вам вернется обеспечительный платеж</li>
+                                        <li>Все дальнейшие финансовые расчеты вы проводите напрямую с Инициатором проекта</li>
+                                    </ol>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- investment end -->
+
+    <!-- Займы -->
+    <div uib-tab index="2" heading="Займы" class="item" ng-if="::project.proj.loan_found_sum">
+        <div class="investment">
+            <div class="row">
+                <div class="col-xs-12 col-lg-7">
+                    <div class="investment--block text-center">
+                        <div class="row text-left">
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="project_details--total">
+                                    <span class="project_details--total--collected">{{project.proj.loan_collected_sum||0|thousand}}
+                                        <span class="fa fa-rub"></span></span>
+                                    <span class="project_details--total--sub">инвестировано из {{::(project.proj.loan_found_sum|thousand)}}
+                                        <span class="fa fa-rub"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="project_details--time">
+                                    <span class="project_details--time--count"><i class="fa fa-clock-o"></i>
+                                        {{::project.temp.remain}}
+                                        <span>{{::project.temp._remain}}</span></span>
+                                    до завершения сбора средств
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="progress_wrap">
+                            <div class="progress">
+                                <div class="progress-bar default" role="progressbar"
+                                     aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+                                     ng-style="{'width': project.details.loan_percent +'%'}"></div>
+                            </div>
+                            <div class="progress-bar--count" ng-style="{'left': project.details.loan_percent_100 +'%'}">
+                                {{::project.details.loan_percent}}%
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="investment--block text-center">
+                        <div class="title">Общий размер займа:</div>
+                        <div class="investment--price">
+                            {{::(project.proj.loan_found_sum | thousand)}}
+                            <i class="fa fa-rub"></i>
+                        </div>
+
+                        <div class="investment_total col">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-7">
+                                    <p>Доход по займу в год:</p>
+                                </div>
+                                <div class="col-xs-12 col-sm-5">
+                                    <span class="investment_total--num">
+                                        <span>{{::(project.proj.loan_interest_rate | myround)}}</span>%.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="investment_total col">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-7">
+                                    <p>Срок займа:</p>
+                                </div>
+                                <div class="col-xs-12 col-sm-5">
+                                    <span class="investment_total--num">
+                                        <span>{{::project.proj.loan_period}} Месяцев</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="investment_total col">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-7">
+                                    <p>Порядок выплаты процентов:</p>
+                                </div>
+                                <div class="col-xs-12 col-sm-5">
+                                    <span class="investment_total--num">
+                                        <span>{{::project.temp.loan_payment_order}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="investment_total col">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-7">
+                                    <p>Порядок погашения основного долга:</p>
+                                </div>
+                                <div class="col-xs-12 col-sm-5">
+                                    <span class="investment_total--num">
+                                        <span>{{::project.temp.loan_main_debt}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="investment_total col">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-7">
+                                    <p>Договор на привлечение займа:</p>
+                                </div>
+                                <div class="col-xs-12 col-sm-5">
+                                    <span class="investment_total--num">
+                                        <span><a class="btn-doc"  download target="_blank"
+                                                 ng-href="{{project.baseDocUrl+'contract-tmpl-kl-'+project.temp.selectLegals+'-'+
+                                                 project.proj.loan_contract_tmpl_id+'.pdf'}}">
+                                            <i class="fa fa-file"></i> Договор займа #{{::project.proj.loan_contract_tmpl_id}}</a></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-xs-12 col-lg-5">
+                    <div class="investment--block text-center" ng-if="::project.isEnded">
+                        <div class="alert alert-info">
+                            <i class="icon fa fa-lg"
+                               ng-class="{'fa-thumbs-o-up':project.proj.status==8,'fa-thumbs-o-down':project.proj.statusproject.proj.status==9}"
+                               ng-if="i.status>7"></i>
+                            <span>Сбор средств завершен!</span>
+                        </div>
+                    </div>
+                    <div class="investment--block text-center"
+                         not-if="::project.isEnded"
+                         ng-class="{'pointer-none': project.details.restForLoan<=0}">
+                        <div class="investment_total investment_total--actions col">
+                            <div class="investment_total col">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-7">
+                                        <p>Сумма предоставляемого займа:</p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-5">
+
+                                        <div class="qty">
+                                        <span class="tip pull-right"
+                                              tooltip-popup-close-delay='500' tooltip-placement="left"
+                                              uib-tooltip="Сумма должна быть кратна 10.">?</span>
+                                            <div class="input-group">
+                                                <input type="text" class="qty--field text-center form-control"
+                                                       ozk-number
+                                                       awnum num-thousand="true" num-thousand-sep=" "
+                                                       ng-change="project.checkLoanSum()"
+                                                       max="{{project.details.restForLoan}}"
+                                                       ng-model="project.countin.loan" ng-model-options="{debounce:1500}">
+                                                <div class="input-group-addon">
+                                                    <i class="fa fa-rub"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="investment_total col">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-7">
+                                        <p>Доход по займу:</p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-5">
+                                        <span class="investment_total--num">
+                                            <span>{{project.countin.loan*project.proj.loan_interest_rate*project.proj.loan_period/1200||0 |myround:0 | thousand}}</span>
+                                            <i class="fa fa-rub"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="investment_total col">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-7">
+                                        <p>Обеспечение заявки:</p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-5">
+                                        <span class="investment_total--num">
+                                            <span>{{project.countin.loan/10 |myround:0 | thousand}}</span>
+                                            <i class="fa fa-rub"></i>
+                                            <span class="tip"
+                                                  tooltip-popup-close-delay='500' tooltip-placement="left"
+                                                  uib-tooltip="10% от суммы будет замороженно в качестве гаранта займа.
+                                                   Данная сумма будет разморожена после подтверждения договоренности.">?</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center media">
+                            <label class="checkbox styled">
+                                <input type="checkbox" ng-model="project.checkboxLoan">
+                                <span></span>Принимаю условия
+                                <a ng-href="{{project.baseDocUrl+'oferta-tmpl-kl-1.pdf'}}"
+                                   target="_blank" download>оферты</a>
+                            </label>
+                            <pay-button class="btn btn-success"
+                                        type="loan"
+                                        amount="{{project.countin.loan}}"
+                                        ng-class="{'pointer-none':!project.checkboxLoan || project.countin.loan<100}"
+                                        onclick="yaCounter40097510.reachGoal('click-kl-buy-button')">
+                                Занять
+                            </pay-button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Поступления денег end скрываю если нет ки-->
+    <div uib-tab index="3" heading="Поступления" class="item" ng-if="project.proj.isCurrentUserProject && project.r.length">
+        <div class="project--operations">
+            <constart-history></constart-history>
+        </div>
+    </div>
+    <!-- Поступления end -->
+
+    <div uib-tab index="4" heading="Договоренности" class="item" ng-if="::project.proj.isCurrentUserProject">
+        <div class="project--operations">
+            <constart-agreement value="project"></constart-agreement>
+        </div>
+    </div>
+</div>

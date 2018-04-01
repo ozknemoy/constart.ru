@@ -1,0 +1,39 @@
+
+<div class="project--users--main">
+    <div class="row masonry" angular-grid="cu.users"
+         ag-id="gallery"
+         page-size="auto" ag-css-grid="true"
+         ag-gutter-size="1">
+        <div class="masonry--item col-xs-12 col-sm-6 col-lg-4 col-lgs-3"
+             dir-paginate="u in cu.usersF=(cu.users | itemsPerPage: 12) track by u.id">
+            <a href try-to-see-user="{{::u.id}}" class="user">
+                <span class="user--conf" ng-if="::u.is_verified">
+                    <i class="fa fa-check"></i>
+                </span>
+                <span class="user--image">
+                    <!--<img src="assets/img/blank-user.png" ozk-img="{{::u.foto}}" base="{{::cu.baseImgUrl}}" alt="">-->
+                    <img ozk-img="{{::u.foto}}"
+                         base="{{::cu.baseImgUrl}}"
+                         sex="{{::u.sex}}"
+                         src="assets/_img/blank_profile--male.png"
+                         f-src="assets/_img/blank_profile--female.png" alt="">
+                </span>
+                <span class="user--descr">
+                    <span style="text-transform: capitalize" class="user--name">
+                        <span>{{::u.name}}</span><span>{{::u.surname}}</span>
+                    </span>
+                    <span class="user--title" ng-if="u.user_status!==[]&&u.user_status!==null">
+                        <span ng-repeat="s in u._status">
+                            {{::s.name}}<span not-if="::$last">,</span>&nbsp;
+                        </span>
+                    </span>
+                </span>
+                <span class="user--location" ng-if="::u.country_id">
+                    <i class="fa fa-map-marker"></i>
+                    {{::u._place}}
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
+<nav ng-click="cu.reloadGrid()" data-dir-pagination-controls></nav>

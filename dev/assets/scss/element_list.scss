@@ -1,0 +1,530 @@
+@import 'mixin.scss';
+
+.elem_list {
+	padding: 30px 0 0;
+	font-size: 0;
+	p.title {
+		margin-bottom: 25px;	
+	}
+	&--item {
+		background: $white;
+		border: 1px solid $color-gray;
+		margin: 0 5px 20px;
+		position: relative;
+		display: block;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		@include transition(.3s linear);
+		@include border-radius(4px);
+		&:after {
+			content: '';
+			display: table;
+			clear: both;
+		}
+		&:hover {
+			background: rgba(255,255,255,1);
+			border: 1px solid #cbcbcb;
+			@include box-shadow(0px 0px 5px 1px rgba(0,0,0,0.2));
+			.elem_list--edit, .elem_list--count, .dropdown, .buttons {
+				opacity: 1;
+			}
+			.elem_list--start {
+				max-width: 300px;
+				.elem_list--start--desc {
+					margin-left: 0;
+					opacity: 1;
+				}
+			}
+		}
+		&--wrap {
+			position: relative;
+			// plate item
+			&.plate {
+				display: inline-block;
+				vertical-align: top;
+				width: 25%;
+				.elem_list--support {
+					left: 30px;
+					right: 30px;
+					bottom: 25px;
+					.btn {
+						display: block;
+					}
+				}
+				.elem_list--published {
+					right: 11px;
+					top: 6px;
+				}
+				.elem_list--img {
+					float: none;
+					width: auto;
+					height: auto;
+					margin: 5px;
+					z-index: 0;
+				}
+				.elem_list--descr {
+					height: auto;
+					overflow: visible;
+					position: static;
+					padding-top: 5px;
+					margin: 0;
+					z-index: 1;
+					.elem_list--title {
+						display: block;
+						margin-right: 0;
+						position: static;
+						&--wrapper {
+							position: absolute;
+							left: 5px;
+							right: 5px;
+							top: -5px;
+							padding-top: 100%;
+						}
+						&--wrap {
+							background: rgba(255,255,255,.8);
+							position: absolute;
+							bottom: 0;
+							left: 0px;
+							right: 0px;
+							font-size: 20px;
+							padding: 10px 15px;
+						}
+					}
+					.elem_list--location {
+						display: block;
+						font-size: 14px;
+						line-height: 120%;
+						margin: 0 15px 10px;
+					}
+					.elem_list--short-descr {
+						margin: 0 15px;
+						height: 80px;
+						overflow: hidden;
+					}
+					&--footer {
+						position: static;
+						margin: 15px 0 0;
+						left: 0;
+						padding: 5px 10px 45px;
+						.project_details--total--collected {
+							//font-size: 12px;
+						}
+						.project_details--total--sub {
+							font-size: 13px;
+						}
+						.project_details--attract--info {
+							margin-right: 0;
+							.progress-bar {
+								border-radius: 1em;
+							}
+						}
+						.project_details--time {
+							font-size: 14px;
+							span {
+								font-size: 13px;
+							}
+						}
+						.elem_list--users {
+							font-size: 14px;
+						}
+						&--item {
+							padding: 0 0 0 30px;
+							display: block;
+							margin: 0;
+							&:before {
+								display: none;
+							}
+						}
+					}
+				}
+			}
+		}
+
+	}
+	&--img {
+		border: 1px solid $color-gray;
+		float: left;
+		width: 200px;
+		height: 200px;
+		position: relative;
+		overflow: hidden;
+		display: block;
+		margin:  5px 30px 5px 5px;
+		@include border-radius(4px);
+		z-index: 1;
+		img {
+			width: 100%;
+		}
+	}
+	&--start {
+		background: $color-bluedark;
+		position: absolute;
+		left: 10px;
+		top: 10px;
+		height: 33px;
+		max-width: 33px;
+		overflow: hidden;
+		@include border-radius(33px);
+		z-index: 2;
+		@include transition(all 500ms cubic-bezier(0.175, 0.885, 0.335, 1));
+		&.win {
+			background: $white;
+		}
+		&:after {
+			content: '';
+			display: table;
+			clear: both;
+		}
+		&--icon {
+			@include background-image('rocket_min', $size: 15px 23px, $repeat: no-repeat, $position: center, $color: $color-bluedark);
+			width: 30px;
+			height: 30px;
+			display: inline-block;
+			vertical-align: top;
+			position: relative;
+			z-index: 1;
+			.win & {
+				@include background-image('cup_min1', $size: 19px 23px, $repeat: no-repeat, $position: center, $color: $white);
+			}
+		}
+		&--desc{
+			display: inline-block;
+			opacity: 0;
+			margin-left: -100px;
+			font-size: 14px;
+			color: white;
+			white-space: nowrap;
+			line-height: 33px;
+			padding: 0 10px 0 0;
+			vertical-align: top;
+			@include transition(all 500ms cubic-bezier(0.175, 0.885, 0.335, 1));
+			.win & {
+				color: $color-bluedark;
+			}
+		}
+	}
+	&--support {
+		position: absolute;
+		right: 20px;
+		bottom: 33px;
+		z-index: 1;
+		font-size: 12px;
+		text-align: center;
+		color: $color-bluedark;
+		span {
+			font-family: $ubuntu_bold;
+		}
+	}
+	&--descr {
+		margin: 0 0 0 230px;
+		padding: 15px 0 0;
+		position: relative;
+		height: 210px;
+		display: block;
+		.project_details--total--collected, .project_details--total--sub {
+			font-size: 18px;
+			color: $color-bluedark;
+			display: inline-block;
+			vertical-align: top;
+			margin-right: 5px;
+			.fa {
+				font-size: .9em;
+			}
+		}
+		.project_details--attract--info {
+			margin: 5px 160px 10px 0;
+			display: block;
+			.completed & {
+				margin-right: 75px;
+			}
+		}
+		.project_details--attract--total {
+			display: block;
+			.progress-bar {
+				border-radius: 1em;
+			}
+		}
+		.progress_wrap {
+			display: block;
+			.progress {
+				display: block;
+			}
+		}
+		.project_details--time {
+			display: inline-block;
+			vertical-align: top;
+		}
+		.elem_list {
+			&--title {
+				@extend .title;
+				font-size: 24px;
+				margin-right: 30px;
+			}
+		}
+		.elem_list--short-descr {
+			position: relative;
+			display: block;
+			margin: 5px 30px 0 0;
+		}
+		p {
+			font-size: 14px;
+			line-height: 120%;
+			color: $color-bluedark;
+			margin: 5px 0 0 0;
+		}
+		&--footer {
+			background: #f2f2f2;
+			border-top: 1px solid $color-gray;
+			position: absolute;
+			left: -230px;
+			bottom: 0;
+			right: 0;
+			display: block;
+			padding: 5px 0 8px 230px;
+			&--wrap {
+				font-size: 12px;
+				display: block;
+			}
+			&--item {
+				display: inline-block;
+				vertical-align: top;
+				color: $color-bluedark;
+				position: relative;
+				&.foot1 {
+					padding: 0 0 0 30px;
+					margin-right: 10px;
+					.icon {
+						position: absolute;
+						left: 0;
+						top: 0;
+						width: 20px;
+						height: 20px;
+						@include background-cover;
+						&.fa {
+							top: 4px;
+							left: 6px;
+						}
+					}
+					span {
+						display: inline-block;
+						font-weight: bold;
+						font-size: 1rem;
+						margin: 0 0 -1px;
+					}
+				}
+				&.foot2 {
+					padding-left: 15px;
+					&:before {
+						background: $color-bluedark;
+						content: '';
+						height: 18px;
+						position: absolute;
+						left: 5px;
+						top: 3px;
+						width: 1px;
+						width: 1px;
+					}
+					span {
+						display: inline-block;
+						font-weight: bold;
+						font-size: 1rem;
+						margin: 0 0 -1px;
+					}
+				}
+				&.foot3 {
+					padding-left: 15px;
+					margin-left: 10px;
+					&:before {
+						background: $color-bluedark;
+						content: '';
+						height: 18px;
+						position: absolute;
+						left: 0px;
+						top: 3px;
+						width: 1px;
+						width: 1px;
+					}
+					span {
+						display: inline-block;
+						font-weight: bold;
+						font-size: 1rem;
+						margin: 0 0 -1px;
+					}
+				}
+				
+			}
+			&-it {
+				font-size: 16px;
+				display: block;
+				color: $color-bluedark;
+				margin: 5px 0;
+				.fa {
+					font-size: 1.1em;
+					margin-right: 3px;
+				}
+			}
+		}
+	}
+	&--users {
+		display: inline-block;
+		vertical-align: top;
+		font-size: 16px;
+    	color: $color-bluedark;
+		position: relative;
+		margin: -2px 0 3px 0;
+		+ .elem_list--location {
+			margin: -2px 0 0;
+		}
+	}
+	&--location {
+		@include font(16px, $ubuntu_light);
+    	color: $color-gray-dark;
+    	display: inline-block;
+	}
+	&--published {
+		position: absolute;
+		right: 5px;
+		top: 0;
+		padding: 0;
+		overflow: hidden;
+		color: $white;
+		font-size: 12px;
+		padding: 5px 10px;
+		@include border-radius(0px 4px 0px 4px);
+		z-index: 1;
+	}
+	&--actions {
+		background: $color-info;
+		position: absolute;
+		right: 5px;
+		bottom: 0;
+		padding: 0;
+		overflow: hidden;
+		@include border-radius(4px 0 4px 0);
+		z-index: 1;
+		a {
+			color: $white;
+			display: inline-block;
+			padding: 5px 10px;
+			@include transition(.2s linear);
+			&:hover {
+				background: $color-danger;
+			}
+		}
+		// float: right;
+		// width: 160px;
+		// text-align: right;
+		// margin-right: 30px;
+		// .price {
+		// 	font-size: 14px;
+		// 	padding-top: 10px;
+		// 	span {
+		// 		@include font(25px, $font_sec);
+		// 		color: $color-blue;
+		// 		display: inline-block;
+		// 		vertical-align: middle;
+		// 	}
+		// 	i {
+		// 		vertical-align: baseline;
+		// 	}
+		// }
+		.dropdown {
+			position: absolute;
+			right: 10px;
+			bottom: 10px;
+			opacity: 0;
+			@include transition(.6s linear);
+		}
+		.elem_list--edit {
+			padding: 20px 20px 0 0;
+			opacity: 0;
+			@include transition(.6s linear);
+		}
+		i.icon.pen_blue {
+			background-position: center;
+			background-repeat: no-repeat;
+			width: 26px;
+			height: 26px;
+			cursor: pointer;
+		}
+		.elem_list--count {
+			background: #adadad;
+			position: absolute;
+			bottom: 0;
+			right: 0;
+			height: 30px;
+			color: white;
+			font-size: 22px;
+			line-height: 30px;
+			padding: 0 10px;
+			opacity: 0;
+			@include transition(.6s linear);
+			&:before {
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-width: 15px 10px 15px 0;
+				border-color: transparent #adadad transparent transparent;
+				content: '';
+				display: block;
+				position: absolute;
+				left: -10px;
+				top: 0;
+			}
+			.arr_t {
+				margin-top: 8px;
+			}
+		}
+		.buttons {
+			position: absolute;
+			right: 10px;
+			bottom: 10px;
+			opacity: 0;
+			@include transition(.3s linear);
+		}
+	}
+	.project_details--time {
+		font-size: 20px;
+		color: $color-bluedark;
+		margin: -5px 0 5px;
+		display: inline-block;
+		vertical-align: top;
+		span {
+			font-size: 16px;
+			color: $color-bluedark;
+			margin: -5px 20px 0 0;
+			vertical-align: middle;
+		}
+		i {
+			margin: 0 4px 0 0;
+		}
+	}
+	&--short-descr {
+		p {
+			margin: 0;
+		}
+	}
+
+	
+}
+
+// catalog view buttons
+.catalog_view {
+	margin-top: 10px;
+	position: relative;
+	z-index: 16;
+	&--list {
+		margin-top: 0;
+	}
+	&--item {
+		&.active {
+			background: $color-bluedark;
+			color: $white;
+		}
+	}
+}
+.catalog_view--filter {
+	margin-top: 15px;
+	margin-right: 5px;
+}

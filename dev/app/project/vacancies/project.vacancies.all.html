@@ -1,0 +1,48 @@
+
+<div class="project_vacancy-list">
+    <div class="form-group" ng-if="v.ownProj==1">
+        <a class="btn btn-success" ui-sref="proj.vacancies.editor({'id_vacancy':'new'})">
+            <i class="fa fa-newspaper-o" aria-hidden="true"></i>&nbsp;Добавить вакансию
+        </a>
+    </div>
+
+
+    <ul class="project_vacancy-list--wrap">
+        <li class="project_vacancy-list--item"
+            dir-paginate="one in v.vac|itemsPerPage: 10 track by one.id">
+
+
+                <div class="project_vacancy-list--link">
+                    <a ui-sref="proj.vacancies.one({'id_vacancy':one.id})">
+                        <span class="project_vacancy-list--body">
+                            <span class="project_vacancy-list--title">{{::one.header}}</span>
+                            <login-button class="btn btn-sm btn-success" ng-if="!v.isAuth && v.ownProj!=1">
+                                Авторизуйтесь, чтобы откликнуться на вакансию
+                            </login-button>
+                            <button ng-if="v.isAuth && v.ownProj!=1"
+                               value="{vacId:one.id}"
+                               modal-open="app/_common/modals/vac-email-to-user.html"
+                               class="btn btn-sm btn-success">Откликнуться</button>
+                        </span>
+                    </a>
+                </div>
+                <div class="project_vacancy-list--footer">
+                    <span class="project_vacancy-list--count">Откликов:&nbsp;{{::one.response_count}}</span>
+                    <div class="project_vacancy-list--actions" ng-if="::v.ownProj==1">
+                        <button ui-sref="proj.vacancies.editor({'id_vacancy':one.id})">
+                            <i class="fa fa-fw fa-pencil"></i>
+                        </button>
+                        <confirm-button text-body="Действительно удалить вакансию?"
+                                        callback="v.delete(one.id)">
+                            <button><i class="fa fa-fw fa-times"></i></button>
+                        </confirm-button>
+                    </div>
+                </div>
+
+
+        </li>
+    </ul>
+
+    <nav scroll-to=".project_header--mob" aria-label="Page navigation" data-dir-pagination-controls></nav>
+
+</div>

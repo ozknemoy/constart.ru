@@ -1,0 +1,24 @@
+<button type="button" class="close" ng-click="$dismiss()">
+    <span aria-hidden="true">&times;</span>
+</button>
+<button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
+    <span aria-hidden="true">&times;</span></button>
+<div class="modal-header text-center">
+    <div class="title">Внимание</div>
+</div>
+<div class="modal-body text-center">
+    <p>Вы уверены, что хотите удалить юридическое лицо?</p>
+</div>
+<div class="modal-footer text-center">
+    <button class="btn btn-success btn-animated"
+            ng-class="{'animated':le.pend}"
+            ng-disabled="le.pend"
+            ng-click="le.deleteLegals();"
+            data-dismiss="modal" aria-label="Close">
+        <span class="btn-visible">Да, удалить</span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+    <button class="btn btn-danger" ng-click="$dismiss()" aria-label="Close">
+        Отменить
+    </button>
+</div>

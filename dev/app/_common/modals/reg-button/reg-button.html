@@ -1,0 +1,134 @@
+
+<button class="close" ng-click="$dismiss()"><span>&times;</span></button>
+
+<!--<div class="modal-header">Регистрация</div>-->
+
+<div class="modal-header">
+    <div class="title" not-if="lg.header">Регистрация</div>
+    <ul class="nav nav-tabs modal-header-login" ng-if="lg.header">
+        <li >
+            <a ng-click="$dismiss()"><login-button href>Войти</login-button></a>
+        </li>
+        <li class="active">
+            <a data-hook="reg">Регистрация</a>
+        </li>
+    </ul>
+</div>
+
+<form name="lg.registerForm">
+    <div class="modal-body" oc-lazy-load="['https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit&hl=ru']">
+        <div ng-if="!lg.regSuccess">
+            <p>Мы заботимся о вашей безопасности, поэтому рекомендуем использовать при регистрации
+                ваши настоящие имя и фамилию.</p>
+            <div class="form-group">
+                <div class="input-group"
+                     ng-class="{'has-error':(lg.registerForm.email.$error.required||
+                               lg.registerForm.email.$error.email)&&lg.registerForm.email.$touched}">
+                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                    <input id="register_email" ng-model="lg.register_email" class="form-control" autofocus
+                           type="email" placeholder="E-Mail" required name="email">
+                </div>
+            </div>
+            <div class="alert alert-warning">
+                <i class="fa fa-info "></i>&nbsp;
+                Адрес электронной почты является вашим логином и в дальнейшем изменить его нельзя.
+            </div>
+            <div class="alert alert-danger"
+                 ng-if="lg.registerForm.email.$touched && (lg.registerForm.email.$error.required||
+                 lg.registerForm.email.$error.email)">Введите правильный E-Mail
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group"
+                         ng-class="{'has-error':lg.registerForm.name.$error.required && lg.registerForm.name.$touched}">
+                        <input id="register_name" ng-model="lg.register_name" class="form-control"
+                               type="text" placeholder="Имя" required name="name">
+                    </div>
+                    <div class="alert alert-danger"
+                         ng-if="lg.registerForm.name.$touched && lg.registerForm.name.$error.required">Введите имя</div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group"
+                         ng-class="{'has-error':lg.registerForm.surname.$error.required && lg.registerForm.surname.$touched}">
+                        <input id="register_surname" ng-model="lg.register_surname" class="form-control"
+                               type="text" placeholder="Фамилия" required name="surname">
+                    </div>
+                    <div class="alert alert-danger"
+                         ng-if="lg.registerForm.surname.$touched && lg.registerForm.surname.$error.required">Введите фамилию</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group"
+                     ng-class="{'has-error':(lg.registerForm.phone.$error.required||
+                          lg.registerForm.phone.$error.mask) && lg.registerForm.phone.$touched}">
+                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                    <input id="register_phone" ng-model="lg.register_phone" class="form-control"
+                           type="text" required ui-mask="+7(999) 999 99 99" name="phone">
+                </div>
+            </div>
+            <div class="alert alert-danger"
+                 ng-if="lg.registerForm.phone.$touched && (lg.registerForm.phone.$error.required||
+                      lg.registerForm.phone.$error.mask)">Введите правильный телефон</div>
+
+            <div class="form-group">
+                <div class="input-group" ng-class="{'has-error':(lg.registerForm.password.$error.required||
+                     lg.registerForm.password.$error.pattern)&& lg.registerForm.password.$touched}">
+                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                    <input id="register_password" ng-model="lg.register_password" class="form-control"
+                           type="password" placeholder="Пароль" required name="password"
+                           pattern="^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{6,}$">
+                </div>
+            </div>
+            <div class="alert"
+                 ng-class="lg.registerForm.password.$touched &&
+                 (lg.registerForm.password.$error.required||
+                 lg.registerForm.password.$error.pattern)?'alert-danger':'alert-warning'">
+                <i class="fa fa-info "></i>&nbsp;
+                Минимальная длина пароля 6 символов. Пароль должен состоять из комбинации цифр и латинских букв, должен включать в себя большие и маленькие буквы.
+            </div>
+
+            <div class="form-group captcha text-center">
+                <div vc-recaptcha
+                     size="compact" class="text-center"
+                     theme="'light'"
+                     key="lg.key"
+                     ng-model="lg.recaptchaResponse"
+                     on-success="lg.setResponse(response)"
+                     on-expire="lg.cbExpiration()"></div>
+            </div>
+            <div class="alert alert-warning" ng-show="lg.registerForm.$error.recaptcha">
+                <i class="fa fa-info "></i>&nbsp;Подтвердите что вы не робот
+            </div>
+        </div>
+
+        <div class="alert alert-info" ng-if="lg.regSuccess">
+            <i class="fa fa-info"></i>
+            Для завершения регистрации подтвердите свой email.<br>
+            Если письмо не пришло, проверьте папку со спамом.
+        </div>
+    </div>
+
+    <div class="modal-footer" ng-if="!lg.regSuccess">
+        <div class="form-group">
+            <button class="btn btn-success btn-block btn-animated"
+                    onclick="yaCounter40097510.reachGoal('header-click-registration-register-button-click')"
+                    ng-click="lg.signup()"
+                    ng-class="{'animated':lg.pending}"
+                    ng-disabled="lg.registerForm.$invalid||lg.pending">
+                <span class="btn-visible">Регистрация</span>
+                <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+            </button>
+        </div>
+        <p class="alert alert-info">
+            <i class="fa fa-exclamation-triangle"></i>
+            Нажимая кнопку «Регистрация», вы соглашаетесь с условиями
+            <a ng-href="{{lg.baseDocUrl+'user-agreement.pdf'}}" target="_blank" download>
+                Пользовательского соглашения</a>
+        </p>
+    </div>
+</form>
+
+

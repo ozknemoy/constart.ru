@@ -1,0 +1,46 @@
+<div class="modal-body" ng-swipe-left=Lightbox.nextImage() ng-swipe-right=Lightbox.prevImage()>
+
+    <button type="button" class="close" aria-hidden="true" ng-click="$dismiss()"><span aria-hidden="true">×</span></button>
+    <br>
+    <div class="row" style="">
+        <div class="col-sm-8" style="position:relative;">
+            <div class="ekko-lightbox-container">
+                <div class=lightbox-image-container>
+                    <img ng-if=!Lightbox.isVideo(Lightbox.image) lightbox-src={{Lightbox.imageUrl}} class="img-responsive">
+
+                    <div ng-if=Lightbox.isVideo(Lightbox.image) class="embed-responsive embed-responsive-16by9">
+                        <!--пока не нужно-->
+                        <!--<video ng-if=!Lightbox.isSharedVideo(Lightbox.image)
+                               lightbox-src={{Lightbox.imageUrl}} controls
+                               autoplay></video>-->
+                        <embed-video ng-if=Lightbox.isSharedVideo(Lightbox.image)
+                                     lightbox-src={{Lightbox.imageUrl}}
+                                     ng-href={{Lightbox.imageUrl}}
+                                     iframe-id=lightbox-video class=embed-responsive-item>
+                            <a ng-href={{Lightbox.imageUrl}}>Watch video</a></embed-video>
+                    </div>
+                    <div class=lightbox-image-caption ng-if="Lightbox.imageCaption"><span>{{Lightbox.imageCaption}}</span></div>
+                </div>
+
+                <div class="ekko-lightbox-nav-overlay" style="display: block;" ng-if="Lightbox.images.length>1">
+                    <a href="#" class="glyphicon glyphicon-chevron-left" ng-click=Lightbox.prevImage()></a>
+                    <a href="#" class="glyphicon glyphicon-chevron-right" ng-click=Lightbox.nextImage()></a>
+                </div>
+            </div>
+        </div><!--style="border: 2px dashed red;bottom:0;left:0;position:absolute;top:0;width:100%;height: 100%"-->
+        <div class="col-sm-4" >
+            <div style="overflow-y:auto;max-height: 100%">
+                <h4>контейнер комментов</h4><br>
+                <p>красивый заголовок</p>
+                <p>красивые кнопочки</p>
+                <p>и непонятный текст</p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at atque dicta facere fugiat illum ipsum ut! Beatae laboriosam laudantium omnis. Ab amet asperiores cum dolores esse est, et ex facilis fuga hic inventore iste itaque laborum mollitia neque nihil odio officia omnis
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at atque dicta facere fugiat illum ipsum ut! Beatae laboriosam laudantium omnis. Ab amet asperiores cum dolores esse est, et ex facilis fuga hic inventore iste itaque laborum mollitia neque nihil odio officia omnis
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at atque dicta facere fugiat illum ipsum ut! Beatae laboriosam laudantium omnis. Ab amet asperiores cum dolores esse est, et ex facilis fuga hic inventore iste itaque laborum mollitia neque nihil odio officia omnis
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto at atque dicta facere fugiat illum ipsum ut! Beatae laboriosam laudantium omnis. Ab amet asperiores cum dolores esse est, et ex facilis fuga hic inventore iste itaque laborum mollitia neque nihil odio officia omnis
+
+            </div>
+             </div>
+    </div>
+
+</div>

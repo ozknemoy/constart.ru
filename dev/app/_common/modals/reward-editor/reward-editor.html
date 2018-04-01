@@ -1,0 +1,238 @@
+
+
+<!--модалка создания и редактирования вознаграждения-->
+<button type="button" class="close" ng-click="$dismiss()"><span aria-hidden="true">&times;</span></button>
+<div class="modal-header">
+    <div class="awards_modal--title" ng-if="!pe.temp.editableReward">Создать вознаграждение</div>
+    <div class="awards_modal--title" ng-if="pe.temp.editableReward">Редактировать вознаграждение</div>
+</div>
+<div class="modal-body">
+    <form name="pe.rewardForm">
+        <div class="pe.awards_modal">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                    <div class="awards_modal--img text-center form-group">
+                        <img src="assets/img/blank_image--small.png" alt="" ng-if="!pe.tempReward.cover">
+                        <img ng-src="{{pe.baseImgUrl+pe.tempReward.cover}}" alt="" ng-if="pe.tempReward.cover">
+                    </div>
+                    <div class="form-group">
+                        <label class="btn btn-info btn-block btn-file btn-animated"
+                               ng-class="{'animated':pe.pend}"
+                               ng-disabled="pe.pend">
+                            <input type="file" class="ng-hide"
+                                   ng-model="pe.tempReward.cover_temp"
+                                   name="cover_temp"
+                                   accept=".jpeg,.jpg,.png"
+                                   ngf-select="pe.uploadRewards($file,'cover')"
+                                   ngf-max-size="2MB"
+                                   ngf-model-invalid="errorReward_foto">
+                            <input type="hidden" ng-model="pe.tempReward.cover" name="cover">
+                            <span class="btn-visible"><i class="fa fa-photo"></i> Загрузить фото</span>
+                            <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+                        </label>
+                    </div>
+                    <div class="alert alert-danger" ng-if="pe.rewardForm.cover_temp.$error.maxSize">
+                        <small>Вы пытаетесь загрузить файл размером {{errorReward_foto.size / 1000000|number:1}}MB .
+                            максимально допустимый размер 2M</small>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-8">
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Название" name="name"
+                               pattern="(.){2,160}" required
+                               ng-model="pe.tempReward.name">
+                        <div class="alert alert-danger"
+                             ng-if="pe.rewardForm.name.$touched &&
+                                      (pe.rewardForm.name.$error.required || pe.rewardForm.name.$error.pattern)">
+                            <small>Введите название</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                                <textarea rows="4" class="form-control" placeholder="Описание" name="description"
+                                          pattern="(.|\n)[^><]{2,1000}" required
+                                          ng-model="pe.tempReward.description"></textarea>
+                        <div class="alert alert-danger"
+                             ng-if="pe.rewardForm.description.$touched &&
+                                      (pe.rewardForm.description.$error.required || pe.rewardForm.description.$error.pattern)">
+                            <small>Введите описание. От 2 до 1000 символов. </small>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Условия доставки</label>
+                        <ui-select class="select"
+                                   append-to-body="false"
+                                   search-enabled="false"
+                                   on-select="pe.checkTerms()"
+                                   ng-model="pe.tempReward.delivery_rules">
+                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="o.id as o in pe.terms track by $index">
+                                <span>{{::o.name}}</span>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div ng-if="pe.tempReward.delivery_rules!=2">
+                        <label>Период доставки</label>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group datepickerAng">
+                                        <span class="input-group-addon">С</span>
+                                        <input type="date" class="form-control datepicker text-center"
+                                               uib-datepicker-popup name="dateOne"
+                                               ng-model="pe.tempReward.send_date_temp_from" required
+                                               datepicker-options="pe.dateOptions"
+                                               ng-change="pe.changeMinDate()"
+                                               is-open="open1" show-button-bar="false"
+                                               ng-click="open1 = true">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group datepickerAng">
+                                        <span class="input-group-addon">По</span>
+                                        <input type="date" class="form-control datepicker text-center"
+                                               uib-datepicker-popup name="dateTwo"
+                                               ng-model="pe.tempReward.send_date_temp_to" required
+                                               datepicker-options="pe.dateOptionsTwo"
+                                               is-open="open2" show-button-bar="false"
+                                               ng-click="open2 = true">
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-danger"
+                             ng-if="(pe.rewardForm.dateOne.$touched && (pe.rewardForm.dateOne.$error.required || pe.rewardForm.dateOne.$error.date))
+                                    || (pe.rewardForm.dateTwo.$touched && (pe.rewardForm.dateTwo.$error.required || pe.rewardForm.dateTwo.$error.date))">
+                            <small>Введите дату</small>
+                        </div>
+                        <div class="alert alert-danger" ng-if="pe.dateError">
+                            <small>Не корректный интервал дат</small>
+                        </div>
+                    </div>
+                    <!--долько если требуется доставка-->
+                    <div ng-if="pe.tempReward.delivery_rules==0 || pe.tempReward.delivery_rules==1 || pe.tempReward.delivery_rules==4">
+                        <div class="form-group">
+                            <label class="checkbox default">
+                                <input type="checkbox" ng-model="pe.tempReward.has_pickup">
+                                <span></span>
+                                <i></i>Доступен самовывоз
+                            </label>
+                        </div>
+
+                        <div ng-if="pe.tempReward.has_pickup">
+                            <div id="pickup" class="collapse_item collapse" uib-collapse="!pe.tempReward.has_pickup">
+                                <div class="form-group">
+                                    <label>Телефон</label>
+                                    <input type="text" class="form-control" name="phone"
+                                           ui-mask="+7(999) 999 99 99"
+                                           ng-model="pe.tempReward.phone">
+                                    <div class="alert alert-danger"
+                                         ng-if="pe.rewardForm.phone.$touched &&
+                                         (pe.rewardForm.phone.$error.required|| pe.rewardForm.phone.$error.mask)">
+                                        Введите правильный телефон</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Адрес и условия самовывоза</label>
+                                    <textarea rows="4" class="form-control"
+                                              name="pickup_address"
+                                              pattern="(.|\n)[^<>]{10,2000}" required
+                                              ng-model="pe.tempReward.pickup_address"></textarea>
+                                    <div class="alert alert-danger"
+                                         ng-if="pe.rewardForm.pickup_address.$touched &&
+                                      (pe.rewardForm.pickup_address.$error.required || pe.rewardForm.pickup_address.$error.pattern)">
+                                        <small>Введите адрес. От 10 до 2000 символов. Запрещены символы < и ></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-md-6">
+                            <div class="form-group">
+                                <label for="">Цена</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control text-right"
+                                           required
+                                           ozk-number
+                                           max="100000000000"
+                                           ng-model="pe.tempReward.price">
+                                    <span class="input-group-addon"><i class="fa fa-rub"></i></span>
+                                </div>
+                            </div>
+                            <div class="alert alert-danger"
+                                 ng-if="pe.rewardForm.price.$touched && pe.rewardForm.price.$error.required">
+                                <small>Введите цену</small>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-6">
+                            <label>Количество</label>
+                            <div class="form-group">
+                                <div class="spinner-wrap">
+                                    <div id="amount">
+                                        <div class="input-group spinner" ng-class="{'pointer-none':pe.temp.rewardUnlim}">
+                                            <input type="text" class="form-control"
+                                                   required
+                                                   ozk-number
+                                                   max="1000000"
+                                                   ng-model="pe.tempReward.sell_count">
+                                            <div class="input-group-btn-vertical">
+                                                <div class="btn btn-default"
+                                                     ng-click="pe.countRewardUp()">
+                                                    <i class="fa fa-caret-up"></i></div>
+                                                <div class="btn btn-default" ng-click="pe.countRewardDown()">
+                                                    <i class="fa fa-caret-down"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                &nbsp;&nbsp;
+                                <label class="checkbox default">
+                                    <input type="checkbox" ng-click="pe.temp.rewardUnlim=!pe.temp.rewardUnlim;
+                                                       pe.tempReward.sell_count=0">
+                                    <span></span>
+                                    <i></i>неограниченно
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</div><!--<pre>{{pe.rewardForm.$error|json}}</pre>-->
+<div class="modal-footer text-center">
+    <button class="btn btn-danger btn-animated"
+            ng-if="pe.temp.editableReward"
+            ng-disabled="pe.pend"
+            ng-click="pe.delReward(pe.tempReward)"
+            ng-class="{'animated':pe.pend}">
+        <span class="btn-visible">Удалить</span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+
+    <button class="btn btn-success btn-animated"
+            ng-if="!pe.temp.editableReward"
+            ng-disabled="pe.rewardForm.$invalid || pe.pend"
+            ng-click="pe.createReward(pe.tempReward)"
+            ng-class="{'animated': pe.pend}">
+        <span class="btn-visible">Создать</span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+    <button class="btn btn-success btn-animated"
+            ng-if="pe.temp.editableReward"
+            ng-disabled="pe.rewardForm.$invalid || pe.pend"
+            ng-click="pe.updateRewards(pe.tempReward)"
+            ng-class="{'animated':pe.pend}">
+        <span class="btn-visible">Редактировать</span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+
+</div>
+

@@ -1,0 +1,73 @@
+
+<div class="logo-wrap">
+    <menu-toggle class="hamburger hamburger--arrow-r">
+        <div class="hamburger-box">
+            <div class="hamburger-inner"></div>
+        </div>
+    </menu-toggle>
+    <a ui-sref="home" class="logo-link">
+        <span class="logo-w"></span>
+        <span class="logo-d"></span>
+    </a>
+</div>
+<div class="nav_wrap">
+    <a ui-sref="memorandumOdvf" class="lg-odvf" ng-if="nb.isOdvf">
+        ОДВФ
+    </a>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-nav">
+                <div class="nav_profile">
+                    <div class="nav_profile--links" ng-class="{open:nb.openmenu}" uib-dropdown is-open="status.isopen">
+                        <login-button class="btn btn-success"
+                              not-if="::nb.isAuthenticated"
+                            onclick="yaCounter40097510.reachGoal('header-click-login-button')">
+                            <i class="fa fa-lg fa-sign-in"></i>&nbsp;Войти
+                        </login-button>
+
+                        <!--<reg-light-button ng-cloak class="btn btn-primary ml5"
+                                          text="Введите адрес эл.почты:"
+                                      ng-if="::(!nb.isAuthenticated && nb.isOdvf)"
+                                      onclick="yaCounter40097510.reachGoal('header-click-registration-button')">
+                            <i class="fa fa-lg fa-user-plus"></i>&nbsp;Зарегистрироваться
+                        </reg-light-button>--><!-- && nb.isCS-->
+                        <reg-button ng-cloak class="btn btn-primary ml5"
+                                          text="Введите адрес эл.почты."
+                                          ng-if="::(!nb.isAuthenticated)"
+                                          onclick="yaCounter40097510.reachGoal('header-click-registration-button')">
+                            <i class="fa fa-lg fa-user-plus"></i>&nbsp;Зарегистрироваться
+                        </reg-button>
+
+                        <div class="btn_menu" type="button"
+                             data-hook="open-logout"
+                             uib-dropdown-toggle
+                             ng-if="::nb.isAuthenticated">
+                            <span>{{nb.lS.data.name}}</span>&nbsp;
+                            <div class="btn_menu--img">
+                                <!-- никаких bind-once!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+                                <!--если есть foto64-->
+                                <img ng-src="{{nb.lS.data.foto64}}" ng-if="nb.lS.data.foto64" alt="">
+                                <!--если еще нет foto64-->
+                                <img ozk-img="{{nb.lS.data.foto}}"
+                                     base="{{::nb.baseImgUrl}}"
+                                     sex="{{nb.lS.data.sex}}"
+                                     src="assets/_img/blank_profile--male-40px.png"
+                                     f-src="assets/_img/blank_profile--female-40px.png" alt="">
+                            </div>
+                        </div>
+                        <div class="dropdown-profile" uib-dropdown-menu ng-if="nb.isAuthenticated">
+                            <a ui-sref-active="active" ui-sref="user.about(::{id:nb.lS.data.user_id})">Моя страница</a>
+                            <a ui-sref-active="active" ui-sref="user.projects(::{id:nb.lS.data.user_id})">Мои проекты</a>
+                            <a ui-sref-active="active" ui-sref="user.history(::{id:nb.lS.data.user_id})">История операций</a>
+                            <a ng-if="::nb.ozk" ui-sref="projectEditor.about({id: 84})">Edit 84</a>
+                            <a ng-if="::nb.ozk" ui-sref="userEditor.about({id: 2})"> мой юзер 2</a>
+                            <a ng-if="::nb.ozk" ui-sref="proj.about({id: 84})">просмотр 84</a>
+                            <a ng-if="::nb.ozk" ui-sref="proj.about({id: 2})">просмотр 2</a>
+                            <a data-hook="logout" ng-click="nb.logout()" href>Выйти</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

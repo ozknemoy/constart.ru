@@ -1,0 +1,63 @@
+@import 'mixin.scss';
+
+.tabs {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	list-style-position: outside;
+	li {
+		position: relative;
+		margin: 0 50px 10px 0;
+		padding: 0;
+		a {
+			background: rgba(255,255,255, .5);
+			display: block;
+			@include font(25px, $font_sec);
+			color: $color-blue;
+			line-height: 40px;
+			padding: 0 0 0 10px;
+			text-decoration: none;
+			@include transition(.3s linear);
+			i {
+				margin-top: 10px;
+			}
+		}
+		button {
+			background: $color-gray;
+			border: 0;
+			color: white;
+			height: 28px;
+			line-height: 28px;
+			padding: 0 15px;
+			position: absolute;
+			right: 0;
+			top: 6px;
+			font-size: 16px;
+			@include transition(.2s linear);
+			&:hover {
+				background: $color-bluedark !important;
+			}
+		}
+
+		.count {
+			background: $color-gray;
+			color: white;
+			height: 28px;
+			line-height: 28px;
+			padding: 0 15px;
+			position: absolute;
+			left: 100%;
+			top: 6px;
+			@include font(20px, $font_sec);
+		}
+		&:hover, &.active {
+			a {
+				text-decoration: none;
+				background: white;
+			}
+			button {
+				background-color: $color-blue;
+			}
+		}
+	} 
+}

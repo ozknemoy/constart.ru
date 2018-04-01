@@ -1,0 +1,64 @@
+<div>
+    <div class="awards_modal--sep"></div>
+
+    <form name="rl.form">
+        <div class="alert alert-info">
+            <i class="fa fa-info-circle fa-2x fa-pull-left"></i>
+            Для совершения покупки, если у вас уже есть профиль на платформе CONSTART, пожалуйста,&nbsp;
+            <login-button class="btn btn-xs btn-success">авторизуйтесь</login-button>&nbsp;или заполните поля ниже
+        </div>
+        <div class="form-group">
+            <label for="">Введите email (необходим для согласования условий доставки вознаграждения):</label>
+            <input type="email" class="form-control" required name="email"
+                   ng-change="rl.check()"
+                   ng-cut="$event.preventDefault()"
+                   ng-copy="$event.preventDefault()"
+                   ng-paste="$event.preventDefault()"
+                   ng-model="rl.email">
+        </div>
+        <div class="alert alert-danger"
+             ng-if="rl.form.email.$touched && (rl.form.email.$error.required ||
+                 rl.form.email.$error.email)">Введите правильный E-Mail
+        </div>
+        <div class="form-group">
+            <label for="">Введите повторно e-mail (во избежание ошибки или опечатки):</label>
+            <input type="email" class="form-control" required name="emailTwo"
+                   ng-change="rl.check()"
+                   ng-cut="$event.preventDefault()"
+                   ng-copy="$event.preventDefault()"
+                   ng-paste="$event.preventDefault()"
+                   ng-model="rl.emailTwo">
+        </div>
+        <div class="alert alert-danger"
+             ng-if="rl.form.emailTwo.$touched && (rl.form.emailTwo.$error.required ||
+                 rl.form.emailTwo.$error.email)">Введите правильный E-Mail
+        </div>
+
+       <!-- <div class="form-group">
+            <label for="">Введите пароль:</label>
+            <input type="password" class="form-control"
+                   ng-change="rl.check()"
+                   required name="password"
+                   ng-model="rl.password"
+                   pattern="^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{6,}$">
+        </div>
+        <div class="alert alert-danger"
+             ng-if="rl.form.password.$touched &&
+                 (rl.form.password.$error.required|| rl.form.password.$error.pattern)">
+            Минимальная длина пароля 6 символов. Пароль должен состоять только из латинских букв, обязательно должен включать в себя большие и маленькие буквы, а также цифры.
+        </div>-->
+
+        <div class="alert alert-danger" ng-if="rl.emailNotEqual">
+            Почтовые ящики не идентичны
+        </div>
+        <div class="alert alert-danger" ng-if="rl.emailOccupied">
+            Такой пользователь уже зарегистрирован
+        </div>
+
+        <div class="alert alert-success" ng-show="rl.allOk">
+            Почтовые ящики идентичны
+        </div>
+
+    </form>
+
+</div>

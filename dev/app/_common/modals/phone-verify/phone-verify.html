@@ -1,0 +1,16 @@
+
+<button type="button" class="close" ng-click="$dismiss()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<div class="modal-header text-center">
+    <div class="title">Введите код смс</div>
+</div>
+<div class="modal-body text-center">
+    <p>На ваш мобильный телефон отправлено сообщение с паролем для подтверждения.
+        Пароль действует 15 минут. Введите его в форму ниже:</p>
+    <div class="form-group">
+        <input autofocus type="text" class="form-control" ng-model="ue.phoneCode">
+    </div>
+    <p>Вы можете запросить код повторно через <span><i class="fa fa-clock-o"></i> 10 минут</span></p>
+</div>
+<div class="modal-footer text-center">
+    <button class="btn btn-success" ng-click="ue.sentCodeSMS('phone-verify',ue.phoneCode)">Подтвердить</button>
+</div>

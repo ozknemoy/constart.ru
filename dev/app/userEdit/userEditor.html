@@ -1,0 +1,154 @@
+<section class="section">
+    <div class="section_wrap">
+        <div class="container-fluid">
+            <div class="profile" ng-class="{'prj_m--open':ue.temp.prj_mOpen}">
+                <!-- profile header block -->
+                <div class="profile--block">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div ng-click="ue.openModalFoto(ue.idCroppedImg)" class="profile--image">
+                                <img ng-if="ue.temp[ue.idCroppedImg]"
+                                     ng-src="{{ue.baseImgUrl+ue.temp[ue.idCroppedImg]}}" alt="">
+                                <label class="profile--image--edit modal_label">
+                                    <span><i class="fa fa-camera"></i></span>
+                                    Обновить фотографию
+                                </label>
+                            </div>
+                            <div class="profile--descr">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-5">
+                            <span class="profile--name">
+                                {{ue.u.surname +' '+ ue.u.name}}<span ng-if="ue.u.age">, {{::ue.u.age}}&nbsp;
+                                {{ue.u.age|getNoun:'год ':'года ':'лет '}}</span>
+                            </span>
+                            <span class="profile--status">
+                                <span ng-if="!ue.u.is_verified"
+                                      class="label label-round label-danger"> Не подтвержден</span>
+                                <span ng-if="ue.u.is_verified"
+                                      class="label label-round label-success"> Подтвержден</span>
+                            </span>
+
+                            <!-- profile location -->
+                            <div class="profile--info" ng-if="ue.u.country_id"><i
+                                    class="fa fa-map-marker"></i>&nbsp;
+                                {{::ue.countryAndRegion}}
+                            </div>
+
+                            <!-- header projects info -->
+                            <div class="profile--projects--count">
+                                <div class="profile--projects--count--item" ng-if="ue.u.projectsCount">
+                                    Инициатор
+                                    <span>{{::ue.u.projectsCount||0}}</span>&nbsp;
+                                    {{ue.u.projectsCount|getNoun:'проекта':'проектов':'проектов'}}
+                                </div>
+                                <div class="profile--projects--count--item" ng-if="ue.u.projectsInCount">
+                                    Участвую в
+                                    <span>{{::ue.u.projectsInCount}}</span>
+                                    {{ue.u.projectsInCount|getNoun:'проектe':'проектах':'проектах'}}
+                                </div>
+                            </div>
+                            <!-- header projects info end -->
+
+                            </div>
+                            <div class="col-xs-12 col-md-7">
+                                <div class="profile--onsite">На сайте {{::ue.u.daysOnSite}}&nbsp;
+                                    {{ue.u.daysOnSite|getNoun:'день':'дня':'дней'}}
+                                    <!--| online <span  ng-class="{'bg-danger': !ue.u.is_online,'bg-success': ue.u.is_online}"></span>-->
+                                </div>
+
+                                <!-- header balance -->
+                                <div class="profile--balance">
+                                    <div class="profile--balance--item">
+                                        Доступно
+                                        <span>{{ue.u.balance|thousand}} <i class="fa fa-rub"></i></span>
+                                    </div>
+                                    <div class="profile--balance--item">
+                                        Заморожено
+                                        <span>{{ue.u.freeze_balance|thousand}} <i class="fa fa-rub"></i></span>
+                                    </div>
+                                </div>
+                                <!-- header balance end -->
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- profile header block end -->
+
+                <!-- project mobile menu -->
+                <div class="prj_mb">
+                    <div class="prj_mb--wrap">
+                        <a class="prj_mb--item active"
+                           ng-click="ue.temp.prj_mOpen=0"
+                           ui-sref-active="current" ui-sref="userEditor.about">Информация</a>
+                        <a class="prj_mb--item"
+                           ng-click="ue.temp.prj_mOpen=0"
+                           ui-sref-active="current" ui-sref="userEditor.projects">Проекты</a>
+                        <pay-deposit class="prj_mb--item" ng-click="ue.temp.prj_mOpen=0">
+                            <i class="fa fa-money"></i>&thinsp;Пополнить баланс
+                        </pay-deposit>
+                        <div class="prj_mb--close" ng-click="ue.temp.prj_mOpen=0"><span></span>Закрыть</div>
+                    </div>
+                </div>
+                <!-- project mobile menu end -->
+
+                <!-- profile navigation -->
+                <div class="profile_navigation">
+                    <div class="kebab-wrapper" ng-click="ue.temp.prj_mOpen=1" ng-class="{'active':ue.temp.prj_mOpen}">
+                        <div class="kebab">
+                            <span></span>
+                        </div>
+                        <span class="kebab--title">Меню профиля</span>
+                    </div>
+                    <ul class="profile_navigation--wrap">
+                        <li class="profile_navigation--item">
+                            <a class="profile_navigation--link" ui-sref-active="current" ui-sref="userEditor.about">
+                                Информация</a></li>
+                        <li class="profile_navigation--item">
+                            <a class="profile_navigation--link"
+                               ui-sref-active="current" ui-sref="userEditor.projects">
+                                Проекты</a></li>
+                        <li class="profile_navigation--item pull-right">
+                            <a class="btn btn-success" href ng-click="ue.trySave()"
+                               ng-disabled="ue.pasportData.surname.$error.required||ue.pasportData.name.$error.required||
+                   ue.phoneForm.$invalid">
+                                <i class="fa fa-save"></i>&thinsp;Сохранить</a>
+                            <pay-deposit class="btn btn-info"><i class="fa fa-money"></i>&thinsp;Пополнить баланс</pay-deposit>
+                        </li>
+                    </ul>
+                </div>
+                <!-- profile navigation end -->
+
+                <main ui-view></main>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</section>
+
+<div class="modal" id="{{ue.idCroppedImg}}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-header text-center">
+                <div class="title">Выбрать область</div>
+            </div>
+            <div class="modal-body">
+                <foto-editor
+                        foto-emit="ue.setFotoUrl(id,url)"
+                        modal-parent-id="{{ue.idCroppedImg}}"
+                        area-type='circle'
+                        foto-w='160'
+                        foto-h='160'></foto-editor>
+            </div>
+        </div>
+    </div>
+</div>
+
+

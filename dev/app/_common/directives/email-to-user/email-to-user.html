@@ -1,0 +1,37 @@
+
+<!--модалка отправить сообщение юзеру -->
+
+<!--<div ng-bind-html="u.ret"></div>{{u.textForSend}}-->
+<div ng-if="!u.emailIsSend" class="modal-body">
+    <form class="form-group" name="u.sentEmail">
+        <textarea rows="4" class="form-control" name="textForSend"
+                  ng-keydown="u.addBrake($event,'textForSend')"
+                  ng-model="u.textForSend"
+                  pattern="(.|\n)[^><]{35,1000}"></textarea>
+    </form>
+    <div class="alert alert-danger"
+         ng-if="u.sentEmail.$invalid && u.sentEmail.textForSend.$touched">
+        Пожалуйста, введите текст сообщения (минимальная длина 35 символов, максимальная - 1000)
+    </div>
+</div>
+
+<div class="modal-footer text-center">
+    <button ng-if="!u.emailIsSend" class="btn btn-success btn-animated"
+            ng-disabled="u.sendEmail.$invalid || !u.textForSend.length || u.emailIsSending"
+            ng-click="u.sendEmailToUser(u.textForSend)"
+            ng-class="{'animated':u.emailIsSending}">
+        <span class="btn-visible"><span class="fa fa-image" aria-hidden="true"></span>
+            Отправить сообщение</span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+    <p class="alert alert-danger" ng-if="u.emailIsNotSend">Письмо не отправлено</p>
+
+    <div ng-if="u.emailIsSend">
+        <p class="alert alert-success" ng-if="u.subject=='default'">Ваше письмо успешно отправлено</p>
+        <p class="alert alert-success" ng-if="u.subject=='vacancy'">
+            Вы откликнулись на вакансию. Ваш отклик и ссылка на Ваш профиль отправлены инициатору
+        </p>
+    </div>
+
+</div>
+

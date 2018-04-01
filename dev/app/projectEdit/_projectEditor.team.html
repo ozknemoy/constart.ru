@@ -1,0 +1,69 @@
+<div class="project_edit--step">
+    <label class="project_edit--title">Команда проекта:</label>
+    <label class="project_edit--title_descr">Достойная команда - основной залог успеха проекта.
+        Представьте себя и членов своей команды информативно, опишите, в чем вы действительно профессионалы.</label>
+
+    <div class="project--users--main">
+        <div class="masonry row">
+            <invite-view value="pe.p.projectTeamInvite" type="teamInv"></invite-view>
+        </div>
+    </div>
+</div>
+
+<div class="project_edit--footer text-center">
+    <button class="btn btn-success btn-animated"
+            ng-disabled="pe.pend.save"
+            ng-class="{'animated':pe.pend.save}"
+            ng-click="pe.tryChangeState('desc')">
+        <span class="btn-visible"><i class="fa fa-angle-left"></i> Описание проекта</span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+    &nbsp;
+    <button class="btn btn-success btn-animated"
+            ng-if="pe.p.type_id==3"
+            ng-disabled="pe.pend.save"
+            ng-class="{'animated':pe.pend.save}"
+            ng-click="pe.saveProject()">
+        <span class="btn-visible"> Сохранить </span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+    &nbsp;
+    <button class="btn btn-success btn-animated"
+            ng-if="pe.p.type_id!=3"
+            ng-disabled="pe.pend.save"
+            ng-class="{'animated':pe.pend.save}"
+            ng-click="pe.tryChangeState('budget')">
+        <span class="btn-visible">{{pe.p.type_id==1?'Финансирование ':'Смета проекта '}}<i class="fa fa-angle-right"></i></span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+    &nbsp;
+    <button class="btn btn-warning btn-animated"
+            ng-if="pe.p.type_id==3"
+            ng-class="{'animated':pe.pend.save}"
+            ng-click="pe.prePublicate()">
+        <span class="btn-visible"> На модерацию</span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+    <div ng-if="pe.p.type_id==3">
+        <br><br>
+        <div class="alert alert-success" ng-if="pe.temp.publicateSuccess">
+            Проект успешно отправлен на модерацию.<br>
+            Сейчас будет осуществлен переход на просмотр проекта.
+        </div>
+        <div class="alert alert-danger" ng-if="pe.temp.prePublicateError.length"
+             ng-repeat="err in pe.temp.prePublicateError">
+            {{err}}
+        </div>
+        <div class="alert alert-danger" ng-if="pe.temp.publicateError">
+            {{pe.temp.publicateError}}
+        </div>
+        <div class="text-success" ng-if="ue.temp.saveSuccess">
+            <i class="fa fa-exclamation-triangle"></i> Сохранено</div>
+        <div class="text-success" ng-if="ue.temp.saveError">
+            <i class="fa fa-exclamation-triangle"></i> {{ue.temp.saveError}}</div>
+    </div>
+
+</div>
+
+
+

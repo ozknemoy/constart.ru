@@ -1,0 +1,138 @@
+
+<div class="user--operations">
+    <div class="row">
+        <div class="col-xs-12 col-lg-9 col-lgs-6">
+            <!--<form class="datepickerAng" name="form"><pre>{{form.d|json}}</pre>
+                <input type="date" class="form-control"
+                       ozk-date
+                       uib-datepicker-popup
+                       ng-model="u.sa"
+                       name="d"
+                       datepicker-options="u.dateOptHist"
+                       is-open="open11" show-button-bar="false"
+                       ng-click="open11 = 1">
+            </form>-->
+            <div class="row">
+                <div class="col-xs-12 col-sm-5 col-lg-4">
+                    <ui-select class="select"
+                               search-enabled="false"
+                               ng-change="u.getOperationsSums()"
+                               ng-model="u.fHist.payment_type">
+                        <ui-select-match placeholder="выберите тип">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="o.id as o in u.operStatuses">
+                            <span ng-bind="::o.name"></span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-xs-12 col-sm-7 col-lg-8">
+                    <div class="filter--datepicker">
+                        <div class="input-daterange input-group datepickerAng" id="datepicker">
+                            <span class="input-group-addon">с</span>
+                            <input type="date" class="form-control"
+                                   uib-datepicker-popup
+                                   ng-model="u.tempH.a"
+                                   ng-change="u.sliceIt(u.tempH.a,'aSliced')"
+                                   datepicker-options="u.dateOptHist"
+                                   is-open="open1" show-button-bar="false"
+                                   ng-click="open1 = true">
+                            <span class="input-group-addon">по</span>
+                            <input type="date" class="form-control" placeholder="Выбрать дату"
+                                   uib-datepicker-popup
+                                   ng-model="u.tempH.b"
+                                   ng-change="u.sliceIt(u.tempH.b,'bSliced')"
+                                   datepicker-options="u.dateOptHist"
+                                   is-open="open2" show-button-bar="false"
+                                   ng-click="open2 = true">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="col-xs-12 col-md-4 col-lg-6 col-lgs-7">
+            <button class="btn btn-success">Применить фильтр</button>
+        </div>-->
+    </div>
+</div>
+
+<div class="operation_stats--title">
+    За <span ng-show='!u.tempH.aSliced && !u.tempH.bSliced'>весь</span> период
+    <span ng-show='u.tempH.aSliced'>с {{u.tempH.aSliced}}</span>
+    <span ng-show='u.tempH.bSliced'>по {{u.tempH.bSliced}}</span>
+</div>
+<div class="operation_stats">
+    <table>
+        <tr>
+            <td>
+                <span class="operation_stats--item--title">Остаток:</span>
+                <span class="operation_stats--item--content">{{u.tempH.diff}} <i class="fa fa-rub"></i></span>
+            </td>
+            <td>
+                <span class="operation_stats--item--title">Поступило:</span>
+                <span class="operation_stats--item--content">{{u.tempH.incr}} <i class="fa fa-rub"></i></span>
+            </td>
+            <td>
+                <span class="operation_stats--item--title">Израсходовано:</span>
+                <span class="operation_stats--item--content">{{u.tempH.decr}} <i class="fa fa-rub"></i></span>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<p ng-show="!u.operFiltered.length && u.operations && u.operations.length">По вашим параметрам фильтра ничего не найдено</p>
+<table class="operation_table" ng-show="u.operFiltered.length">
+    <tr>
+        <td>Дата-время</td>
+        <td>Назначение платежа</td>
+        <td>Контрагент</td>
+        <td>Сумма</td>
+    </tr>
+    <tr dir-paginate="o in u.operFiltered = (u.operations
+         | fromDateToDate:u.tempH.a:u.tempH.b:'date_created'
+         | filter:u.fHist)
+         | itemsPerPage: 20 track by o.id">
+        <td data-text="Дата-время">{{::o.date_created}}</td>
+        <td data-text="Назначение платежа">
+            <!--<span ng-switch="o.participation_type">
+                <span ng-switch-when="0">Оплата инвестиции</span>
+                <span ng-switch-when="1">Оплата займа</span>
+                <span ng-switch-when="2">Оплата вознаграждения</span>
+                <span ng-switch-when="3">Пополнение баланса</span>
+                <span ng-switch-when="4">Оплата услуг плошадки</span>
+                <span ng-switch-when="5">Списание с баланса</span>.
+            </span>-->
+            <span ng-bind-html="o.description"></span>
+            <!--<span ng-switch="o.payment_type">
+                <span ng-switch-when="3">. Заморозка средств</span>
+                <span ng-switch-when="4">. Разморозка средств</span>
+            </span>-->
+        </td>
+        <td data-text="Контрагент" ng-switch="o.participation_type">
+            <!--<a ui-sref="user.about({'id':o.user_id})" class="operation_table&#45;&#45;link"
+               ng-switch-default>
+                <span class="table">
+                    <span class="table-cell"><span class="img">
+                        <img ng-src="{{u.baseImgUrl+o.user.foto}}" alt=""></span></span>
+                    <span class="table-cell">{{o.user.name+' '+o.user.surname}}</span>
+                </span>
+            </a>-->
+
+            <span class="table">
+                <span ng-switch-default class="table-cell"><!--0 и 1-->
+                    <a ui-sref="proj.about({'id':o.project_id})">{{::o.project.name}}</a>
+                </span>
+                <span ng-switch-when="2" class="table-cell" ng-bind-html="u.isUserView?o.to:o.from"></span>
+                <span ng-switch-when="3" class="table-cell">Нет контрагента</span>
+                <span ng-switch-when="4" class="table-cell">CONSTART</span>
+                <span ng-switch-when="5" class="table-cell">Нет контрагента</span>
+            </span>
+
+        </td>
+        <td data-text="Сумма" ng-switch="o.payment_type">
+            <span class="text-success" ng-switch-when="1">{{::o.amount}} <i class="fa fa-rub"></i></span>
+            <span class="text-warning" ng-switch-when="3">{{::o.amount}} <i class="fa fa-rub"></i></span>
+            <span class="text-danger" ng-switch-when="2">{{::o.amount}} <i class="fa fa-rub"></i></span>
+            <span class="text-info" ng-switch-when="4">{{::o.amount}} <i class="fa fa-rub"></i></span>
+        </td>
+    </tr>
+</table>
+<nav class="pagination"  data-dir-pagination-controls></nav>

@@ -1,0 +1,144 @@
+@import 'mixin.scss';
+
+.search {
+	// .title {
+	// 	margin-top: 30px;
+	// }
+	// filter
+	padding: 30px 0 0;
+	.search_tabs {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		font-size: 0;
+		li {
+			display: inline-block;
+			&.active {
+				a {
+					background: $white;
+					color: $color-bluedark;
+				}
+			}
+		}
+		a {
+			background: $color-gray;
+			border-left: 1px solid $color-gray;
+			border-top: 1px solid $color-gray;
+			border-right: 1px solid $color-gray;
+			position: relative;
+			top: 1px;
+			display: inline-block;
+			padding: 10px 20px;
+			color: $color-gray-dark;
+			@include font(20px, $font_sec);
+			
+		}
+	}
+	.nav-tabs {
+		border: 0;
+		> li {
+			> a {
+				background: $color-bluedark;
+				color: $white;
+				border-left: 1px solid $color-gray;
+				border-top: 1px solid $color-gray;
+				border-right: 1px solid $color-gray;
+				position: relative;
+				top: 1px;
+			}
+			&.active {
+				a {
+					background: $white;
+					color: $color-bluedark;
+				}
+			}
+		}
+	}
+	&--filter {
+		background: white;
+		border: 1px solid $color-gray;
+		padding: 20px;
+		margin-bottom: 30px;
+		
+		// margin-top: 30px;
+		&--field {
+			display: table;
+			padding: 15px 0;
+			.label {
+				display: table-cell;
+				vertical-align: middle;
+				font-size: 16px;
+				color: $color-bluedark;
+				padding: 0 .6em 0 0;
+			}
+			.select2 {
+				display: table-cell;
+			}
+		}
+	}
+	.project--users {
+		border: 0;
+	}
+	.elem_list {
+		padding: 25px 0 0;
+		// max-width: 1000px;
+	}
+	.btn-filter {
+		span {
+			@include transition(.3s linear);
+		}
+		&.collapsed {
+			span {
+				@include rotate(180);
+			}
+		}
+	}
+	&--field {
+		padding: 30px 0 0;
+	}
+	&--divider {
+		background: $color-gray;
+		height: 1px;
+		margin: 0 -20px 20px;
+	}
+	.toogleSlider {
+		border: 1px solid $color-gray;
+		padding: 15px 30px 10px;
+		position: relative;
+		@include border-radius(4px);
+		&:before {
+			background: $white;
+			border-left: 1px solid $color-gray;
+			border-top: 1px solid $color-gray;
+			content: '';
+			position: absolute;
+			left: 50px;
+			top: -6px;
+			width: 10px;
+			height: 10px;
+			@include rotate(45);
+		}
+		&.disabled {
+			display: none;
+		}
+	}
+	label {
+		&.label-input {
+			margin-top: 10px;
+		}
+	}
+	.select2-selection--multiple {
+		// margin-bottom: 10px;
+	}
+}
+.filter {
+	&--select {
+		padding: 30px 0 0;
+	}
+}
+.full_filter--button {
+	position: absolute;
+	left: 0;
+	top: 0;
+	right: 0;
+}

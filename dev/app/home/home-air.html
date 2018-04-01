@@ -1,0 +1,105 @@
+<section class="section page1">
+    <div class="bg_main"></div>
+    <a ui-sref="memorandumOdvf" class="logo_main"></a>
+
+    <div class="section_wrap">
+<!-- first page - section 1 -->
+        <div class="page1--section1">
+
+            <div class="heading-text">
+                <h1>Сила России - воздушный флот</h1>
+                <!--<p>Нам разум дал стальные руки-крылья, а вместо сердца - пламенный мотор!</p>-->
+
+            </div>
+            <p class="title"><small>Нас уже <b>{{::(home.numOfUsers| thousand)}}</b></small></p>
+            <!--<a ui-sref="projectEditor.about({'id':'new','type_id':1})"
+                           onclick="yaCounter40097510.reachGoal('home-click-create-project')"
+                           ng-if="::home.isAuthenticated"
+                           class="btn btn-info">Создать проект</a>
+
+                        <login-button
+                                onclick="yaCounter40097510.reachGoal('home-click-create-project')"
+                                ng-if="::!home.isAuthenticated"
+                                class="btn btn-info">Создать проект</login-button>-->
+        </div>
+
+
+<div class="page1--section2">
+    <!--<div class="row">
+        <div class="col-xs-12 col-xss-10 col-xss-offset-1 col-sm-6 col-sm-offset-3">
+            <form action="">
+                <div class="form-group">
+                    <div class="input-group">
+                        <ui-select class="select"
+                                   search-enabled="false"
+                                   ng-model="home.filtered">
+                            <ui-select-match placeholder="Выберите направление">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="o.id as o in home.directions">
+                                <span>{{::o.name}}</span>
+                            </ui-select-choices>
+                        </ui-select>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default"
+                                    onclick="yaCounter40097510.reachGoal('home-click-search-project')"
+                                    ui-sref="projects(::{'category':home.filtered})">Найти проект
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>-->
+    <div class="odvf-q">
+        <div class="btn-group">
+            <span>Нужна ли авиация России?</span>
+            <div class="btn-group">
+                <reg-light-button
+                        text="Введите e-mail для подтверждения Вашего мнения."
+                        class="btn btn-success">Да</reg-light-button>
+                <button class="btn btn-warning" modal-open="app/_common/modals/odvf/memorandum-odvf.html;lg">Нет</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</section>
+
+<!-------------------------------- проекты на главной -------------------------------->
+<section class="section page3">
+    <div class="section_wrap">
+        <div class="container-fluid projects_main">
+            <a class="title" ui-sref="projects">Популярные проекты</a>
+
+
+            <constart-project empty="1" view="1" url="project/get-main-page-projects?limit=4"></constart-project>
+
+
+        </div>
+    </div>
+</section>
+<section class="section">
+    <div class="section_wrap">
+        <div class="container-fluid projects_main projects_main--new">
+            <a class="title" ui-sref="projects">Новые проекты</a>
+
+
+            <constart-project empty="2" view="1" url="project/get-main-page-last-projects?limit=4"></constart-project>
+
+
+        </div>
+    </div>
+</section>
+<!-------------------------------- end проекты на главной -------------------------------->
+
+<section class="section" ng-if="::home.news">
+    <div class="section_wrap">
+
+            <news-slider value="::home.news" title="Новости проектов"></news-slider>
+
+    </div>
+</section>
+
+
+
+

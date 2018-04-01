@@ -1,0 +1,34 @@
+{
+  "name": "myapp",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular-cookies": "~1.5.0",
+    "jquery": "~2.1.4",
+    "angular": "1.6.1",
+    "satellizer": "~0.14.0",
+    "ngstorage": "~0.3.10",
+    "angular-youtube-mb": "latest",
+    "angular-ui-router": "^0.4.0",
+    "angular-rangeslider": "^0.0.14",
+    "angular-animate": "^1.5.7",
+    "ngtouch": "^1.0.1",
+    "angular-ui-select": "^0.18.1",
+    "angular-sanitize": "^1.5.8",
+    "angular-bootstrap-lightbox": "^0.12.0",
+    "ng-videosharing-embed": "^0.3.4",
+    "angular-recaptcha": "^3.0.4",
+    "ng-file-upload": "^12.2.5",
+    "oclazyload": "^1.0.9",
+    "ng-img-crop-full-extended": "ngImgCropFullExtended#^6.0.1",
+    "ngToast": "ngtoast#^2.0.0",
+    "ng-directive-lazy-image": "afkl-lazy-image#^0.3.2",
+    "owl.carousel": "^2.2.0",
+    "angulargrid": "^0.6.3",
+    "angular-dynamic-number": "^2.4.0"
+  },
+  "devDependencies": {},
+  "resolutions": {
+    "jquery": "~2.1.4",
+    "angular": "1.6.1"
+  }
+}

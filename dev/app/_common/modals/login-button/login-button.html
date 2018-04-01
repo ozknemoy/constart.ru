@@ -1,0 +1,73 @@
+
+<button class="close" ng-click="$dismiss()"><span>&times;</span></button>
+
+<div class="modal-header" ng-init="lg.login=1;lg.reset=0">
+    <div ng-if="lg.login" class="title">Войти</div>
+    <div ng-if="lg.reset" class="title">Восстановления пароля</div>
+</div>
+
+<form name="lg.loginForm" ng-if="lg.login">
+    <!-- Login Form -->
+    <div class="modal-body">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                <input id="login_username" class="form-control" type="text"
+                       placeholder="E-mail" ng-model="lg.login_email" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                <input id="login_password" class="form-control" type="password"
+                       placeholder="Пароль" ng-model="lg.login_password" required>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer text-center">
+        <button class="btn btn-success btn-block btn-animated"
+                ng-class="{'animated':lg.pending}"
+                ng-disabled="lg.loginForm.$invalid||lg.pending"
+                ng-click="lg.log()">
+            <span class="btn-visible">Войти</span>
+            <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+        </button>
+        <a class="btn-reset-pass" href="" ng-click="lg.login=0;lg.reset=1">
+            Забыли пароль?
+        </a>
+    </div>
+    <!-- Login Form end -->
+</form>
+
+<!-- Lost Password Form -->
+<form name="lg.lostForm" ng-if="lg.reset">
+    <div class="modal-body">
+        <p>Для восстановления пароля, пожалуйста введите адрес электроной почты:</p>
+        <div class="form-group">
+            <input id="lost_email" class="form-control" type="email" placeholder="example@example.ru"
+                   ng-model="lg.lost_email" required>
+        </div>
+
+        <div class="alert alert-success" ng-if="lg.restoreResponse">
+            <i class="fa fa-info"></i>&nbsp;На ваш почтовый ящик отправлено письмо
+        </div>
+    </div>
+    <div class="modal-footer text-center">
+        <button  class="btn btn-success btn-block btn-animated"
+                 ng-if="!lg.restoreResponse"
+                 ng-disabled="lg.lostForm.$invalid||lg.pending"
+                 ng-click="lg.restore()"
+                 ng-class="{'animated':lg.pending}">
+            <span class="btn-visible">Восстановить пароль</span>
+            <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+        </button>
+        <a class="btn-reset-pass" href ng-click="lg.login=1;lg.reset=0">
+            Вернуться к форме авторизации
+        </a>
+    </div>
+</form>
+
+<!-- Lost Password Form end -->
+
+

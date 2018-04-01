@@ -1,0 +1,100 @@
+
+<div class="row">
+    <div class="col-xs-12" ng-class="{'col-sm-8 col-lgm-7':$ctrl.rewards.length}">
+        <div class="project_comments">
+
+            <div class="project_comments--addNew" ng-if="!$ctrl.isOwner && $ctrl.isAuth">
+                <comment-writer
+                        url="{{$ctrl.urlComment}}"
+                        callback="$ctrl.addComment(comment)"
+                        key="body"></comment-writer>
+            </div>
+            <div class="alert alert-info" not-if="::$ctrl.isAuth">
+                Чтобы оставить комментарий, Вам необходимо&nbsp;
+                <reg-button class="btn btn-success btn-sm">зарегистрироваться</reg-button>&nbsp;
+                или&nbsp;<login-button class="btn btn-success btn-sm">авторизоваться</login-button>
+            </div>
+
+            <div class="project_comments--item" dir-paginate="c in $ctrl.comms | itemsPerPage: 10 track by c.id">
+                <a ui-sref="user.about(::{'id':c.author.id})" class="project_comments--user">
+                    <span class="project_comments--img">
+                        <!--<img src="assets/img/blank-user.png" ozk-img="{{::c.author.foto}}"
+                             base="{{::$ctrl.baseImgUrl}}" alt="">-->
+                        <img ozk-img="{{::c.author.foto}}"
+                             base="{{::$ctrl.baseImgUrl}}"
+                             sex="{{::c.author.sex}}"
+                             src="assets/_img/blank_profile--male.png"
+                             f-src="assets/_img/blank_profile--female.png" alt="">
+                    </span>
+                    &nbsp;{{c.author.name + ' ' + c.author.surname}}&nbsp;
+                </a>
+                <div class="project_comments--date">{{::c.create_date}}</div>
+                <div class="project_comments--content">
+                    {{::c.body}}
+                </div>
+
+                <!--realtime для ответа-->
+                <div class="project_comments--answ"
+                     ng-if="c.response_body">
+                    <a ui-sref="user.about(::{'id':$ctrl.owner.id})" class="project_comments--user">
+                        <span class="project_comments--img">
+                            <!--<img src="assets/img/blank-user.png" ozk-img="{{::$ctrl.owner.foto}}"
+                                 base="{{::$ctrl.baseImgUrl}}" alt="">-->
+                            <img ozk-img="{{::$ctrl.owner.foto}}"
+                                 base="{{::$ctrl.baseImgUrl}}"
+                                 sex="{{::$ctrl.owner.sex}}"
+                                 src="assets/_img/blank_profile--male.png"
+                                 f-src="assets/_img/blank_profile--female.png" alt="">
+                        </span>
+                        &nbsp;{{::$ctrl.owner.fullName}}
+                    </a>
+                    &nbsp;ответил в&nbsp;
+                    <div class="project_comments--date">{{::c.response_date}}</div>
+                    <div class="project_comments--content authtor">{{::c.response_body}}</div>
+                </div>
+
+
+                <div class="project_comments--actions">
+                    <span tooltip-placement="top" uib-tooltip="Ответить"
+                        ng-if="$ctrl.isOwner && !c.response_body">
+                        <a ng-click="c.collapse[$index]=!c.collapse[$index]"><i class="fa fa-fw fa-comment"></i></a>
+                    </span>
+                    <confirm-button tooltip-placement="top" uib-tooltip="Пожаловаться"
+                                    text-body="Вы действительно хотите пожаловаться на комментарий?"
+                                    callback="$ctrl.sendComplain(c.id,$index)"
+                                    ng-if="$ctrl.isOwner && !c.has_complaint">
+                        <a href><i class="fa fa-fw fa-exclamation"></i></a>
+                    </confirm-button>
+                    <confirm-button tooltip-placement="top" uib-tooltip="Удалить"
+                                    ng-if="$ctrl.userId==c.author.id"
+                                    text-body="Вы уверены, что хотите удалить комментарий?"
+                                    callback="$ctrl.delete(c.id,$index)">
+                        <a href><i class="fa fa-fw fa-times"></i></a>
+                    </confirm-button>
+                </div>
+                <!--изза анимации колапса не отрисовываю дом только когда нельзя ответить-->
+                <div uib-collapse="!c.collapse[$index]" class="project_comments--answer collapse"
+                     ng-if="$ctrl.isOwner && !c.response_body">
+                    <comment-writer
+                            url="project-comment/{{c.id}}/response"
+                            callback="$ctrl.refreshComment(comment,$index)"
+                            key="response_body"></comment-writer>
+                </div>
+            </div>
+            <nav scroll-to=".project_comments" data-dir-pagination-controls></nav>
+        </div>
+    </div>
+
+<!--<pre>{{$ctrl.comms|json}}</pre>-->
+    <div class="col-xs-12 col-sm-4 col-lgm-5">
+        <div class="project_news-list--awards">
+            <constart-rewards value="::$ctrl.rewards" limit="4" inner-class="col-lgm-6"></constart-rewards>
+        </div>
+        <div class="text-center" ng-if="$ctrl.rewards.length>4">
+            <button class="btn btn-success" ui-sref="proj.fin">Все вознаграждения</button>
+        </div>
+    </div>
+</div>
+
+<!--кнопка для мобилок-->
+<div class="project_support text-center" ng-include="'app/_common/tmpl/project-support-n-like.html'"></div>

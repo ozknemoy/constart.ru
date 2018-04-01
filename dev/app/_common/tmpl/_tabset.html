@@ -1,0 +1,12 @@
+<div class="carousel slide">
+  <div class="carousel-indicators list" ng-transclude></div>
+
+  <div class="carousel-inner" role="listbox">
+    <div class="item relative"
+         ng-repeat="tab in tabset.tabs"
+         ng-class="{active: tabset.active === tab.index}"
+         uib-tab-content-transclude="tab">
+    </div>
+  </div>
+</div>
+

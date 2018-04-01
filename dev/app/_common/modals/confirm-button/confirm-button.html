@@ -1,0 +1,15 @@
+
+<button class="close" ng-click="$dismiss()"><span>&times;</span></button>
+
+<div class="modal-header text-center" ng-if="::cb.textHeader">
+    <div class="title">{{::cb.textHeader}}</div>
+</div>
+
+<div class="modal-body text-center" ng-if="::cb.textBody">
+    <p>{{::cb.textBody}}</p>
+</div>
+
+<div class="modal-footer text-center">
+    <button class="btn btn-success" ng-click="cb.ok()">Подтвердить</button>
+    <button class="btn btn-danger" ng-click="$dismiss()">Отменить</button>
+</div>

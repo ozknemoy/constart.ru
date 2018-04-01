@@ -1,0 +1,64 @@
+<section class="section">
+    <div class="section_wrap">
+        <div class="container-fluid" ng-if="mailVerify.restorePassword">
+            <div class="form-page">
+                <form name="restorePassword">
+                    <div class="form-group">
+                        <div class="title">Смена пароля</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                            <div class="form-group">
+                                <label>Введите новый пароль</label>
+                                <input class="form-control" type="password" name="passwordOne"
+                                       ng-model="mailVerify.passwordOne"
+                                       pattern="^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{6,}$">
+                            </div>
+                            <div class="form-group">
+                                <label>Подтвердите пароль</label>
+                                <input class="form-control" type="password" ng-model="mailVerify.passwordTwo">
+                            </div>
+                            <input class="btn btn-success" type="button" ng-click="mailVerify.sendPassword()"
+                                   value="отправить"
+                                   ng-disabled="(restorePassword.$dirty&&restorePassword.$error.pattern)||
+                                                restorePassword.$pristine||!mailVerify.passwordOne.length">
+                        </div>
+                    </div>
+
+                </form>
+
+                <br> <br>
+
+                <div class="alert alert-danger" ng-show="(restorePassword.$dirty&&restorePassword.$error.pattern)">
+                    Минимальная длина 6 символов. Обязательно наличие букв разного регистра и цифр в любой
+                    последовальности.
+                </div>
+                <div class="alert alert-danger" ng-show="mailVerify.diffPassword==1">
+                    Пароль подтверждения не верен.
+                </div>
+
+                <div class="alert alert-success" ng-show="mailVerify.changePassword==1">
+                    Ваш пароль успешно изменен.
+                </div>
+                <div class="alert alert-danger" ng-show="mailVerify.changePassword==2">
+                    Ваш пароль НЕ изменен.
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+
+            <div class="alert alert-success" ng-show="mailVerify.confirm==1">
+                Почта верифицирована.&nbsp;
+                <login-button class="btn btn-success">Теперь Вы можете войти.</login-button>
+            </div>
+            <div class="alert alert-warning" ng-show="mailVerify.confirm==2">
+                Ошибочный код верификации
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+

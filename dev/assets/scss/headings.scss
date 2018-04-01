@@ -1,0 +1,253 @@
+@import 'mixin.scss';
+
+.title {
+	font: 34px $font_sec;
+	line-height: 95%;
+	color: $color-bluedark;
+	&.blue {
+		color: $color-blue;
+	}
+	&.slide {
+		cursor: pointer;
+		&:after {
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-width: 0 5px 5px 5px;
+			border-color: transparent transparent $color-bluedark transparent;
+			content: '';
+			display: inline-block;
+			vertical-align: top;
+			margin: 10px 0 0 10px;
+			@include transition(.3s linear);
+		}
+		&.collapsed:after {
+			border-width: 5px 5px 0 5px;
+			border-color: $color-bluedark transparent transparent transparent;
+		}
+	}
+	&--sidebar {
+		padding: 0px 32px 0px 0px;
+		font-family: 'Conv_RoomBold';
+		color: white;
+		text-transform: uppercase;
+		font-size: 1.1rem;
+		text-decoration: none;
+		white-space: pre;
+		position: absolute;
+		left: -313px;
+		top: 0;
+		width: 220px;
+		text-align: right;
+		&:after{
+			background: rgb(0, 153, 168);
+			border: 3px solid #fff;
+			content: '';
+			position: absolute;
+			right: 7px;
+			top: 8px;;
+			width: 17px;
+			height: 17px;
+			margin-top: -2px;
+			border-radius: 10px;
+			-webkit-border-radius: 10px;
+			-moz-border-radius: 10px;
+			
+		}
+	}
+	&--block {
+		@include font(20px, $font_sec);
+		color: $color-bluedark;
+		line-height: 120%;
+		margin: 20px 0 5px 0;
+	}
+	&--small {
+		@include font(20px, $font_sec);
+		color: $color-bluedark;
+		.fa-rub {
+			font-size: .9em;
+		}
+	}
+	&--small {
+		@include font(26px, $font_sec);
+		color: $color-bluedark;
+		.btn {
+			font-family: $ubuntu;
+			font-size: 60%;
+		}
+	}
+	&--icon {
+		font-size: 18px;
+		position: relative;
+		padding: 20px 0 0 55px;
+		color: $color-bluedark;
+		margin: 10px 0;
+		i:not(.pen_blue) {
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	}
+	&--slide {
+		cursor: pointer;
+		@include transition(.3s linear);
+		&:hover {
+			color: $color-blue;
+		}
+		&.empty {
+			color: $color-gray-dark;
+		}
+	}
+	.button_add {
+		margin: -2px 0 0;
+	}
+	
+	.dropdown {
+		display: inline-block;
+		vertical-align: top;
+		min-width: 340px;
+	}
+	.text-small {
+		font-size: 50%;
+	}
+	.title--links {
+		display: inline-block;
+		padding: 0 0 0 10px;
+		a {
+			@include font(16px, $ubuntu_light);
+			color: $color-gray-dark;
+			@include transition(.3s linear);
+			&.active {
+				color: $color-bluedark;
+			}
+			&:hover {
+				color: $color-blue;
+				text-decoration: none;
+			}
+		}
+	}
+	&--description {
+		@include font(16px, $ubuntu_light);
+		color: $color-bluedark;
+		position: relative;
+		z-index: 1;
+	}
+}
+
+
+// slide toggle heading
+.slideToggle {
+	font-size: 20px;
+	color: $color-bluedark;
+	line-height: 24px;
+	position: relative;
+	cursor: pointer;
+	margin: 0 0 0 16px;
+	padding-bottom: 10px;
+	.tip {
+		margin-top: 1px;
+	}
+	&:before {
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 6px 0 6px 6px;
+		border-color: transparent transparent transparent $color-bluedark;
+		content: '';
+		display: block;
+		position: absolute;
+		left: -15px;
+		top: 5px;
+		@include transition(.2s linear);
+	}
+	&:after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+	&.open {
+		&:before {
+			border-width: 6px 6px 0 6px;
+			border-color: $color-bluedark transparent transparent transparent;
+			top: 10px;
+			left: -20px
+		}
+	}
+	&:not(.collapsed) {
+		&:before {
+			@include rotate(90);
+			// border-width: 6px 6px 0 6px;
+			// border-color: $color-bluedark transparent transparent transparent;
+			// top: 10px;
+			// left: -20px
+		}
+	}
+	&--right {
+		width: 60%;
+		.slideToggle--price {
+			float: left;
+			width: 35%;
+			font-size: 16px;
+			position: relative;
+			text-align: right;
+			white-space: nowrap;
+			// span:not(.price), span:not(.text--edit) {
+			// 	position: absolute;
+			// 	left: 100%;
+			// 	top: 8px;
+			// 	font-size: 16px;
+			// 	color: $color-gray-dark;
+			// 	white-space: nowrap;
+			// 	margin-left: 5px;
+
+			// 	i {
+			// 		margin-top: 6px;
+			// 	}
+			// }
+		}
+		.slideToggle--progress {
+			background: transparent;
+			float: left;
+			width: 65%;
+			padding: 0 10px 5px;
+			@include transition(.3s linear);
+			.progress--title {
+				margin-bottom: -11px;
+			}
+			.project_details--progress {
+				margin-top: 0;
+			}
+			button {
+				// margin: -9px 0 0 0;
+			}
+			span.text-danger {
+				// display: inline-block;
+				// vertical-align: top;
+				// margin: -2px 0 0;
+			}
+		}
+		// &.open  {
+		// 	.slideToggle--progress {
+		// 		background: white;
+		// 	}
+		// }
+		
+	}
+}
+.slide_block {
+	padding: 40px 20px 30px;
+	margin-top: -10px;
+	&.hid {
+		display: none;
+	}
+	&--white {
+		background: white;
+		border: 1px solid $color-gray;
+		@extend .slide_block;
+		padding-bottom: 0;
+		@include border-radius(4px);
+		.underline_list--field {
+			margin-bottom: 38px;
+		}
+	}
+}

@@ -1,0 +1,443 @@
+@import 'mixin.scss';
+
+.operation_stats {
+	margin: 0 0 30px;
+	table {
+		width: 100%;
+		td {
+			background: $white;
+			border: 1px solid $color-gray;
+			padding: 10px;
+		}
+	}
+	&--item {
+		&--title {
+			@include font(16px, $ubuntu_light);
+			color: $color-bluedark;
+			margin-right: 5px;
+		}
+		&--content {
+			background: $white;
+			@include font(18px, $font_sec);	
+			.fa {
+				font-size: .9em;
+			}
+		}
+		
+	}
+	&--title {
+		@include font(20px, $font_sec);
+		color: $color-bluedark;
+		margin: 30px 0 5px;
+	}
+}
+
+.operation_table {
+	width: 100%;
+	&--project {
+		margin-top: 30px;
+	}
+	tr {
+		&:first-child {
+			td {
+				background: $color-bluedark;
+				color: $white;
+				@include font(16px, $font_sec);
+				.operation_table--sep {
+					background: $white;
+				}
+			}
+		}
+		td {
+			background: $white;
+			border: 1px solid $color-gray;
+			padding: 10px;
+			border: 1px solid $color-gray;
+			@include font(14px, $ubuntu_light);
+			line-height: 1.4;
+			color: $color-bluedark;
+			vertical-align: middle;
+			width: 40%;
+			&:first-child {
+				width: 10%;
+				text-align: center;
+			}
+			&:last-child {
+				width: 10%;
+				white-space: nowrap;
+			}
+			.fa {
+				font-size: .95em;
+			}
+			.operation_table--sep {
+				background: $color-gray;
+			}
+			.alert {
+				margin: 10px 0;
+				padding: 10px;
+			}
+		}
+	}
+	&--sep {
+		height: 1px;
+		display: block;
+		margin: 5px 0;
+	}
+	&.full-width {
+		tr {
+			td {
+				width: auto;
+			}
+		}
+	}
+	&.mcols {
+		tr {
+			&:first-child {
+				td {
+					@include font(14px, $ubuntu_light);
+					padding: 10px 5px;
+				}
+			}
+			td {
+				@include font(12px, $ubuntu_light);
+				padding: 5px;
+				width: auto;
+				text-align: center;
+				&:last-child {
+					white-space: normal;
+				}
+				&.nowrap {
+					white-space: nowrap;
+				}
+				&.min_col {
+					width: 10%;
+				}
+				.table_docs {
+					border-top: 1px solid $color-gray;
+					position: relative;
+					margin: 5px -5px -5px;
+					padding: 5px;
+					&:after {
+						background: $color-gray;
+						content: '';
+						display: block;
+						position: absolute;
+						left: 50%;
+						top: 0;
+						bottom: 0;
+						width: 1px;
+					}
+				}
+			}
+		}
+	}
+	&.pr_table {
+		margin: -20px 0 30px;
+		tr {
+			&:first-child {
+				td {
+					
+					padding: 10px 5px;
+				}
+			}
+			td {
+				@include font(12px, $ubuntu_light);
+				padding: 5px;
+				width: 10%;
+				text-align: center;
+				&:first-child {
+					width: auto;
+					text-align: left;
+					padding-left: 20px;
+				}
+				&:last-child {
+					white-space: normal;
+				}
+				&.nowrap {
+					white-space: nowrap;
+				}
+				p {
+					margin: 0 0 10px;
+					&.p_slide {
+						cursor: pointer;
+						margin: 5px 0 5px -7px;
+					}
+					&.collapsed {
+						.fa {
+							@include rotate(0);
+						}
+					}
+					.fa {
+						@include transition(.2s linear);
+						@include rotate(90);
+					}
+				}
+				.collapse {
+					
+					p {
+						
+					}
+					
+				}
+			}
+		}
+	}
+	&--link {
+		display: inline-block;
+		color: $color_bluedark;
+		vertical-align: middle;
+		@include font(16px, $ubuntu_light);
+		text-decoration: none;
+		.img {
+			width: 40px;
+			height: 40px;
+			position: relative;
+			overflow: hidden;
+			display: block;
+			margin: 0 10px;
+			@include border-radius(70px);
+			img {
+				max-width: 100%;
+				max-height: 100%;
+			}
+		}
+	}
+	&--constart {
+		display: inline-block;
+		color: $color_bluedark;
+		vertical-align: middle;
+		@include font(16px, $ubuntu_light);
+		text-decoration: none;
+		.img {
+			@include background-image('constart--rocket', $size: 20px 30px, $repeat: no-repeat, $color: $color_bluedark, $position: center);
+			width: 40px;
+			height: 40px;
+			position: relative;
+			overflow: hidden;
+			display: block;
+			margin: 0 10px;
+			@include border-radius(70px);
+		}
+	}
+}
+
+.user--operations {
+	&--filter {
+		margin-bottom: 30px;
+	}
+	&--wrap {
+		border-top: 1px solid $color-gray;
+		border-left: 1px solid $color-gray;
+		border-right: 1px solid $color-gray;
+	}
+	&--item {
+		background: white;
+		border-bottom: 1px solid $color-gray;
+		padding: 10px;
+		@include font(14px, $ubuntu_light);
+		&:after {
+			content: '';
+			display: table;
+			clear: both;
+		}
+	}
+	&--title {
+		color: $color_bluedark;
+		float: left;
+		width: 35%;
+		line-height: 120%;
+		.table-cell:first-child {
+			width: 70px;
+		}
+		.img {
+			width: 70px;
+			height: 70px;
+			position: relative;
+			overflow: hidden;
+			display: block;
+			margin-right: 10px;
+			@include border-radius(70px);
+			img {
+				max-width: 100%;
+				max-height: 100%;
+			}
+		}
+	}
+	&--transaction {
+		float: left;
+		width: 10%;
+		text-align: center;
+		line-height: 70px;
+	}
+	&--type {
+		width: 35%;
+		float: left;
+		height: 70px;
+	}
+	&--amount {
+		float: left;
+		width: 10%;
+		line-height: 70px;
+	}
+	&--date {
+		float: left;
+		width: 10%;
+		text-align: center;
+		line-height: 70px;
+		position: relative;
+		&:after {
+			background: $color-gray;
+			content: '';
+			display: block;
+			position: absolute;
+			right: 15px;
+			top: 0;
+			bottom: 0;
+			width: 1px;
+		}
+	}
+}
+
+// Breakpoints
+$bp-maggie: 15em; 
+$bp-lisa: 30em;
+$bp-bart: 48em;
+$bp-marge: 62em;
+$bp-homer: 75em;
+
+.responsive-table {
+	width: 100%;
+	margin-bottom: 1.5em;
+	@media (min-width: $bp-bart) {
+			font-size: .9em; 
+	}
+	@media (min-width: $bp-marge) {
+		font-size: 1em; 
+	}
+  
+	thead {
+		position: absolute;
+		clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+		clip: rect(1px, 1px, 1px, 1px);
+		padding: 0;
+		border: 0;
+		height: 1px; 
+		width: 1px; 
+		overflow: hidden;
+		@media (min-width: $bp-bart) {
+			position: relative;
+			clip: auto;
+			height: auto;
+			width: auto;
+			overflow: auto;
+		}
+		th {
+			background-color: rgba(29,150,178,1);
+			border: 1px solid rgba(29,150,178,1);
+			font-weight: normal;
+			text-align: center;
+			color: white;
+			&:first-of-type {
+				text-align: left; 
+			}
+		}
+	}
+  
+	// Set these items to display: block for narrow viewports
+	tbody,
+	tr,
+	th,
+	td {
+		display: block;
+		padding: 0;
+		text-align: left;
+		white-space: normal;
+	}
+  
+	tr {
+		@media (min-width: $bp-bart) {
+			display: table-row; 
+		}
+	}
+  
+	th,
+	td {
+		padding: .5em;
+		vertical-align: middle;
+		@media (min-width: $bp-lisa) {
+			padding: .75em .5em; 
+		}
+		@media (min-width: $bp-bart) {
+			display: table-cell;
+			padding: .5em;
+		}
+		@media (min-width: $bp-marge) {
+			padding: .75em .5em; 
+		}
+		@media (min-width: $bp-homer) {
+			padding: .75em; 
+		}
+	}
+  
+  
+	tbody {
+		@media (min-width: $bp-bart) {
+			display: table-row-group; 
+		}
+    
+		tr {
+			margin-bottom: 1em;
+			border: 2px solid rgba(29,150,178,1);
+
+			@media (min-width: $bp-bart) {
+				display: table-row;
+				border-width: 1px;
+			}
+			&:last-of-type {
+				margin-bottom: 0; 
+			}
+			&:nth-of-type(even) {
+				@media (min-width: $bp-bart) {
+					background-color: rgba(94,93,82,.1);
+				}
+			}
+		}
+    
+		th[scope="row"] {
+			background-color: rgba(29,150,178,1);
+			color: white;
+			@media (min-width: $bp-bart) {
+				background-color: transparent;
+				color: rgba(94,93,82,1);
+				text-align: left;
+			}
+		}
+    
+		td {
+			text-align: right;
+			@media (min-width: $bp-lisa) {
+				border-bottom: 1px solid  rgba(29,150,178,1);
+			}
+			@media (min-width: $bp-bart) {
+				text-align: center; 
+			}
+		}
+    
+		td[data-type=currency] {
+			text-align: right;
+		}
+    
+		td[data-title]:before {
+			content: attr(data-title);
+			float: left;
+			font-size: .8em;
+			color: rgba(94,93,82,.75);
+			@media (min-width: $bp-lisa) {
+				font-size: .9em; 
+			}
+			@media (min-width: $bp-bart) {
+				content: none; 
+			}
+		} 
+	}
+}

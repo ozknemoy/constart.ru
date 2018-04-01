@@ -1,0 +1,328 @@
+<!--отображение списка юриков в редакторе профиля-->
+<div class="profile_fields">
+    <legals-edit callback="lv.legalsChanges(ind,type,obj)" class="btn btn-success" create="true">Добавить</legals-edit>
+
+
+    <div class="panel-group entities_list" id="accordion" role="tablist" aria-multiselectable="true">
+
+        <uib-accordion>
+            <div class="panel panel-default" ng-repeat="l in lv.l">
+            <!--Индивидуальный предприниматель-->
+            <div ng-if="::l.legal_type==1" uib-accordion-group>
+                <div uib-accordion-heading>
+                    <h4 class="panel-title">
+                        <a href >{{::l.data.ii_name}}</a>
+                        <span class="entities_list--item--buttons" ng-if="l.is_editable">
+                            <legals-edit class="btn btn-warning btn-sm btn-round-lg"
+                                         callback="lv.legalsChanges(ind,type,obj)"
+                                        edit="[l,$index]"><i class="fa fa-pencil"></i>
+                            </legals-edit>
+                            <legals-edit class="btn btn-danger btn-sm btn-round-lg"
+                                         callback="lv.legalsChanges(ind,type,obj)"
+                                        delete="[$index,l.id]"><i class="fa fa-times"></i>
+                            </legals-edit>
+                        </span>
+                    </h4>
+                </div>
+                <div class="panel-collapse">
+                    <div class="panel-body">
+                        <div class="entities_list--item">
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">
+                                    Организационно-правовая форма:
+                                </div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    Индивидуальный предприниматель
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">
+                                    Наименование ИП:
+                                </div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ii_name}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">
+                                    Свидетельство о гос регистрации ИП:
+                                </div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ii_reg}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">
+                                    Дата выдачи свидетельства о гос регистрации ИП:
+                                </div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ii_reg_date| date: 'dd-MM-yyyy'}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">
+                                    Свидетельство о присвоении ИНН РФ:
+                                </div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ii_num_id}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">
+                                    Дата выдачи свидетельства о присвоении ИНН РФ:
+                                </div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ii_num_date| date: 'dd-MM-yyyy'}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Скан документов:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    <a ng-href="{{::lv.baseImgUrl+l.data.ii_photo_1}}" target="_blank">
+                                        <i class="fa fa-file"></i>
+                                        Сканы Свидетельства о гос регистрации</a>,<br>
+                                    <a ng-href="{{::lv.baseImgUrl+l.data.ii_photo_2}}" target="_blank">
+                                        <i class="fa fa-file"></i>
+                                        Скан Свидетельства о присвоении ИНН</a>
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--divider"></div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3"></div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    <div class="profile_fields--title">Банковские реквизиты</div>
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Название банка:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ii_bank_name}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">БИК:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ii_bank_bik}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">
+                                    Корреспондентский счет банка:
+                                </div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ii_bank_corr}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Расчетный счет:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ii_bank_account}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Юридическое лицо-->
+            <div ng-if="::l.legal_type!=1" uib-accordion-group>
+                <div uib-accordion-heading>
+                    <h4 class="panel-title">
+                        <a href >{{::l.data.ur_name}}</a>
+                                <span class="entities_list--item--buttons">
+                                    <legals-edit class="btn btn-warning btn-sm btn-round-lg"
+                                                 callback="lv.legalsChanges(ind,type,obj)"
+                                                 ng-if="l.is_editable"
+                                                 edit="[l,$index]"><i class="fa fa-pencil"></i>
+                                    </legals-edit>
+                                    <legals-edit class="btn btn-danger btn-sm btn-round-lg"
+                                                 callback="lv.legalsChanges(ind,type,obj)"
+                                                 ng-if="l.is_editable"
+                                                 delete="[$index,l.id]"><i class="fa fa-times"></i>
+                                    </legals-edit>
+                                </span>
+                    </h4>
+                </div>
+                <div class="panel-collapse">
+                    <div class="panel-body">
+                        <div class="entities_list--item">
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">
+                                    Организационно-правовая форма:
+                                </div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::lv.legals[l.legal_type].name}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">
+                                    Сокращенное наименование юридического лица:
+                                </div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ur_name}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">ИНН:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ur_inn}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">КПП:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ur_kpp}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">ОГРН:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ur_ogrn}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Дата регистрации:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ii_num_date| date: 'dd-MM-yyyy'}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Телефон:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    +7{{::l.data.ur_phone}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Юридический адрес:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ur_addres}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Фактический адрес:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ur_fact_addres}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">ФИО руководителя:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ur_boss}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row" ng-if="l.data.ur_has_middleman">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Номер доверенности::</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ur_num_warrant}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row" ng-if="l.data.ur_has_middleman">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">
+                                    Дата подписания доверенности:
+                                </div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ur_date_warrant | date: 'dd-MM-yyyy'}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Сайт:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.site}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Скан документов:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    <a ng-href="{{::lv.baseImgUrl+l.data.ur_photo_0}}" target="_blank">
+                                        <i class="fa fa-file"></i>
+                                        Номер доверенности</a>,<br>
+                                    <a ng-href="{{::lv.baseImgUrl+l.data.ur_photo_1}}" target="_blank">
+                                        <i class="fa fa-file"></i>
+                                        Протокол / Решение о назначении/избрании единоличного исполнительного органа
+                                    </a>,<br>
+                                    <a ng-href="{{::lv.baseImgUrl+l.data.ur_photo_2}}" target="_blank">
+                                        <i class="fa fa-file"></i>
+                                        Свидетельство о государственной регистрации юридического лица
+                                    </a>,<br>
+                                    <a ng-href="{{::lv.baseImgUrl+l.data.ur_photo_3}}" target="_blank">
+                                        <i class="fa fa-file"></i>
+                                        Свидетельство о постановке на налоговый учет
+                                    </a>,<br>
+                                    <a ng-href="{{::lv.baseImgUrl+l.data.ur_photo_4}}" target="_blank">
+                                        <i class="fa fa-file"></i>
+                                        Устав
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--divider"></div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3"></div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    <div class="profile_fields--title">Банковские реквизиты</div>
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Название банка:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ur_bank_name}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">БИК:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ur_bank_bik}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">
+                                    Корреспондентский счет банка:
+                                </div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ur_bank_corr}}
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Расчетный счет:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    {{::l.data.ur_bank_account}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </uib-accordion>
+    </div>
+</div>

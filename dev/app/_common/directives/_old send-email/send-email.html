@@ -1,0 +1,19 @@
+
+<form name="mailForm">
+    <div class="form-group">
+        <label for="">Адрес эл.почты <span class="text-danger">*</span></label>
+        <input  class="form-control text" type="email" name="emailFromUnknown" ng-model="emailFromUnknown">
+    </div>
+
+    <div class="form-group">
+        <label for="">Сообщение <span class="text-danger">*</span></label>
+        <textarea rows="5" class="form-control" name="messageFromUnknown"
+                  ng-model="messageFromUnknown" required pattern=(.){35,}></textarea>
+    </div>
+    <p class="alert alert-success" ng-if="emailIsSend">Ваше письмо успешно отправлено</p>
+    <p class="alert alert-danger" ng-if="emailIsNotSend">Письмо не отправлено</p>
+    <button class="btn btn-success"
+            ng-if="!emailIsSend"
+            ng-disabled="mailForm.$invalid"
+            ng-click="sendMessageFromUnknown(emailFromUnknown,messageFromUnknown)">Отправить</button>
+</form>

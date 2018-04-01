@@ -1,0 +1,163 @@
+@import 'mixin.scss';
+
+.pg_help {
+	// sidebar
+	&--sidebar {
+		background: $white;
+		border-right: 1px solid $color-gray;
+		width: 300px;
+		position: fixed;
+		left: 220px;
+		top: 57px;
+		bottom: 0px;
+		z-index: 1;
+		@include transition(0.2s cubic-bezier(0.645, 0.045, 0.355, 1));
+		.panel-group {
+			margin-bottom: 0;
+		}
+		&--parent {
+			border-bottom: 1px solid $color-gray;
+			@include font(16px, $ubuntu_light);
+			cursor: pointer;
+			padding: 5px 10px;
+			display: block;
+			color: $color-bluedark;
+			@include transition(.3s linear);
+			
+		}
+		&--child {
+			
+		}
+		&--link {
+			border-bottom: 1px solid $color-gray;
+			@include font(14px, $ubuntu_light);
+			cursor: pointer;
+			padding: 5px 10px 5px 30px;
+			display: block;
+			@include transition(.3s linear);
+		}
+		.panel {
+			border: 0;
+			margin: 0 !important;
+			border-radius: 0;
+			@include box-shadow(none);
+		}
+		.green {
+			.pg_help--sidebar--parent:not(.collapsed) {
+				background: $color-success;
+				border-color: darken($color-success, 5%);
+				color: $white;
+			}
+			.panel-collapse {
+				background: $color-success;
+				color: $white;
+				.pg_help--sidebar--link {
+					border-color: darken($color-success, 5%);
+				}
+			}
+		}
+		.blue {
+			.pg_help--sidebar--parent:not(.collapsed) {
+				background: $color-info;
+				border-color: darken($color-info, 5%);
+				color: $white;
+			}
+			.panel-collapse {
+				background: $color-info;
+				color: $white;
+				.pg_help--sidebar--link {
+					border-color: darken($color-info, 5%);
+				}
+			}
+		}
+		.orange {
+			.pg_help--sidebar--parent:not(.collapsed) {
+				background: $color-danger;
+				border-color: darken($color-danger, 5%);
+				color: $white;
+			}
+			.panel-collapse {
+				background: $color-danger;
+				color: $white;
+				.pg_help--sidebar--link {
+					border-color: darken($color-danger, 5%);
+				}
+			}
+		}
+
+	}
+
+	// content
+	&--content {
+		background: $white;
+		
+		margin: 30px -30px 30px 265px;
+		padding: 0 30px;
+		&.green {
+			border: 1px solid $color-success;	
+		}
+		&.blue {
+			border: 1px solid $color-info;	
+		}
+		&.orange {
+			border: 1px solid $color-danger;	
+		}
+		&--title {
+			color: $white;
+			margin: 0 -30px;
+			padding: 10px 30px;
+			@include font(20px, $font_sec);
+		}
+		.panel {
+			border: 0;
+			margin: 0 !important;
+			border-radius: 0;
+			@include box-shadow(none);
+			&-group {
+				margin-bottom: 0;
+			}
+			&-collapse {
+				border-bottom: 1px solid $color-gray;
+				margin:  0 -30px;
+				padding: 0 30px;
+			}
+		}
+		
+		.pg_help--faq--parent {
+			margin: 0 -30px;
+			border-bottom: 1px solid $color-gray;
+			@include font(16px, $ubuntu_light);
+			cursor: pointer;
+			padding: 10px 30px;
+			display: block;
+			color: $color-bluedark;
+			@include transition(.3s linear);
+			&.collapsed {
+				.fa {
+					@include rotate(0);	
+				}
+			}
+			.fa {
+				@include transition(.3s linear);
+				@include rotate(90);
+			}
+		}
+
+	}
+	&--img {
+		&--item {
+			position: relative;
+			padding-top: 50%;
+			img {
+				position: absolute;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				margin: auto;
+				max-height: 90%;
+				max-width: 90%;
+			}
+		}
+	}
+}

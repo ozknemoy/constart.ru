@@ -1,0 +1,26 @@
+<div class="modal-body">
+    <div class="underline_list--field">
+        <div class="underline_list--left">
+            <span class="text-primary" ng-if="pay.type=='Invest'">Краудинвестинг: </span>
+            <span class="text-primary" ng-if="pay.type=='Loan'">Краудлендинг: </span>
+        </div>
+        <div class="underline_list--right">
+            <span class="price">{{pay.taxProj}}</span><i class="fa fa-rub"></i>
+        </div>
+    </div>
+    <br>
+    <div class="text-center">
+        <button class="btn btn-danger" ng-click="$dismiss()">Отменить</button>
+        <button class="btn btn-success" ng-click="pay.doPayExpenses()"
+            ng-disabled="pay.pend">
+            Оплатить
+        </button>
+    </div>
+
+    <div class="alert alert-danger" ng-if="pay.errorNoMoney">
+        Недостаточно средств на вашем счете.&thinsp;
+        <pay-deposit ng-click="$dismiss()" class="btn btn-xs btn-danger">
+           Пополнить счет
+        </pay-deposit>
+    </div>
+</div>

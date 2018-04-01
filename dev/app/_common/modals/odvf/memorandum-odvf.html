@@ -1,0 +1,11 @@
+<!--модалка при нажатии на кнопку нет на главной-->
+<button type="button" class="close" ng-click="$dismiss()"><span aria-hidden="true">&times;</span></button>
+<div class="modal-header">
+    <div class="title text-center">ОБЩЕСТВО ДРУЗЕЙ ВОЗДУШНОГО ФЛОТА</div>
+</div>
+<div class="modal-body">
+    <div ng-include="'app/_common/tmpl/odvf-memorandum.tmpl.html'"></div>
+</div>
+<div class="modal-footer text-center">
+    <button type="submit" class="btn btn-success" ng-click="$dismiss()">Закрыть</button>
+</div>

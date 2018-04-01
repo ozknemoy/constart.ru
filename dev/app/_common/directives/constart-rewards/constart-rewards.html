@@ -1,0 +1,58 @@
+<!-- отображение наград в адаптивной сетке-->
+
+<!--<div class="awards&#45;&#45;item&#45;&#45;content"
+     ng-class="::$ctrl.innerClass"
+     ng-repeat="r in $ctrl.value | orderBy:'price' | limitTo:$ctrl.limit track by $index">
+    <reward-view value="::r">
+        <div class="awards&#45;&#45;price">
+            {{::(r.price|thousand)}} <span class="fa fa-rub"></span>
+        </div>
+        <div class="awards&#45;&#45;title">{{::r.name}}</div>
+        <div class="awards&#45;&#45;img"
+             ng-if="::r.cover"
+             ng-style="{'background-image':'url('+$ctrl.baseImgUrl + r.cover +')'}">
+        </div>
+        <div class="awards&#45;&#45;footer">
+            <div class="awards&#45;&#45;count" ng-if="::r.sell_count">
+                Куплено <span>{{r.collected_count || 0}} из {{::r.sell_count}}</span>
+            </div>
+            <div class="awards&#45;&#45;count" not-if="::r.sell_count">
+                Куплено <span>{{r.collected_count || 0}}</span>
+            </div>
+        </div>
+    </reward-view>
+</div>-->
+
+
+<div class="masonry row">
+    <div angular-grid="::$ctrl.value"
+         ag-id="gallery"
+         page-size="auto" ag-css-grid="true"
+         ag-gutter-size="1">
+        <div class="masonry--item col-xs-12"
+             ng-class="::$ctrl.innerClass"
+             ng-repeat="r in $ctrl.value | orderBy:'price' | limitTo:$ctrl.limit track by $index">
+            <a ui-sref="proj.reward({'id_reward':r.id})" class="awards--item--content">
+                <span class="awards--img" ng-if="::r.cover">
+                    <img ng-src="{{$ctrl.baseImgUrl + r.cover}}" alt="">
+                </span>
+                <span class="awards--body">
+                    <!--для лимитированых-->
+                    <span class="awards--count" ng-if="::r.sell_count">
+                        Куплено <span>{{r.collected_count || 0}} из {{::r.sell_count}}</span>
+                    </span>
+                    <!--безлим-->
+                    <span class="awards--count" not-if="::r.sell_count">
+                        Куплено <span>{{r.collected_count || 0}}</span>
+                    </span>
+
+                    <span class="awards--price">{{::(r.price|thousand)}}<span class="fa fa-rub"></span></span>
+                    <span class="awards--title">{{::r.name}}</span>
+                </span>
+                <span class="awards--footer">
+                    <span class="btn btn-success" onclick="yaCounter40097510.reachGoal('click-kf-snippet-buy-button')">Купить</span>
+                </span>
+            </a>
+        </div>
+    </div>
+</div>

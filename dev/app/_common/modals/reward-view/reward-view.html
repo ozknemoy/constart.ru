@@ -1,0 +1,117 @@
+
+<button type="button" class="close" ng-click="$dismiss()"><span>&times;</span></button>
+
+<div class="modal-body">
+    <div class="awards_modal">
+        <div class="row">
+            <div class="col-xs-12 col-md-4" ng-if="rv.rewardInModal.cover">
+                <div class="awards_modal--img">
+                    <img ng-src="{{rv.baseImgUrl+rv.rewardInModal.cover}}" alt="">
+                </div>
+            </div>
+            <div class="col-xs-12" ng-class="{'col-md-8':rv.rewardInModal.cover}">
+                <div class="awards_modal--title">{{::rv.rewardInModal.name}}</div>
+                <div class="awards_modal--price">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            {{::(rv.rewardInModal.price | thousand)}} <span class="fa fa-rub"></span>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 text-right">
+                            <div class="awards_modal--block">
+                                <span class="awards_modal--block--count">
+                                    {{rv.rewardInModal.collected_count || 0}}</span> куплено
+                            </div>
+                            <div class="awards_modal--block" ng-if="rv.rewardInModal.sell_count">
+                                <span class="awards_modal--block--count">
+                                    {{rv.amountRewD=rv.rewardInModal.sell_count-(rv.rewardInModal.collected_count || 0)}}</span>
+                                осталось
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="awards_modal--description">
+                    <p>{{::rv.rewardInModal.description}}</p>
+                </div>
+
+                <div class="awards_modal--description">
+                    <p>Стоимость доставки оплачивается отдельно.</p>
+                </div>
+
+                <div class="awards_modal--footer">
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <p class="awards_modal--footer--title">Количество:</p>
+                            <div class="spinner-wrap">
+                                <div class="input-group spinner">
+                                    <input type="text" class="form-control"
+                                           ng-if="rv.rewardInModal.sell_count"
+                                           ng-model="rv.countin"
+                                           max="{{rv.amountRewD}}"
+                                           ozk-number min="1">
+                                    <!--безлим-->
+                                    <input type="text" class="form-control"
+                                           ng-if="!rv.rewardInModal.sell_count"
+                                           ng-model="rv.countin"
+                                           max="1000000"
+                                           ozk-number min="1">
+
+                                    <div class="input-group-btn-vertical">
+                                        <button class="btn btn-default" type="button"
+                                                ng-if="rv.rewardInModal.sell_count"
+                                                ng-disabled="rv.countin>rv.amountRewD-1"
+                                                ng-click="rv.count('plus')"><i class="fa fa-caret-up"></i></button>
+                                        <!--безлим-->
+                                        <button class="btn btn-default" type="button"
+                                                ng-if="!rv.rewardInModal.sell_count"
+                                                ng-click="rv.count('plus')"><i class="fa fa-caret-up"></i></button>
+
+                                        <button class="btn btn-default" type="button" ng-disabled="rv.countin<2"
+                                                ng-click="rv.count('minus')"><i class="fa fa-caret-down"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <p class="awards_modal--footer--title">Итого:</p>
+                            <div class="awards_modal--footer--total">
+                                {{rv.countin*rv.rewardInModal.price | thousand}}
+                                <span class="fa fa-rub"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="awards_modal--sep"></div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6">
+                                <label class="checkbox btn-block styled">
+                                    <input type="checkbox" ng-model="rv.checkboxReward">
+                                    <span></span>Принимаю условия
+                                    <a ng-href="{{rv.baseDocUrl+'oferta-tmpl-kf-1.pdf'}}" target="_blank" download>оферты</a>
+                                </label>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <span ng-click="$dismiss()" onclick="yaCounter40097510.reachGoal('click-kf-buy-button')">
+                                    <pay-button type="reward"
+                                                amount="{{rv.countin}}"
+                                                reward="rv.rewardInModal"
+                                                ng-class="{'pointer-none':!rv.checkboxReward || rv.amountRewD<1}"
+                                                class="btn btn-success btn-block">
+                                        Приобрести
+                                    </pay-button>
+                                </span>
+                                <!--<button class="btn btn-success btn-block" data-dismiss="modal" aria-label="Close"
+                                        ng-disabled="!rv.checkboxReward || rv.amountRewD<1">Приобрести</button>-->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

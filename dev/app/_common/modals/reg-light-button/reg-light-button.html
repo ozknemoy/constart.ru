@@ -1,0 +1,41 @@
+
+<button type="button" class="close" ng-click="$dismiss()"><span aria-hidden="true">&times;</span></button>
+<div class="modal-body">
+    <p class="text-center">{{::lg.text}}</p>
+    <form name="lg.registerForm">
+        <div class="form-group">
+            <div class="input-group"
+                 ng-class="{'has-error':(lg.registerForm.email.$error.required||
+                               lg.registerForm.email.$error.email)&&lg.registerForm.email.$touched}">
+
+                <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
+                <input ng-model="lg.register_email" class="form-control" autofocus
+                       type="email" placeholder="E-Mail" required name="email">
+            </div>
+            <div class="alert alert-danger"
+                 ng-show="lg.registerForm.email.$touched && (lg.registerForm.email.$error.required||
+                 lg.registerForm.email.$error.email)">Введите правильный E-Mail
+            </div>
+        </div>
+        <div class="alert alert-info" ng-if="lg.regSuccess">
+            <i class="fa fa-info"></i>
+            Для завершения регистрации подтвердите свой email.<br>
+            Если письмо не пришло, проверьте папку со спамом.
+        </div>
+    </form>
+</div>
+<div class="modal-footer text-center">
+    <div class="alert alert-danger" ng-if="lg.responseErr">{{lg.responseErr}}</div>
+    <button class="btn btn-success btn-block btn-animated"
+            ng-if="!lg.regSuccess"
+            onclick="yaCounter40097510.reachGoal('header-click-registration-register-button-click')"
+            ng-click="lg.signup()"
+            ng-class="{'animated':lg.pending}"
+            ng-disabled="lg.registerForm.$invalid||lg.pending">
+        <span class="btn-visible">Отправить</span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+</div>
+
+
+

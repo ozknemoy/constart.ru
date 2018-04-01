@@ -1,0 +1,1027 @@
+
+<div class="carousel slide" id="profile_info" data-ride="carousel" data-interval="false" data-keyboard="false">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="carousel-indicators list ">
+                <div data-target="#profile_info" data-slide-to="0" class="active">Верификация</div>
+                <div data-target="#profile_info" data-slide-to="1">Основные данные</div>
+                <div data-target="#profile_info" data-slide-to="2">Юридические лица</div>
+                <div data-target="#profile_info" data-slide-to="3">Настройка</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="carousel-inner" role="listbox">
+
+        <div class="item relative active" >
+            <div class="profile_fields">
+
+                <div class="profile_fields--wrap">
+                    <!-- паспортные и личные данные -->
+                    <form name="ue.phoneForm">
+                        <div class="profile_fields--wrap">
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">
+                                    Телефон:&thinsp;<span class="validation">*</span>
+                                </div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    <div class="row" ng-if='ue.u.is_phone_verified'>
+                                        <div class="col-xs-12 col-sm-6 col-sm-push-6">
+                                            <div class="alert alert-info alert-num">
+                                                <span class="alert-num-item">1</span>
+                                                Введите свой номер телефона и нажмите кнопку «Выслать код подтверждения» <br>
+                                                На указанный вами номер телефона придет смс с кодом подтверждения, введите этот код в окно подтверждения и нажмите кнопку «Подтвердить».
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-sm-pull-6">
+                                            <div class="form-group has-success has-feedback"
+                                                 ng-class="{'has-error':ue.phoneForm.$invalid}">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                                    <input type="text" class="form-control"  name="phone" required
+                                                           ng-model="ue.u.phone_num" ui-mask="+7(999) 999 99 99"
+                                                           ng-disabled="ue.u.is_phone_verified">
+                                                </div>
+                                                <br>
+                                                <div class="form-group">
+                                                    <div class="pull-right">
+                                                        <span class="label label-round label-success">Подтвержден</span>
+                                                    </div>
+                                                    <!--<button type="button" class="btn btn-info"
+                                                            ng-if='ue.u.is_phone_verified'
+                                                            data-toggle="modal" data-target="#rephoneCode">
+                                                        <i class="fa fa-pencil"></i>&thinsp;Изменить</button>-->
+                                                    <phone-verify user="ue.u"
+                                                                  re-verify="true"
+                                                                  ng-if='ue.u.is_phone_verified'>
+                                                        <button class="btn btn-info"><i class="fa fa-pencil"></i>&thinsp;Изменить</button>
+                                                    </phone-verify>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" ng-if='!ue.u.is_phone_verified'>
+                                        <div class="col-xs-12 col-sm-6 col-sm-push-6">
+                                            <div class="alert alert-info alert-num">
+                                                <span class="alert-num-item">1</span>
+                                                Введите свой номер телефона и нажмите кнопку «Подтвердить» <br>
+                                                На указанный вами номер телефона придет смс с кодом подтверждения, введите этот код в окно подтверждения и нажмите кнопку «Подтвердить».
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-sm-pull-6">
+                                            <div class="form-group has-error has-feedback">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                                    <input type="text" class="form-control"  name="phone" required
+                                                           ng-model="ue.u.phone_num" ui-mask="+7(999) 999 99 99">
+                                                </div>
+                                                <br>
+                                                <div class="form-group">
+                                                    <phone-verify ng-if='!ue.u.is_phone_verified'
+                                                                  user="ue.u">
+                                                        <button class="btn btn-info"
+                                                                ng-disabled="ue.phoneForm.$invalid || ue.pasportData.name.$error.required ||
+                                                                 ue.pasportData.surname.$error.required">
+                                                            Выслать код подтверждения
+                                                        </button>
+                                                    </phone-verify>
+                                                </div>
+                                                <div class="alert alert-info">
+                                                    Когда ваш телефон будет подтвержден, вы можете продолжить верификацию.<br>
+                                                    <a ui-sref="help({'id':'u3_verif'})" class="btn btn-xs btn-info">Зачем нужна верификация?</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="col-xs-12 col-sm-6 col-lg-7 col-lgs-8">
+                                            <span class="label label-round label-danger">Не подтвержден</span>
+                                        </div>-->
+                                    </div>
+
+                                    <span class="col-xs-12 col-sm-9 col-lg-7 col-lgs-4 alert alert-danger"
+                                          ng-if="ue.phoneForm.$invalid">
+                                        <small>Введите правильный номер телефона</small>
+                                    </span>
+
+
+
+
+                                    <div class="alert alert info" ng-if="ue.pasportData.name.$error.required||
+                                        ue.pasportData.surname.$error.required">
+                                        <i class="fa fa-info-circle"></i>
+                                        <small>&thinsp;Чтобы подтвердить телефон сначала необходимо заполнить обязательные поля</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--<div class="profile_fields&#45;&#45;item row">
+                                <div class="profile_fields&#45;&#45;left col-xs-12 col-sm-4 col-lg-3">Skype:</div>
+                                <div class="profile_fields&#45;&#45;right col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-skype"></i></span>
+                                        <input type="text" class="form-control" ng-model="ue.u.skype">
+                                    </div>
+                                </div>
+                            </div>-->
+                        </div>
+                    </form>
+                    <div class="profile_fields--divider"></div>
+
+                    <form name="ue.pasportData">
+
+                        <div class="profile_fields--item row"
+                             ng-class="{'has-error':ue.blur.surname && ue.pasportData.surname.$error.required}">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Фамилия: <span
+                                    class="validation">*</span>
+                            </div>
+                            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-sm-push-6">
+                                        <div class="alert alert-info alert-num">
+                                            <span class="alert-num-item">2</span>
+                                            Введите свою фамилию так, как указано в вашем паспорте
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-sm-pull-6">
+                                        <input type="text" class="form-control" required name="surname"
+                                               ng-disabled="ue.u.is_on_admin_verific || ue.u.is_verified"
+                                               ng-model="ue.u.surname">
+                                        <div class="alert alert-danger"
+                                             ng-if="ue.pasportData.surname.$touched && ue.pasportData.surname.$error.required">
+                                            <small>Введите фамилию</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--item row"
+                             ng-class="{'has-error':ue.blur.name&&ue.pasportData.name.$error.required}">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Имя: <span
+                                    class="validation">*</span></div>
+                            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-sm-push-6">
+                                        <div class="alert alert-info">
+                                            Введите своё Имя так, как оно указано в вашем паспорте
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-sm-pull-6">
+                                        <input type="text" class="form-control" required name="name"
+                                               ng-model="ue.u.name"
+                                               ng-blur="ue.blur.name=1"
+                                               ng-disabled="ue.u.is_on_admin_verific||ue.u.is_verified">
+                                        <div class="alert alert-danger"
+                                             ng-if="ue.blur.name&&ue.pasportData.name.$error.required">
+                                            <small>Введите имя</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--item row" >
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Отчество:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-sm-push-6">
+                                        <div class="alert alert-info">
+                                            Введите своё Отчество так, как оно указано в вашем паспорте
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-sm-pull-6">
+                                        <input type="text" class="form-control" name="patronymic"
+                                               ng-model="ue.u.patronymic"
+                                               ng-disabled="ue.u.is_on_admin_verific||ue.u.is_verified">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--divider"></div>
+
+                        <!--паспорт-------------------------------------->
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3"></div>
+                            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                <div class="profile_fields--title">Паспорт</div>
+                                <!--<div class="alert alert-info" ng-if="ue.u.is_on_admin_verific">
+                                    <small>Данные отправлены на верификацию и будут проверены в течение 24 часов</small>
+                                </div>-->
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3"></div>
+                            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                <div class="alert alert-info alert-num">
+                                    <span class="alert-num-item">3</span>
+                                    Заполните паспортные данные. Внимательно проверяйте каждую цифру и букву, все должно быть указано как в документе
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="profile_fields--item row"
+                             ng-class="{'has-error':ue.pasportData.passport_number.$touched
+                             &&(ue.pasportData.passport_number.$error.required||ue.pasportData.passport_number.$error.mask)}">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Серия - номер:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-5 col-md-3 col-lg-3 col-lgs-2">
+                                <input type="text" class="form-control passport_number"
+                                       ng-model="ue.u.passport.number" name="passport_number" required
+                                       ng-model-options="{debounce:300}"
+                                       mask='9999-999999'
+                                       restrict="reject"
+                                       mask-clean="true"
+                                       ng-disabled="ue.u.is_on_admin_verific || ue.u.is_verified">
+                                <div class="alert alert-danger"
+                                     ng-if="ue.pasportData.passport_number.$touched &&(ue.pasportData.passport_number.$error.required||
+                                 ue.pasportData.passport_number.$error.mask)">
+                                    <small>Введите номер паспорта</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--item row"
+                             ng-class="{'has-error':ue.pasportData.passport_who_give.$touched && ue.pasportData.passport_who_give.$error.required}">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Кем выдан:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                <input type="text" class="form-control"
+                                       ng-model="ue.u.passport.who_give" ng-model-options="{debounce:300}"
+                                       name="passport_who_give" required
+                                       ng-disabled="ue.u.is_on_admin_verific || ue.u.is_verified">
+                                <div class="alert alert-danger"
+                                     ng-if="ue.pasportData.passport_who_give.$touched &&ue.pasportData.passport_who_give.$error.required">
+                                    <small>Введите кем выдан паспорт</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--item row"
+                             ng-class="{'has-error':ue.pasportData.passport_when_give.$touched &&
+                             (ue.pasportData.passport_when_give.$error.required||ue.pasportData.passport_when_give.$error.date)}">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Когда выдан:</div>
+                            <div class="datepickerAng profile_fields--right col-xs-8 col-sm-4 col-lg-3 col-lgs-2">
+                                <div class="input-group">
+                                    <!-- сразу обновляю модель паспорта из временной переменной-->
+                                    <input type="date" class="form-control" name="passport_when_give" required
+                                           uib-datepicker-popup
+                                           ng-change="ue.evalPassport(ue.temp.passport_when_give)"
+                                           ng-model="ue.temp.passport_when_give"
+                                           datepicker-options="ue.dateOptions"
+                                           is-open="open2"
+                                           ng-disabled="ue.u.is_on_admin_verific || ue.u.is_verified"
+                                           ng-click="open2 = true" show-button-bar="false">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                                <div class="alert alert-danger"
+                                     ng-if="ue.pasportData.passport_when_give.$touched &&
+                                     (ue.pasportData.passport_when_give.$error.required || ue.pasportData.passport_when_give.$error.date)">
+                                    <small>Введите когда выдан паспорт</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--item row"
+                             ng-class="{'has-error':ue.pasportData.passport_code.$touched &&
+                             (ue.pasportData.passport_code.$error.required || ue.pasportData.passport_code.$error.mask)}">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Код подразделения:</div>
+                            <div class="profile_fields--right col-xs-4 col-sm-3 col-lg-2">
+                                <input type="text" class="form-control" name="passport_code" required
+                                       mask='ddd-ddd'
+                                       restrict="reject"
+                                       mask-clean="true"
+                                       ng-model="ue.u.passport.code" ng-model-options="{debounce:300}"
+                                       ng-disabled="ue.u.is_on_admin_verific||ue.u.is_verified"/>
+                                <div class="alert alert-danger"
+                                     ng-if="ue.pasportData.passport_code.$touched &&(ue.pasportData.passport_code.$error.required||
+                                 ue.pasportData.passport_code.$error.mask)">
+                                    <small>Введите код подразделения</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--item row"
+                             ng-class="{'has-error':ue.pasportData.birthday.$touched &&
+                             (ue.pasportData.birthday.$error.required || ue.pasportData.birthday.$error.date)}">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Дата рождения:</div>
+                            <div class="datepickerAng profile_fields--right col-xs-8 col-sm-4 col-lg-3 col-lgs-2">
+                                <div class="input-group">
+                                    <input type="date" class="form-control"
+                                           uib-datepicker-popup name="birthday"
+                                           ng-model="ue.temp.birthday" required
+                                           datepicker-options="ue.dateOptions"
+                                           is-open="open1" show-button-bar="false"
+                                           ng-disabled="ue.u.is_on_admin_verific || ue.u.is_verified"
+                                           ng-click="open1 = true">
+                                    <span class="input-group-addon">
+                                      <!--ng-click="open1 = true"
+                                      ng-disabled="ue.u.is_on_admin_verific||ue.u.is_verified"-->
+                                    <i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-lg-3 col-lgs-2 alert alert-danger"
+                                 ng-if="ue.pasportData.birthday.$touched &&
+                                 (ue.pasportData.birthday.$error.required||ue.pasportData.birthday.$error.date)">
+                                <small>Введите дату рождения</small>
+                            </div>
+
+                        </div>
+
+                        <div class="profile_fields--item row"
+                             ng-class="{'has-error':ue.pasportData.passport_place_reg.$touched &&
+                                          ue.pasportData.passport_place_reg.$error.required}">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Место регистрации:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                <input type="text" class="form-control" name="passport_place_reg" required
+                                       ng-model="ue.u.passport.place_reg" ng-model-options="{debounce:300}"
+                                       ng-disabled="ue.u.is_on_admin_verific||ue.u.is_verified"/>
+                                <div class="alert alert-danger"
+                                     ng-if="ue.pasportData.passport_place_reg.$touched && ue.pasportData.passport_place_reg.$error.required">
+                                    <small>Введите место регистрации</small>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="profile_fields--item row"
+                             ng-class="{'has-error':ue.pasportData.passport_place_birth.$touched &&
+                                         ue.pasportData.passport_place_birth.$error.required}">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Место рождения:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                <input type="text" class="form-control" name="passport_place_birth" required
+                                       ng-model="ue.u.passport.place_birth" ng-model-options="{debounce:300}"
+                                       ng-disabled="ue.u.is_on_admin_verific||ue.u.is_verified"/>
+                                <div class="alert alert-danger"
+                                     ng-if="ue.pasportData.passport_place_birth.$touched && ue.pasportData.passport_place_birth.$error.required">
+                                    <small>Введите место регистрации</small>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="profile_fields--item row"
+                             ng-class="{'pointer-none':ue.u.is_on_admin_verific || ue.u.is_verified}">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3"></div>
+                            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9" >
+                                <div class="profile_fields--right--title">Загрузить</div>
+                                <p class="profile_fields--description">
+                                    Загрузите скан первой и страницы с пропиской. Если Вы прилагаете фото страниц, не пользуйтесь вспышкой при съемке:
+                                </p>
+                                <!-- второй инпут для файла с валидацией размера и скрытый инпут текс для валидации required-->
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-sm-push-6">
+                                        <div class="alert alert-info alert-num">
+                                            <span class="alert-num-item">4</span>
+                                            Загрузите разворот паспорта с фотографией, нажав на кнопку с надписью: «Страница 1»
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-sm-pull-6">
+                                        <div class="file_upload"
+                                             ng-class="{'has-error':ue.pasportData.passport_photo_1.$error.required}">
+                                            <label ng-class="{'loaded':ue.u.passport.photo_1.length}">
+                                                <span class="btn btn-success btn-sm inline btn-animated"
+                                                      ng-class="{'animated pointer-none':ue.pend.upload}">
+                                                    <span class="btn-visible">Страница 1</span>
+                                                    <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+                                                </span>
+                                                <input type="file" id="passport_photo_1"
+                                                       ng-model="ue.temp.passport_photo_1"
+                                                       accept="image/*"
+                                                       name="passport_photo_1_temp"
+                                                       ng-click="ue.blur.passport_photo_1=1"
+                                                       ngf-select="ue.upload($file,'photo_1')"
+                                                       ngf-max-size="2MB"
+                                                       ngf-model-invalid="errorFile1">
+                                                <input type="hidden" ng-model="ue.u.passport.photo_1" required name="passport_photo_1">
+                                                <span class="file_title">{{ue.u.passport.photo_1.slice(-10)}}</span>
+                                            </label>
+
+                                            <!--<button type="button" class="btn btn-danger btn-sm file_delete" data-toggle="modal" data-target="#fileDelete"
+                                                   ng-click="ue.temp.numOfDeletescan='photo_1'"><i class="fa fa-close"></i></button>-->
+                                            <confirm-button class="btn btn-danger btn-sm file_delete"
+                                                            text-header="Удалить скан?"
+                                                            callback="ue.u.passport.photo_1=null"><i class="fa fa-close"></i>
+                                            </confirm-button>
+
+                                            <div>
+                                                <div class="alert alert-danger" ng-if="ue.pasportData.passport_photo_1_temp.$error.maxSize">
+                                                    <i class="fa fa-exclamation-triangle" aria-hidden="true">
+                                                    </i> <small>Вы пытаетесь загрузить файл размером {{errorFile1.size / 1000000|number:1}}MB .
+                                                    максимально допустимый размер 2M</small>
+                                                </div>
+                                                <div ng-show="ue.blur.passport_photo_1&& ue.pasportData.passport_photo_1.$error.required"
+                                                     class="alert alert-danger"><small>Загрузите первый скан паспорта</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-sm-push-6">
+                                        <div class="alert alert-info alert-num">
+                                            <span class="alert-num-item">5</span>
+                                            Загрузите разворот паспорта с местом регистрации, нажав на кнопку с надписью: «Страница 2». Необходимо загрузить разворот с действующей регистрацией
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-sm-pull-6">
+                                        <div class="file_upload"
+                                             ng-class="{'has-error':ue.pasportData.passport_photo_2.$error.required}">
+                                            <label ng-class="{'loaded':ue.u.passport.photo_2.length}">
+                                                <span class="btn btn-success btn-sm inline btn-animated"
+                                                      ng-class="{'animated pointer-none':ue.pend.upload}">
+                                                    <span class="btn-visible">Страница 2</span>
+                                                    <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+                                                </span>
+                                                <input type="file" id="passport_photo_2"
+                                                       ng-model="ue.temp.passport_photo_2"
+                                                       name="passport_photo_2_temp"
+                                                       ng-click="ue.blur.passport_photo_2=1"
+                                                       accept="image/*"
+                                                       ngf-select="ue.upload($file,'photo_2')"
+                                                       ngf-max-size="2MB"
+                                                       ngf-model-invalid="errorFile2">
+                                                <input type="hidden" ng-model="ue.u.passport.photo_2" required name="passport_photo_2">
+                                                <span class="file_title">{{ue.u.passport.photo_2.slice(-10)}}</span>
+                                            </label>
+                                            <!-- <span class="file_delete"
+                                                   ng-click="ue.deleteScan('passport_photo_2')"></span>    -->
+                                            <!--<button type="button" class="btn btn-danger btn-sm file_delete" data-toggle="modal" data-target="#fileDelete"
+                                                    ng-click="ue.temp.numOfDeletescan='photo_2'"><i class="fa fa-close"></i></button>-->
+                                            <confirm-button class="btn btn-danger btn-sm file_delete"
+                                                            text-header="Удалить скан?"
+                                                            callback="ue.u.passport.photo_2=null"><i class="fa fa-close"></i>
+                                            </confirm-button>
+
+
+                                            <div>
+                                                <div class="alert alert-danger" ng-if="ue.pasportData.passport_photo_2_temp.$error.maxSize">
+                                                    <small>Вы пытаетесь загрузить файл размером {{errorFile2.size / 1000000|number:1}}MB .
+                                                        максимально допустимый размер 2M</small>
+                                                </div>
+                                                <div ng-show="ue.blur.passport_photo_2&&ue.pasportData.passport_photo_2.$error.required"
+                                                     class="alert alert-danger"><small>Загрузите второй скан паспорта</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="profile_fields--item row" ng-if="!ue.u.is_on_admin_verific">
+                        <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3"></div>
+                        <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-sm-push-6">
+                                    <div class="alert alert-info alert-num" ng-if="!ue.u.is_verified">
+                                        <span class="alert-num-item">6</span>
+                                        Нажмите на кнопку «Отправить данные на верификацию» <br>
+                                        На указанный вами номер телефона придет смс с кодом подтверждения, введите этот код в окно подтверждения и нажмите кнопку «Подтвердить».
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-sm-pull-6">
+                                    <div class="form-group">
+                                        <!--кнопки дублеры  -->
+                                        <!--<button type="button" class="btn btn-info" data-toggle="modal" data-target="#passportVerification"
+                                                ng-if="ue.u.is_phone_verified && !ue.u.is_verified"
+                                                ng-click="ue.getCodeSMS('passportSave');ue.save(ue.u)"
+                                                ng-disabled="ue.pasportData.$invalid">Отправить данные на верификацию
+                                        </button>--><!---->
+                                        <sms-request ng-if="ue.u.is_phone_verified && !ue.u.is_verified"
+                                                     ng-class="{'pointer-none':ue.pasportData.$invalid}"
+                                                     ng-click="ue.save(ue.u)"
+                                                     request-sms-url="user/get-code?codeType=passportSave"
+                                                     response-toast="Паспортные данные успешно отправлены на проверку"
+                                                     request-url="user/passport-save?code="
+                                                     reload="true"
+                                                     value="ue.u.passport"
+                                                     class="btn btn-info">
+                                            Отправить данные на верификацию
+                                        </sms-request>
+                                        <button class="btn btn-info" ng-if="!ue.u.is_phone_verified" disabled>
+                                            <small>Для верификации подтвердите телефон</small>
+                                        </button>
+                                        <!--кнопки дублеры end -->
+
+                                        <div class="alert alert-success" ng-if="ue.u.is_on_admin_verific">
+                                            <i class="fa fa-lg fa-check"></i>&nbsp;
+                                            Данные отправлены на верификацию, и будут проверены в течении 24 часов.
+                                        </div>
+                                        <span ng-if="ue.u.is_verified" class="label label-round label-success">Подтвержден</span>
+
+
+                                        <!--<label class="project_edit&#45;&#45;title_descr">
+                                            <a ui-sref="help({'id':'u3_verif'})">Зачем нужна верификация?</a>
+                                        </label>-->
+                                        <!--<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#deletePassportData"
+                                                ng-if="ue.u.is_verified">Очистить
+                                        </button>-->
+                                        <sms-request type="button" class="btn btn-warning"
+                                                     uib-tooltip="Все поля будут очищены и верификация отменена."
+                                                     request-sms-url="user/get-code?codeType=passportClear"
+                                                     request-url="user/passport-clear?code="
+                                                     response-toast="Паспортные данные удалены"
+                                                     reload="true"
+                                                     ng-if="ue.u.is_verified">Удалить данные
+                                        </sms-request>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile_fields--item row">
+                        <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3"></div>
+                        <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                            <div class="alert alert-warning">
+                                <i class="fa fa-lg fa-info-circle"></i>&nbsp;
+                                Система оповестит вас, что все сделано правильно. После этого вам будет направлено письмо с подтверждением верификации и вы сможете продолжить работу над своим проектом
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile_fields--divider"></div>
+                    <!-- паспортные и личные данные end -->
+
+                    <!-- банковские данные -->
+                    <div class="profile_fields--item row">
+                        <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3"></div>
+                        <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                            <div class="profile_fields--title">Банковские реквизиты</div>
+                        </div>
+                    </div>
+
+                    <div class="profile_fields--item row">
+                        <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3"></div>
+                        <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                            <div class="alert alert-info alert-num">
+                                <span class="alert-num-item">7</span>
+                                После получения подтверждения о верификации, вы сможете сохранить банковские реквизиты, на которые вы хотите получить деньги для реализации проекта. <br>Внимательно проверяйте каждую цифру, так как это важно для своевременного получения вами денег.
+                            </div>
+                        </div>
+                    </div>
+
+                    <form name="ue.bankForm">
+                        <div class="profile_fields--wrap">
+                            <div class="profile_fields--item row"
+                                 ng-class="{'has-error':ue.bankForm.bank_name.$touched && ue.bankForm.bank_name.$error.required}">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Название банка:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    <input type="text" class="form-control" name="bank_name" required
+                                           ng-disabled="!ue.u.is_verified"
+                                           ng-model="ue.u.bank.name" ng-model-options="{debounce:300}">
+                                    <!--ng-disabled="!ue.u.is_verified || ue.u.bank.is_verified"-->
+                                    <div class="alert alert-danger"
+                                         ng-if="ue.bankForm.bank_name.$touched && ue.bankForm.bank_name.$error.required">
+                                        <small>Введите название банка</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row"
+                                 ng-class="{'has-error':ue.bankForm.bank_bik.$touched &&
+                                 (ue.bankForm.bank_bik.$error.required || ue.bankForm.bank_bik.$error.mask)}">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">БИК:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-4">
+                                    <input type="text" class="form-control" name="bank_bik" required
+                                           ng-model="ue.u.bank.bik" ng-model-options="{debounce:300}"
+                                           ng-disabled="!ue.u.is_verified"
+                                           mask='999999999' restrict="reject">
+                                    <!--ng-disabled="!ue.u.is_verified || ue.u.bank.is_verified"-->
+                                    <div class="alert alert-danger"
+                                         ng-if="ue.bankForm.bank_bik.$touched &&
+                                               (ue.bankForm.bank_bik.$error.required || ue.bankForm.bank_bik.$error.mask)">
+                                        <small>Введите правильный БИК банка</small>
+                                    </div>
+                                </div>
+
+                            </div><!--<pre>{{ue.bankForm.bank_bik|json}}</pre>-->
+                            <div class="profile_fields--item row"
+                                 ng-class="{'has-error':ue.bankForm.bank_corr.$touched &&
+                                 (ue.bankForm.bank_corr.$error.required || ue.bankForm.bank_corr.$error.mask)}">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Кор. счет:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-4">
+                                    <input type="text" class="form-control" required name="bank_corr"
+                                           ng-model="ue.u.bank.corr" ng-model-options="{debounce:300}"
+                                           mask="99999 99999 99999 99999"
+                                           ng-disabled="!ue.u.is_verified"
+                                           restrict="reject" mask-clean="true">
+                                    <!--ng-disabled="!ue.u.is_verified|| ue.u.bank.is_verified"-->
+                                    <div class="alert alert-danger"
+                                         ng-show="ue.bankForm.bank_corr.$touched &&
+                                         (ue.bankForm.bank_corr.$error.required||ue.bankForm.bank_corr.$error.mask)">
+                                        <small>Введите правильный кор. счет банка</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row"
+                                 ng-class="{'has-error':ue.bankForm.bank_account.$touched &&
+                                 (ue.bankForm.bank_account.$error.required || ue.bankForm.bank_account.$error.mask)}">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Расчетный счет:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-4">
+                                    <input type="text" class="form-control" required
+                                           ng-model="ue.u.bank.account" ng-model-options="{debounce:300}"
+                                           mask='99999 99999 99999 99999'
+                                           restrict="reject" mask-clean="true"
+                                           ng-disabled="!ue.u.is_verified"
+                                           name="bank_account">
+                                    <!--ng-disabled="!ue.u.is_verified|| ue.u.bank.is_verified"-->
+                                    <div class="alert alert-danger"
+                                         ng-show="ue.bankForm.bank_account.$touched &&
+                                         (ue.bankForm.bank_account.$error.required||ue.bankForm.bank_account.$error.mask)">
+                                        <small>Введите правильный номер расчетного счета банка</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!--<div class="profile_fields--item row">
+                        <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3"></div>
+                        <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-4">
+                            <button class="btn btn-info">Сохранить банковские реквизиты</button>
+                        </div>
+                    </div>-->
+                    <!--<div class="profile_fields--item row">
+                        <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3"></div>
+                        <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                            <button class="btn btn-info" data-toggle="modal" data-target="#bankVerification"
+                                    ng-if="!ue.u.bank.is_verified"
+                                    ng-click="ue.getCodeSMS('bankSave')"
+                                    ng-disabled="ue.bankForm.$invalid"><!-- || !ue.u.is_verified
+                                Отправить данные на верификацию
+                            </button>
+                            <button class="btn btn-warning" data-toggle="modal" data-target="#deleteBankData"
+                                    ng-if="ue.u.bank.is_verified">
+                                Очистить
+                            </button>
+                            <div class="alert alert info" ng-if="!ue.u.bank.is_verified">
+                                <i class="fa fa-info-circle"></i>
+                                <small> Заполнение банковских реквизитов доступно после заполнения паспортных
+                                данных на вкладке личная информация и проверки оператором.</small>
+                            </div>
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+
+        <!-- основные данные -->
+        <div class="item relative">
+            <form name="ue.mainForm">
+                <div class="profile_fields">
+                    <div class="profile_fields--wrap">
+                        <div class="profile_fields--item row" ng-if="ue.isCS">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Статус на платформе:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                <!--<select ng-options="o.id as o.name for o in ue.u.user_statuses"
+                                        ng-model="ue.u.user_status" multiple></select>{{ue.temp.user_statuses}}-->
+                                <div class="form-group">
+                                    <div class="checkbox-group">
+                                        <label class="checkbox default" ng-repeat="us in ue.temp.user_statuses">
+                                            <input type="checkbox" ng-checked="us.ticked"
+                                                   ng-model="ue.temp.user_status[us.id].ticked">
+                                            <span></span>
+                                            {{::us.name}}
+                                        </label>
+                                    </div>
+                                </div>
+                                <label class="project_edit--title_descr">Отражает Ваш вид деятельности на платформе.
+                                    У пользователя может быть несколько статусов.</label>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--divider"></div>
+
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Страна:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <!--<select class="select" ng-model="ue.u.country_id" ng-change="ue.changeCountry()"
+                                        ng-options="country.id as country.name for country in ue.geo">
+                                </select>-->
+                                <ui-select class="select"
+                                           search-enabled="false"
+                                           ng-model="ue.u.country_id"
+                                           ng-change="ue.u.region_id=null;ue.getNewCountryAndRegion()"><!--ue.getCountryAndRegion()-->
+                                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="o.id as o in ue.geo track by $index">
+                                        <span>{{::o.name}}</span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Регион:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <!--<select class="select" ng-model="ue.u.region_id" ng-change="ue.changeRegion()"
+                                        ng-disabled="!ue.u.country_id"
+                                        ng-options="region.id as region.name for region in ue.geo[ue.u.country_id-1].regions">
+                                </select>-->
+                                <ui-select class="select"
+                                           ng-model="ue.u.region_id"
+                                           ng-disabled="!ue.u.country_id"
+                                           ng-change="ue.getNewCountryAndRegion()">
+                                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="o.id as o in ue.regionsOfContry | filter: $select.search track by $index">
+                                        <span>{{::o.name}}</span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--divider"></div>
+
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Пол:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                <div class="radio rounded">
+                                    <label>
+                                        <input type="radio" name="sex" ng-value="0" ng-checked="ue.u.sex==0"
+                                               ng-model="ue.u.sex">
+                                        <span></span>Мужской
+                                    </label>
+                                </div>
+                                <div class="radio rounded">
+                                    <label>
+                                        <input type="radio" name="sex" ng-value="1" ng-checked="ue.u.sex==1"
+                                               ng-model="ue.u.sex">
+                                        <span></span>Женский
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--divider"></div>
+
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">О себе:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                <textarea rows="5" class="form-control" ng-model="ue.u.about_me"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--divider"></div>
+
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Сфера интересов:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                <!--<select class="select-tags" multiple ng-model="ue.u.user_interest"
+                                        ng-options="i.id as i.name for i in ue.i"> placeholder="выберите сферу интересов"
+                                </select>-->
+                                <ui-select class="select" multiple
+                                           search-enabled="false"
+                                           ng-model="ue.temp.user_interest"
+                                           sortable="true">
+                                    <ui-select-match>{{$item.name}}</ui-select-match>
+                                    <ui-select-choices repeat="i in ue.i">
+                                        <span>{{::i.name}}</span>
+                                    </ui-select-choices>
+                                </ui-select>
+
+
+
+                                <label class="project_edit--title_descr">
+                                    Какие сферы деятельности Вам интересны?</label>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Ключевые навыки:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                <!--<select ng-options="o.id as o.name for o in ue.u.main_activity" placeholder="выберите ключевые навыки"
+                                        ng-model="ue.u.user_main_activity" multiple ></select>-->
+                                <ui-select class="select" multiple
+                                           search-enabled="false"
+                                           ng-model="ue.temp.main_activity"
+                                           sortable="true">
+                                    <ui-select-match>{{$item.name}}</ui-select-match>
+                                    <ui-select-choices repeat="i in ue.temp.main_activityArr | filter:$select.search">
+                                        <span>{{::i.name}}</span>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <label class="project_edit--title_descr">Какими ключевыми навыками Вы обладаете, как
+                                    специалист?</label>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--divider"></div>
+
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Образование:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6 col-md-5 col-lg-3">
+                                <!--<select ng-options="o.id as o.name for o in ue.u.edu_level"
+                                        ng-model="ue.u.education_level_id" class="select"></select>-->
+                                <ui-select class="select"
+                                           search-enabled="false"
+                                           ng-model="ue.u.education_level_id">
+                                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="o.id as o in ue.u.edu_level">
+                                        <span>{{::o.name}}</span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Родной язык:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6 col-md-5 col-lg-3">
+                                <!--<select ng-options="o.id as o.name for o in ue.u.main_lang"
+                                        ng-model="ue.u.main_language" class="select"></select>-->
+                                <ui-select class="select"
+                                           search-enabled="false"
+                                           ng-model="ue.u.main_language">
+                                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="o.id as o in ue.u.main_lang">
+                                        <span>{{::o.name}}</span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Английский язык:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6 col-md-5 col-lg-3">
+                                <!--<select ng-options="o.id as o.name for o in ue.u.english_levell"
+                                        ng-model="ue.u.english_language_level_id" class="select"></select>-->
+                                <ui-select class="select"
+                                           search-enabled="false"
+                                           ng-model="ue.u.english_language_level_id">
+                                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="o.id as o in ue.u.english_levell">
+                                        <span>{{::o.name}}</span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--divider"></div>
+
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Семейное положение:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <ui-select class="select"
+                                           search-enabled="false"
+                                           ng-model="ue.u.marital_status">
+                                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="o.id as o in ue.temp.marital_statuses">
+                                        <span>{{::o.name}}</span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Дети:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <ui-select class="select"
+                                           search-enabled="false"
+                                           ng-model="ue.u.child">
+                                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="o.id as o in ue.temp.children">
+                                        <span>{{::o.name}}</span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+
+                        <div class="profile_fields--divider"></div>
+
+
+
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3"></div>
+                            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                <button ng-click="ue.addWork()" class="btn btn-success">
+                                    <i class="fa fa-plus"></i> Добавить место работы</button>
+                            </div>
+                        </div>
+                        <div ng-repeat="w in ue.u.work track by $index">
+                            <div class="profile_fields--divider" ng-if="$index>0"></div>
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Место работы:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-4">
+                                    <input type="text" class="form-control" ng-model="ue.u.work[$index].user_work">
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Должность:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-4">
+                                    <input type="text" class="form-control" ng-model="ue.u.work[$index].position">
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Страна:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                    <!--<select class="select" ng-model="ue.u.work[$index].country_id_work"
+                                            ng-options="country.id as country.name for country in ue.geo">
+                                    </select>-->
+                                    <ui-select class="select"
+                                               search-enabled="false"
+                                               ng-model="ue.u.work[$index].country_id_work"
+                                               ng-change="ue.u.work[$index].region_id_work=null">
+                                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="o.id as o in ue.geo track by o.id">
+                                            <span>{{::o.name}}</span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <!--ng-init="ue.u.work[$index].country_work=ue.geo[ue.u.work[$index].country_id_work-1].name"-->
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Регион:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                    <ui-select class="select"
+                                               ng-model="ue.u.work[$index].region_id_work"
+                                               ng-disabled="!ue.u.work[$index].country_id_work">
+                                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                        <!--не засирать массив лишней инфой поэтому тут такой медленный метод-->
+                                        <ui-select-choices repeat="o.id as o in ue.getRegionWorkByCountryId(ue.u.work[$index].country_id_work) | filter: $select.search track by o.id">
+                                            <span>{{::o.name}}</span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Сфера деятельности компании:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-4">
+                                    <!--<select class="select" ng-model="ue.u.work[$index].work_sphere"
+                                            ng-options="country.id as country.name for country in ue.temp.work_sphere"> placeholder="выберите cферу деятельности"
+                                    </select>-->
+                                    <ui-select class="select-tags"
+                                               search-enabled="false"
+                                               ng-model="ue.u.work[$index].work_sphere"
+                                               sortable="true">
+                                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                        <ui-select-choices repeat="w.id as w in ue.temp.work_sphere">
+                                            <span>{{::w.name}}</span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+
+                            </div>
+
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Сайт компании:</div>
+                                <div class="profile_fields--right col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                    <input type="text" class="form-control" ng-model="ue.u.work[$index].site">
+                                </div>
+                            </div>
+                            <div class="profile_fields--item row">
+                                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3"></div>
+                                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                                    <button ng-click="ue.deleteWork($index);ue.mainForm.$setDirty()" class="btn btn-danger">
+                                        <i class="fa fa-times"></i> Удалить место работы</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- основные данные end -->
+
+        <!--юр лица -->
+        <div class="item">
+            <legals-view></legals-view>
+        </div>
+        <!--юр лица end-->
+
+  <!--настройки-->
+        <div class="item">
+            <div class="profile_fields">
+                <div class="profile_fields--wrap">
+                    <div class="profile_fields--item row">
+                        <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Смена пароля:</div>
+                        <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-4">
+                            <button class="btn btn-success" ng-click="ue.restorePassword()">Сменить пароль</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="profile--footer" id="anchor">
+    <div class="row">
+        <div class="col-xs-12">
+            <button class="btn btn-success" ng-click="ue.trySave()"
+                    ng-disabled="ue.pasportData.surname.$error.required||
+                    ue.pasportData.name.$error.required || ue.phoneForm.$invalid">
+                <i class="fa fa-save"></i> Сохранить</button>
+            <span><span class="text-danger">*</span>Поля, обязательные для заполнения</span>
+        </div>
+    </div>
+</div>
+

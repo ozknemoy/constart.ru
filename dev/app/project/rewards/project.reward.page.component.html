@@ -1,0 +1,190 @@
+<!--страница покупки награды-->
+<div class="awards_item ">
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-lgm-7">
+            <div class="awards_item--wrap">
+                <div class="title">{{::rv.reward.name}}</div>
+                <div class="row">
+                    <!-- award image -->
+                    <div class="col-xs-12 col-sm-3 col-lg-4" ng-if="rv.reward.cover">
+                        <div class="awards_item--img">
+                            <img ng-src="{{rv.baseImgUrl+rv.reward.cover}}" alt="">
+                        </div>
+                    </div>
+                    <!-- award image end -->
+
+                    <!-- award content -->
+                    <div class="col-xs-12" ng-class="::{'col-sm-9 col-lg-8':rv.reward.cover}">
+                        <div class="awards_item--content">
+                            <!-- award price -->
+                            <div class="awards_modal--price">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6">
+                                        {{::(rv.reward.price | thousand)}}&nbsp;<span class="fa fa-rub"></span>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 text-right">
+                                        <div class="awards_modal--block">
+                                            <span class="awards_modal--block--count">
+                                                {{rv.reward.collected_count || 0}}</span>
+                                            куплено &nbsp;
+                                        </div>
+                                        <div class="awards_modal--block" ng-if="rv.reward.sell_count">
+                                            <span class="awards_modal--block--count">
+                                                {{::rv.amountRewD}}
+                                            </span>
+                                            осталось
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- award price end -->
+
+                            <div class="wysiwyg">
+                                <p>{{::rv.reward.description}}</p>
+                            </div>
+
+                            <p ng-if="::rv.reward.date">
+                                <i class="fa fa-calendar fa-fw fa-pull-left fa-lg" aria-hidden="true"></i>
+                                Доставка :&nbsp;{{::rv.reward.date}}
+                            </p>
+
+                            <p ng-if="::rv.reward.delivery_rules">
+                                <i class="fa fa-truck fa-fw fa-pull-left fa-lg" aria-hidden="true"></i>
+                                Условия доставки:&nbsp;{{::rv.term}}
+                            </p>
+
+                            <p ng-if="rv.reward.has_pickup && rv.reward.delivery_rules!=4">
+                                <i class="fa fa-shopping-bag fa-fw fa-pull-left fa-lg" aria-hidden="true"></i>
+                                Возможен самовывоз
+                            </p>
+
+                            <div ng-if="::rv.isEnded" class="alert alert-info">
+                                Сбор средств завершен
+                            </div>
+                            <div not-if="::rv.isEnded">
+                                <div class="alert alert-info" ng-if="::rv.isCS">
+                                    <i class="fa fa-money fa-2x fa-pull-left" aria-hidden="true"></i>
+                                    Деньги за вознаграждения будут возвращены вам, если проект не соберет заявленную сумму.
+                                </div>
+
+                                <!--показываю если не остались награды и sell_count==0 (бесконечность)-->
+                                <div class="alert alert-info" ng-if="rv.amountRewD<1 && rv.reward.sell_count">
+                                    Это вознаграждение закончилось. Вы можете выбрать&nbsp;<a ui-sref="proj.fin">другое</a>.
+                                </div>
+
+                                <div class="awards_modal--footer" ng-if="rv.amountRewD>0 || !rv.reward.sell_count">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6">
+                                            <p class="awards_modal--footer--title">Количество:</p>
+                                            <div class="spinner-wrap">
+                                                <div class="input-group spinner">
+                                                    <!--лим-->
+                                                    <input type="text" class="form-control"
+                                                           ng-if="rv.reward.sell_count"
+                                                           ng-model="rv.countin"
+                                                           max="{{rv.amountRewD}}"
+                                                           ozk-number min="1">
+                                                    <!--безлим-->
+                                                    <input type="text" class="form-control"
+                                                           ng-if="!rv.reward.sell_count"
+                                                           ng-model="rv.countin"
+                                                           max="1000000"
+                                                           ozk-number min="1">
+                                                    <div class="input-group-btn-vertical">
+                                                        <button class="btn btn-default" type="button"
+                                                                ng-if="rv.reward.sell_count"
+                                                                ng-disabled="rv.countin>rv.amountRewD-1"
+                                                                ng-click="rv.count('plus')"><i class="fa fa-caret-up"></i></button>
+                                                        <!--безлим-->
+                                                        <button class="btn btn-default" type="button"
+                                                                ng-if="!rv.reward.sell_count"
+                                                                ng-click="rv.count('plus')"><i class="fa fa-caret-up"></i></button>
+
+                                                        <button class="btn btn-default" type="button" ng-disabled="rv.countin<2"
+                                                                ng-click="rv.count('minus')"><i class="fa fa-caret-down"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6">
+                                            <p class="awards_modal--footer--title">Итого:</p>
+                                            <div class="awards_modal--footer--total">
+                                                {{rv.countin*rv.reward.price | thousand}}&nbsp;<span class="fa fa-rub"></span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <reg-light callback="rv.email=email" ng-if="rv.isAuth=='no'"></reg-light>
+
+                                    <div class="awards_modal--sep"></div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-xs-12" ng-if="rv.enoughMoney">
+                                                <label class="checkbox btn-block styled">
+                                                    <input data-hook="checkboxFromCAccount" type="checkbox" ng-model="rv.fromCanstartAccount">
+                                                    <span data-hook="_checkboxFromCAccount"></span>
+                                                    Оплатить с личного счета ( доступно&nbsp;{{rv.isAuth|thousand}}
+                                                    <i class="fa fa-rub"></i>&nbsp;)
+                                                </label>
+                                            </div>
+
+                                            <div class="col-xs-12 col-sm-6">
+                                                <label class="checkbox btn-block styled">
+                                                    <input data-hook="checkboxReward" type="checkbox" ng-model="rv.checkboxReward">
+                                                    <span data-hook="_checkboxReward"></span>Принимаю условия
+                                                    <a ng-href="{{rv.baseDocUrl+'oferta-tmpl-kf-1.pdf'}}" target="_blank" download>оферты</a>
+                                                </label>
+                                            </div>
+
+
+                                            <div class="col-xs-12 col-sm-6">
+                                                <!--кнопки дублёры -->
+                                                <!-- для внешнего счета логинов и для неавторизованых -->
+                                                <button class="btn btn-success btn-block btn-animated"
+                                                        data-hook="notLoginOuterButton"
+                                                        ng-class="{'animated':rv.pend}"
+                                                        ng-if="rv.isAuth=='no' || !rv.fromCanstartAccount"
+                                                        onclick="yaCounter40097510.reachGoal('click-kf-buy-button')"
+                                                        ng-click="rv.buyByNotAuth()"
+                                                        ng-disabled="!rv.checkboxReward ||
+                                                     (rv.amountRewD<1 && rv.reward.sell_count) ||
+                                                     (!rv.email && rv.isAuth=='no')">
+                                                    <span class="btn-visible">Приобрести</span>
+                                                    <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+                                                </button>
+                                                <!-- для внутреннего счета логина-->
+                                                <button class="btn btn-success btn-block btn-animated"
+                                                        data-hook="forLoginInnerButton"
+                                                        ng-class="{'animated':rv.pend}"
+                                                        ng-if="rv.isAuth!=='no' && rv.fromCanstartAccount"
+                                                        onclick="yaCounter40097510.reachGoal('click-kf-buy-button')"
+                                                        ng-click="rv.buyByAuth()"
+                                                        ng-disabled="!rv.checkboxReward ||
+                                                     (rv.amountRewD<1 && rv.reward.sell_count)">
+                                                    <span class="btn-visible">Приобрести</span>
+                                                    <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- award content end -->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-lgm-5">
+            <constart-rewards value="::rv.value" inner-class="col-lgm-6"></constart-rewards>
+        </div>
+    </div>
+</div>
+<br>
+<br>

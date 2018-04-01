@@ -1,0 +1,278 @@
+@import 'mixin.scss';
+.modal {
+	.title {
+
+	}
+	.location {
+		padding: 4px 0 0 35px;
+		position: relative;
+		margin: 10px 0 0;
+		h4 {
+			font-size: 20px;
+			color: $color-gray-dark;
+			margin: 0 0 10px;
+		}
+		p {
+			font-size: 14px;
+			margin: 0 0 15px;
+		}
+		i {
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+	}
+	// textarea {
+	// 	min-height: 100px;
+	// }
+	label:not(.btn) {
+		font-weight: normal;
+		margin: 10px 0 0;
+		&.block {
+			display: block;
+		}
+	}
+	button {
+		// margin-top: 35px;
+		display: inline-block;
+	}
+	&_user {
+		position: relative;
+		margin-top: 15px;
+	}
+	span {
+		&.tip {
+			margin: 0 0 0 3px;
+			vertical-align: middle;
+		}
+		&.required {
+			font-size: 16px;
+			margin-left: 20px;
+			.text-danger {
+				font-size: 30px;
+			}
+			&.text-danger {
+				margin-left: 0;
+				font-size: 20px;
+				line-height: 18px;
+				display: inline-block;
+				vertical-align: top;
+				height: 0px;
+			}
+		}
+	}
+	.underline_list--field {
+		margin: 40px 0;
+	}
+	.total {
+		&--text {
+			display: inline-block;
+			@include font(22px, $font_sec);
+			vertical-align: middle;
+			.fa {
+				font-size: .9em;
+			}
+		}
+		&--field {
+			display: inline-block;
+			width: 100px;
+			margin: 0 10px;
+			text-align: center;
+			vertical-align: middle;
+		}
+		&--button {
+			display: inline-block;
+			vertical-align: middle;
+		}
+		p {
+			font-size: 16px;
+			span {
+				display: block;
+				@include font(42px, $ubuntu_bold);
+				margin-top: -5px;
+				color: $color-bluedark;
+				i {
+					margin-top: 14px;
+				}
+			}
+		}
+
+		&--block {
+			float: left;
+			@include font(12px, $ubuntu_light);
+			text-transform: uppercase;
+			margin-right: 20px;
+			&--count {
+				@include font(20px, $font_sec);
+				display: block;
+				.fa {
+					font-size: .9em;
+				}
+			}
+			&--actions {
+				float: right;
+			}
+		}
+	}
+	.investment_total {
+		text-align: left;
+		margin: 20px 0 0;
+		.icon.rub_bluedark {
+			vertical-align: baseline;
+		}
+		.investment_total--num {
+			span {
+				font-size: 40px;
+				margin-top: 0px;
+			}
+		}
+	}
+	 .btn-reset-pass {
+	 	display: inline-block;
+	 	@include font(14px, $ubuntu_light);
+	 	color: $color-bluedark;
+	 	margin: 15px 0 0;
+	 	position: relative;
+	 	&:after {
+	 		background: $color-bluedark;
+	 		content: '';
+	 		position: absolute;
+	 		left: 50%;
+	 		right: 50%;
+	 		height: 0;
+	 		display: block;
+	 		@include transition(.2s linear);
+	 	}
+	 	&:hover {
+	 		&:after {
+	 			left: 0;
+	 			right: 0;
+	 			height: 1px;
+	 		}
+	 	}
+	 }
+	.file_upload {
+		label {
+			float: none;
+		}
+	}
+
+	&-sep {
+		background: $color-gray;
+		margin: 20px -30px;
+		height: 1px;
+
+	}
+}
+
+// select drop down
+.select_dropdown {
+	position: relative;
+	.button_sub--toggle {
+		margin-right: 10px;
+		margin-bottom: 0;
+	}
+	.dropdown-submenu {
+		background: #999999;
+		position: absolute;
+		top: 44px;
+		left: 39px;
+		z-index: 1000;
+		padding: 0;
+		margin: 0;
+		width: 400px;
+		.wrap {
+			padding: 10px 0;
+			&:after {
+				background: #bfbfbf;
+				content: '';
+				position:absolute;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				width: 20px;
+			}
+			.slideToggle {
+				color: #dddddd;
+				@include font(16px, $font_sec);
+				line-height: 13px;
+				&:before {
+					border-color: transparent transparent transparent #dddddd;
+					top: 0;
+				}
+				&.open:before {
+					border-color: #dddddd transparent transparent transparent;
+					top: 3px;
+				}
+			}
+		}
+	}
+	.slideSub {
+		display: none;
+		padding: 0 20px;
+		
+	}
+	label {
+		position: relative;
+		padding: 0 0 0 20px;
+		margin: 0 20px 10px;
+		cursor: pointer;
+		display: block;
+		input {
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		span {
+			font-size: 15px;
+			line-height: 17px;
+			color: #d8d8d8;
+			display: inline-block;
+			vertical-align: top;
+			margin: 3px 0 1px;
+		}
+	}
+	&--item {
+		background: white;
+		border: 1px solid $color-gray;
+		display: inline-block;
+		vertical-align: top;
+		font-size: 16px;
+		color: $color-bluedark;
+		padding: 5px 40px 4px 15px;
+		margin: 10px 10px 0 0; 
+		line-height: 20px;
+		position: relative;
+		span {
+			@include background-image('delete', $size: 13px 13px, $repeat: no-repeat, $position: center);
+			position: absolute;
+			right: 0;
+			top: 0;
+			display: block;
+			height: 27px;
+			width: 27px;
+			cursor: pointer; 
+		}
+	}
+}
+
+.radio {
+	display: inline-block;
+	vertical-align: bottom;
+	font-size: 16px;
+	margin: 5px 20px 0;
+	color: $color-gray-dark;
+	label {
+		padding: 0;
+		margin: 0;
+		vertical-align: top;
+	}
+	input[type="text"] {
+		width: 80px;
+		text-align: right;
+		padding: 0 5px;
+		margin-top: -6px;
+		display: inline-block;
+		vertical-align: top;
+	}
+}

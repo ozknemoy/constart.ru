@@ -1,0 +1,37 @@
+
+<div class="project_vacancy-view">
+    <div class="project_vacancy-view--content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="project_vacancy-view--header">
+                    <div class="title">{{v.vac.header}}</div>
+                    <div class="project_vacancy-view--date">{{v.vac.create_date}}</div>
+                </div>
+                <div class="wysiwyg" ng-bind-html="v.vac.body"></div>
+                <div class="text-center">
+                    <login-button class="btn btn-success" ng-if="!v.isAuth && v.ownProj!=1">
+                        Авторизуйтесь, чтобы откликнуться на вакансию
+                    </login-button>
+                    <button class="btn btn-success"
+                            ng-if="v.isAuth && v.ownProj!=1"
+                            value="{'vacId':v.idVac}"
+                            modal-open="app/_common/modals/vac-email-to-user.html">
+                        Откликнуться на вакансию
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav ng-if="v.allCount>1">
+        <ul class="pager">
+            <li ng-click="v.prev()" ng-class="{'pointer-none':v.currentPage<1}">
+                <a href><span aria-hidden="true">&larr;</span>&nbsp;Предыдущая</a>
+            </li>
+            <li><a ui-sref="proj.vacancies.all">К списку</a></li>
+            <li ng-click="v.next()" ng-class="{'pointer-none':v.currentPage > v.allCount-2}">
+                <a href>Следующая&nbsp;<span aria-hidden="true">&rarr;</span></a>
+            </li>
+        </ul>
+    </nav>
+</div>

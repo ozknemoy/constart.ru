@@ -1,2 +1,1 @@
-simple adjuster contrast and brightness on pure javaScript
-
+angular 1.5 es2016 project

@@ -1,0 +1,112 @@
+
+<dynamic  dynamic id="dynamic" class="dynamic"></dynamic>
+<div>
+    <div class="profile_fields--wrap">
+        <div class="profile_fields--item row">
+            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3"></div>
+            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                <div class="profile_fields--title">Основное</div>
+            </div>
+        </div>
+
+        <div class="profile_fields--item row" ng-if="::u.isCS">
+            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Статус:</div>
+            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                <span class="label label-pill label-default" not-if="::u.u.user_statuses.length">Не заполнено</span>
+                <span ng-if="::u.u.user_statuses.length"
+                      ng-repeat="s in u.u.user_statuses" class="label  label-pill label-default">{{::s}}</span></div>
+        </div>
+
+        <div class="profile_fields--item row">
+            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Сфера интересов:</div>
+            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                <span class="label label-pill label-default" not-if="::u.interests.length">Не заполнено</span>
+                <span class="label label-pill label-default"
+                      ng-if="::u.interests.length"
+                      ng-repeat="i in u.interests track by $index">{{::i}}</span>
+            </div>
+        </div>
+
+        <div class="profile_fields--item row">
+            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Ключевые навыки:</div>
+            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                <span class="label  label-pill label-default" not-if="::u.u.user_activities.length">Не заполнено</span>
+                <span class="label label-pill label-default"
+                      ng-if="::u.u.user_activities.length"
+                      ng-repeat="act in u.u.user_activities">{{::act}}</span>
+            </div>
+        </div>
+
+        <div class="profile_fields--divider"
+            ng-if="u.u.education_level || u.u.main_language || u.u.english_language_level"></div>
+
+        <div class="profile_fields--item row" ng-if="::u.u.education_level">
+            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Образование:</div>
+            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">{{::u.u.education_level}}</div>
+        </div>
+
+        <div class="profile_fields--item row" ng-if="::u.u.main_language">
+            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Родной язык:</div>
+            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">{{::u.u.main_language}}</div>
+        </div>
+
+        <div class="profile_fields--item row" ng-if="::u.u.english_language_level">
+            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Английский язык:</div>
+            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">{{::u.u.english_language_level}}</div>
+        </div>
+
+
+        <div class="profile_fields--divider" ng-if="::u.u.work.length"></div>
+        <!--работа -->
+        <div class="profile_fields--item row" ng-if="::u.u.work.length">
+            <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3"></div>
+            <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                <div class="profile_fields--title">Место работы</div>
+            </div>
+        </div>
+
+        <div ng-repeat="w in u.u.work track by $index">
+            <div class="profile_fields--divider" ng-if="$index>0"></div>
+
+            <div class="profile_fields--item row" ng-if="::w.user_work">
+                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Компания:</div>
+                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">{{::w.user_work}}</div>
+            </div>
+            <div class="profile_fields--item row" ng-if="::w.country_work">
+                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Страна:</div>
+                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">{{::w.country_work}}</div>
+            </div>
+            <div class="profile_fields--item row" ng-if="::w.region_work">
+                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Регион:</div>
+                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">{{::w.region_work}}</div>
+            </div>
+            <div class="profile_fields--item row" ng-if="::w.position">
+                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Должность:</div>
+                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">{{::w.position}}</div>
+            </div>
+            <div class="profile_fields--item row" ng-if="u.work_sphere[w.work_sphere]">
+                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Сфера деятельности компании:</div>
+                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">{{::u.work_sphere[w.work_sphere]}}</div>
+            </div>
+            <div class="profile_fields--item row" ng-if="w.site && w.site!='http://'">
+                <div class="profile_fields--left col-xs-12 col-sm-4 col-lg-3">Сайт компании:</div>
+                <div class="profile_fields--right col-xs-12 col-sm-8 col-lg-9">
+                    <a ng-href="{{::w._site}}"  target="_blank">{{::w.site}}</a></div>
+            </div>
+        </div>
+        <!--работа end -->
+    </div>
+</div>
+
+<!-- description -->
+<div class="description" ng-if="::u.u.about_me">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="wysiwyg">
+                <h3>О себе</h3>
+                <p>{{::u.u.about_me}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- description end -->

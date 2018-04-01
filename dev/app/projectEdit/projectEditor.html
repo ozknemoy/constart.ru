@@ -1,0 +1,37 @@
+
+<div id="page-content-wrapper" class="project">
+    <section class="section">
+        <div class="section_wrap">
+            <div class="container-fluid">
+                <div class="project_edit">
+                    <div class="title">Создание проекта</div>
+
+                    <ol class="steps" ng-class="{'pointer-none':pe.pend.save || pe.aboutForm.$invalid}">
+                        <li class="current">
+                            <a href="" ng-click="pe.tryChangeState('about')">
+                            <span>Общая информация</span></a></li>
+                        <li ng-class="{'current':pe.state!='about'}">
+                            <a href="" ng-click="pe.tryChangeState('desc')">
+                            Описание проекта</a></li>
+                        <li ng-class="{'current':pe.state=='team'||pe.state=='budget'}"><a href="" ng-click="pe.tryChangeState('team')">
+                            Команда проекта</a></li>
+                        <li ng-class="{'current':pe.state=='budget'}"
+                            ng-if="pe.p.type_id==1 || pe.p.type_id==2">
+                            <a href="" ng-click="pe.tryChangeState('budget')">
+                            {{pe.p.type_id==1?'Финансирование':'Смета проекта'}}</a></li>
+                    </ol>
+
+                    <div ui-view></div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<!--изза z-index перенес сюда две больших модалки-->
+<!--<div legal-entity change="pe.legalsChanges(ind,type,obj)"></div>-->
+
+
+

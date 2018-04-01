@@ -1,0 +1,40 @@
+
+<div class="project_news-list">
+    <div class="form-group" ng-if="n.ownProj==1">
+        <a class="btn btn-success" ui-sref="proj.news.editor({'id_news':'new'})">
+            <i class="fa fa-newspaper-o" aria-hidden="true"></i>&nbsp;Добавить новость
+        </a>
+    </div>
+
+
+    <ul class="project_news-list--wrap">
+        <li class="project_news-list--item"
+            ng-class="{'noImg':!one.image}"
+            dir-paginate="one in n.newses|itemsPerPage: 10 track by one.id">
+            <a ui-sref="proj.news.one({'id_news':one.id})" class="project_news-list--link">
+                <span class="project_news-list--img"
+                      ng-if="::one.image"
+                      ng-style="::{'background-image':'url('+n.baseImgUrl + one.image+')'}"></span>
+                <!--<span class="project_news-list&#45;&#45;img"
+                      not-if="::one.image"
+                      style="background-image: url(assets/img/default_img.png)"></span>-->
+                <span class="project_news-list--body">
+                    <span class="project_news-list--title">{{::one.header}}</span>
+                    <span class="project_news-list--content" ng-bind-html="::one.short_body"></span>
+                </span>
+            </a>
+            <div class="project_news-list--footer">
+                <span class="project_news-list--date">{{::one.create_date}}</span>
+                <div class="project_news-list--actions" ng-if="::n.ownProj==1">
+                    <button ui-sref="proj.news.editor({'id_news':one.id})"><i class="fa fa-fw fa-pencil"></i></button>
+                    <confirm-button text-body="Действительно удалить новость?"
+                                    callback="n.delete(one.id,$index)">
+                        <button><i class="fa fa-fw fa-times"></i></button></confirm-button>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+    <nav scroll-to=".project_header--mob" aria-label="Page navigation" data-dir-pagination-controls></nav>
+
+</div>

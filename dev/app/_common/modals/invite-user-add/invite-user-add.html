@@ -1,0 +1,144 @@
+
+<button type="button" class="close" ng-click="$dismiss()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+<div class="modal-header">
+    <div class="title--small">Пригласить в проект пользователя</div>
+</div>
+<div class="modal-body">
+    <form name="iu.preAddForm" ng-if="iu.addUser.isOnServer!='y'">
+        <div class="form-group">
+            <label for="email">E-mail: <span class="required text-danger">*</span></label>
+            <input type="email" class="form-control" id="email" name="email" required
+                   ng-disabled="iu.addUser.isOnServer=='n'"
+                   ng-model="iu.addUser.email">
+            <div class="alert alert-danger"
+                 ng-if="iu.preAddForm.email.$touched"
+                 ng-show="iu.preAddForm.email.$error.required||
+                          iu.preAddForm.email.$error.email"><small>Введите правильный E-Mail
+            </small></div>
+        </div>
+        <div class="form-group">
+            <label for="position">Должность: <span class="required text-danger">*</span></label>
+            <input type="text" class="form-control" id="position" name="position" required
+                   ng-disabled="iu.addUser.isOnServer=='n'"
+                   pattern=[,A-Za-zА-Яа-я0-9\s.,-]{2,100}
+                   ng-model="iu.addUser.position">
+            <div class="alert alert-danger"
+                 ng-if="iu.preAddForm.position.$touched&&
+                        (iu.preAddForm.position.$error.pattern || iu.preAddForm.position.$error.required)">
+                <small>Разрешены только буквы и цифры, точки, запятые, тире. От 2 до 100 знаков</small>
+            </div>
+        </div>
+
+        <!--открываю поля если юзера нет на нашей площадке-->
+        <div ng-if="iu.addUser.isOnServer=='n'">
+            <div class="form-group">
+                <label for="name">Имя: <span class="required text-danger">*</span></label>
+                <input type="text" class="form-control" id="name" required name="name"
+                       ng-model="iu.addUser.name">
+                <div class="alert alert-danger"
+                     ng-if="iu.preAddForm.name.$touched&& iu.preAddForm.name.$error.required">
+                    <small>Введите имя</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="surname">Фамилия: <span class="required text-danger">*</span></label>
+                <input type="text" class="form-control" id="surname" required name="surname"
+                       ng-model="iu.addUser.surname">
+                <div class="alert alert-danger"
+                     ng-if="iu.preAddForm.surname.$touched&& iu.preAddForm.surname.$error.required">
+                    <small>Введите фамилию</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Сообщение: <span class="required text-danger">*</span></label>
+                            <textarea id="message" rows="4" class="form-control" required name="message"
+                                      pattern=(.){2,255}
+                                      ng-model="iu.addUser.message"></textarea>
+                <div class="alert alert-danger"
+                     ng-if="iu.preAddForm.message.$touched&&
+                                 (iu.preAddForm.message.$error.pattern || iu.preAddForm.message.$error.required)">
+                    <small>Минимальная длина текста сообщения - 2 знака, максимальная - 255 знаков</small>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <!--форма для отправки нашему пользователю-->
+    <div ng-if="iu.addUser.isOnServer=='y'">
+        <a ui-sref="user({'id':iu.u.id})" class="user" target="_blank">
+                    <span class="user--image" ng-if="iu.u.foto">
+                        <img ng-src="{{iu.baseImgUrl+iu.u.foto}}" alt="">
+                    </span>
+                    <span class="user--image" ng-if="!iu.u.foto">
+                        <img src="assets/img/blank-user.png" alt="">
+                    </span>
+                        <span class="user--descr">
+                        <span class="user--name">{{::iu.u.name+' '+iu.u.surname}}</span>
+                        <span class="user--title" ng-if="iu.u.user_status!==[] && iu.u.user_status!==null">
+                            <span ng-repeat="s in iu.userStatuses(iu.u.userStatus)">{{::s + ' '}}</span>
+                        </span>
+                    </span>
+                        <span class="user--location" ng-if="iu.u.country_id">
+                        <i class="fa fa-map-marker"></i>
+                        {{iu.getCountryAndRegion(iu.u.country_id,iu.u.region_id)}}
+                    </span>
+        </a>
+
+        <form name="iu.addForm">
+            <div class="form-group">
+                <label for="message">Сообщение: <span class="required text-danger">*</span></label>
+                    <textarea id="message" rows="4" class="form-control" required name="message"
+                              pattern=(.){2,255}
+                              ng-model="iu.addUser.message"></textarea>
+                <div class="alert alert-danger"
+                     ng-if="iu.addForm.message.$touched&&
+                            (iu.addForm.message.$error.pattern || iu.addForm.message.$error.required)">
+                    <small>Минимальная длина текста сообщения - 2 знака, максимальная - 255 знаков</small>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <!--<div class="alert alert-success" ng-if="iu.temp.successAddUser">
+        Приглашение сохранено и будет отправлено при публикации проекта
+    </div>
+
+    <div class="alert alert-danger" ng-if="iu.temp.errorAddUser">
+        {{iu.temp.errorAddUser}}
+    </div>-->
+
+</div>
+<div class="modal-footer text-center" ng-switch="iu.addUser.isOnServer">
+    <!--поиск юзера на площадке-->
+    <button class="btn btn-success btn-animated"
+            ng-class="{'animated':iu.pend}"
+            ng-switch-default
+            ng-click="iu.checkUserOnServer()"
+            ng-disabled="iu.preAddForm.$invalid || iu.pend">
+        <span class="btn-visible">Далее</span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+    <!--если не нашли его-->
+    <button class="btn btn-success btn-animated"
+            ng-switch-when="n"
+            ng-disabled="iu.preAddForm.$invalid || iu.pend"
+            ng-class="{'animated':iu.pend}"
+            ng-click="iu.inviteOursUser()">
+        <span class="btn-visible">Отправить приглашение</span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+    <!--если наш пользователь-->
+    <button class="btn btn-success btn-animated"
+            ng-switch-when="y"
+            ng-disabled="iu.addForm.$invalid || iu.pend"
+            ng-class="{'animated':iu.pend}"
+            ng-click="iu.inviteOursUser()">
+        <span class="btn-visible">Пригласить</span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+</div>

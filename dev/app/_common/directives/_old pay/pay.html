@@ -1,0 +1,183 @@
+
+<div class="modal fade" tabindex="-1" role="dialog" id="pay">
+     <!--data-controls-modal="pay"
+     data-backdrop="static"
+     data-keyboard="false"-->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div class="modal-header">
+                <div class="title text-center" ng-if="pay.m.deposit">Пополнение счета</div>
+                <div class="title text-center" ng-if="pay.m.withdrawal">Вывод со счета</div>
+                <div class="title text-center" ng-if="pay.m.payProject_invest">Инвестирование</div>
+                <div class="title text-center" ng-if="pay.m.payProject_reward">Спонсорство</div>
+                <div class="title text-center" ng-if="pay.m.payProject_loan">Займ</div>
+               <!-- <div class="title text-center" ng-if="pay.expenseType=='Invest'">Оплата краудинвестинга</div>
+                <div class="title text-center" ng-if="pay.expenseType=='Loan'">Оплата краудлендинга</div>-->
+            </div>
+
+            <div class="modal-body">
+                <form name="pay.payForm">
+                    <!--пополнение счета-->
+                    <div ng-if="pay.m.deposit">
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-6">Введите сумму:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6">
+                                <input type="text" name="amountMoney" ozk-number required ng-model="pay.amountMoney">
+                            </div>
+                        </div>
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-6">К оплате с учетом комиссии платежной системы:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6">
+                                <span>{{pay.amountMoney*pay.tax||0|myround:2:'math'|thousand}} <i class="fa fa-rub"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button class="btn btn-danger" data-dismiss="modal" aria-label="Close">Отменить</button>
+                            <button class="btn btn-success"
+                                    ng-click="pay.doDeposit(pay.amountMoney)"
+                                    ng-disabled="pay.payForm.$invalid">Оплатить</button>
+                        </div>
+                    </div>
+                    <!--инвестиции-->
+                    <div ng-if="pay.m.payProject_invest">
+
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-6">Количество долей:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6">
+                                {{pay.amountI}}
+                            </div>
+                        </div>
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-6">Стоимость доли:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6">
+                                {{pay.sharePriceI|thousand}}<i class="fa fa-rub"></i>
+                            </div>
+                        </div>
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-6">Итого:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6">
+                                <span>{{pay.sum|thousand}}<i class="fa fa-rub"></i></span>
+                            </div>
+                        </div>
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-6">Обеспечение заявки:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6">
+                                {{pay.sum10percent|thousand}}<i class="fa fa-rub"></i>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-danger" data-dismiss="modal" aria-label="Close">Отменить</button>
+                            <button class="btn btn-success"
+                                    ng-disabled="!pay.isAuth"
+                                    ng-click="pay.doPayProject('invest')">Оплатить</button>
+                            <br>
+                        </div>
+                    </div>
+                    <!--займ-->
+                    <div ng-if="pay.m.payProject_loan">
+
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-6">Сумма займа:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6">
+                                {{pay.amountL}}<i class="fa fa-rub"></i>
+                            </div>
+                        </div>
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-6">Обеспечение заявки:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6">
+                                {{pay.amountL/10 | myround:0 |thousand}}<i class="fa fa-rub"></i>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button class="btn btn-danger" data-dismiss="modal" aria-label="Close">Отменить</button>
+                            <button class="btn btn-success"
+                                    ng-disabled="!pay.isAuth"
+                                    ng-click="pay.doPayProject('loan')">Оплатить</button>
+                            <br>
+                        </div>
+                    </div>
+                    <!--reward-->
+                    <div ng-if="pay.m.payProject_reward">
+
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-6">Количество вознаграждений:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6">
+                                {{pay.amountR}}
+                            </div>
+                        </div>
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-6">
+                                Стоимость вознаграждения:
+                            </div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6">
+                                {{pay.sharePriceR|thousand}}<i class="fa fa-rub"></i>
+                            </div>
+                        </div>
+                        <div class="profile_fields--item row">
+                            <div class="profile_fields--left col-xs-12 col-sm-6">Итого:</div>
+                            <div class="profile_fields--right col-xs-12 col-sm-6">
+                                <span>{{pay.amountR*pay.sharePriceR|thousand}}<i class="fa fa-rub"></i></span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-danger" data-dismiss="modal" aria-label="Close">Отменить</button>
+                            <button class="btn btn-success"
+                                    ng-disabled="!pay.isAuth"
+                                    ng-click="pay.doPayProject('reward')">Оплатить</button>
+                            <br>
+                        </div>
+                    </div>
+                    <!--оплата запуска проекта -->
+                    <!--<div ng-if="pay.m.payExpenses">
+                        <div class="underline_list--field">
+                            <div class="underline_list--left">
+                                <span class="text-primary" ng-if="pay.expenseType=='Invest'">Краудинвестинг: </span>
+                                <span class="text-primary" ng-if="pay.expenseType=='Loan'">Краудлендинг: </span>
+                            </div>
+                            <div class="underline_list--right">
+                                <span class="price">{{pay.taxProj}}</span>
+                                <i class="fa fa-rub"></i>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button class="btn btn-danger" data-dismiss="modal" aria-label="Close">Отменить</button>
+                            <button class="btn btn-success" ng-click="pay.doPayExpenses()">Оплатить</button>
+                        </div>
+                    </div>-->
+                    <br>
+                    <p class="text-center" ng-if="!pay.isAuth">
+                        <span class="alert alert-info">
+                            Чтобы продолжить Вы должны&nbsp;
+                            <login-button class="btn btn-info" data-dismiss="modal">авторизоваться</login-button>
+                        </span>
+                    </p>
+                </form>
+            <!--<div class="modal-footer text-center"></div>-->
+
+            </div>
+
+            <div class="modal-footer text-center">
+                <p class="alert alert-success" ng-if="pay.succesTransaq">
+                    Операция успешно завершена
+                </p>
+                <div class="alert alert-danger" ng-if="pay.error">
+                    {{pay.error}}.
+                    <a href ng-if="pay.errorNoMoney" ng-click="pay.deposit()" class="btn btn-info">
+                        <i class="fa fa-money"></i>&nbsp;Пополнить баланс
+                    </a>
+                </div>
+                <!--<p class="alert alert-info" ng-if="!pay.succesTransaq">
+                    <i class="fa fa-info-circle"></i>
+                    После нажатия кнопки «оплатить» вы будете переведены на безопасную страницу для
+                    совершения платежа с помощью банковских карт (Visa, MasterCard, American Express).
+                    Подтверждение платежа происходит около 2 минут. Вам надо будит перезагрузить сайт
+                    чтобы увидеть изменения.
+                </p>-->
+            </div>
+        </div>
+    </div>
+</div>

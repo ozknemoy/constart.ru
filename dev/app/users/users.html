@@ -1,0 +1,239 @@
+<section class="section">
+    <div class="section_wrap">
+        <div class="container-fluid">
+            <div class="search">
+                <div class="search--filter">
+                    <div class="row">
+                        <div class="col-xs-12  col-lgs-4" ng-if="::users.isCS">
+                            <label class="control-label">Статус на платформе:</label>
+
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <label class="checkbox default" ng-repeat="us in users.fData.user_status">
+                                        <input type="checkbox" ng-value="us.id"
+                                               ng-model="users.f.user_status[us.id]">
+                                        <span></span>
+                                        {{::us.name}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-4 col-lgs-3">
+                            <div class="form-group">
+                                <label class="control-label">Страна:</label>
+                                <ui-select class="select"
+                                           search-enabled="false"
+                                           ng-model="users.f.country_id"
+                                           ng-change="users.changeCountry()">
+                                    <ui-select-match>
+                                        {{$select.selected.name}}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="o.id as o in users.geo">
+                                        <span>{{::o.name}}</span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-lgs-3">
+                            <div class="form-group">
+                                <label class="control-label">Регион:</label>
+                                <ui-select class="select"
+                                           ng-model="users.f.region_id"
+                                           ng-disabled="!users.f.country_id">
+                                    <ui-select-match placeholder="поиск...">{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices
+                                            repeat="o.id as o in users.regionsOfContry | filter: $select.search">
+                                        <span>{{::o.name}}</span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-lgs-2">
+                            <div class="form-group">
+                                <label class="control-label">Пол:</label>
+                                <ui-select class="select"
+                                           search-enabled="false"
+                                           ng-model="users.f.sex">
+                                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="o.id as o in users.fData.sexes">
+                                        <span>{{::o.name}}</span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <div class="checkbox-group">
+                                    <label class="checkbox default">
+                                        <input type="checkbox" ng-model="users.f.is_verified"
+                                               ng-false-value="0"
+                                               ng-true-value="1">
+                                        <span></span>Пользователь подтвержден
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <button class="btn btn-success collapsed btn-filter" type="button"
+                                onclick="yaCounter40097510.reachGoal('search-users-more-filters')"
+                                ng-click="u.full_filter=!u.full_filter">Еще фильтры&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-chevron-up"></span></button>
+                    </div>
+                    <div class="collapse full_filter" uib-collapse="!u.full_filter">
+
+                        <div class="search--divider"></div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-lg-3 text-right form-horizontal">
+                                <label>Возраст</label>
+                            </div>
+                            <div class="col-xs-12 col-md-8 col-lg-6 col-lgs-6">
+                                <div class="slider_range--age">
+                                    <div class="slider_range">
+                                        <div range-slider min="18" max="78" step="1" id="sl3"
+                                             attach-handle-values="true"
+                                             model-min="users.f.age_min"
+                                             model-max="users.f.age_max"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-4 col-lg-3 text-right form-horizontal">
+                                    <label class="label-input">Сфера интересов</label>
+                                </div>
+                                <div class="col-xs-12 col-md-8 col-lg-6 col-lgs-6">
+                                    <div class="form-group">
+                                        <ui-select class="select" multiple
+                                                   ng-model="users.f.user_interest" sortable="true">
+                                            <ui-select-match>{{$item.name}}</ui-select-match>
+                                            <ui-select-choices repeat="i.id as i in users.i | filter:$select.search">
+                                                <span>{{::i.name}}</span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-4 col-lg-3 text-right form-horizontal">
+                                    <label class="label-input">Ключевые навыки</label>
+                                </div>
+                                <div class="col-xs-12 col-md-8 col-lg-6 col-lgs-6">
+                                    <div class="form-group">
+                                        <ui-select class="select" multiple
+                                                   ng-model="users.f.user_main_activity" sortable="true">
+                                            <ui-select-match>{{$item.name}}</ui-select-match>
+                                            <ui-select-choices
+                                                    repeat="i.id as i in users.fData.main_activity | filter:$select.search">
+                                                <span>{{::i.name}}</span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-4 col-lg-3 text-right form-horizontal">
+                                    <label class="label-input">Уровень образования</label>
+                                </div>
+                                <div class="col-xs-12 col-md-8 col-lg-6 col-lgs-3">
+                                    <div class="form-group">
+                                        <!--<select class="select" ng-options="o.id as o.name for o in users.fData.education_level_id"
+                                                ng-model="users.f.education_level_id"></select>-->
+                                        <ui-select class="select"
+                                                   search-enabled="false"
+                                                   ng-model="users.f.education_level_id">
+                                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="o.id as o in users.fData.education_level_id">
+                                                <span>{{::o.name}}</span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-4 col-lg-3 text-right form-horizontal">
+                                    <label class="label-input">Родной язык</label>
+                                </div>
+                                <div class="col-xs-12 col-md-8 col-lg-6 col-lgs-3">
+                                    <div class="form-group">
+                                        <!--<select class="select" ng-options="o.id as o.name for o in users.fData.main_language"
+                                                ng-model="users.f.main_language"></select>-->
+                                        <ui-select class="select"
+                                                   search-enabled="false"
+                                                   ng-model="users.f.main_language">
+                                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="o.id as o in users.fData.main_language">
+                                                <span>{{::o.name}}</span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-4 col-lg-3 text-right form-horizontal">
+                                    <label class="label-input">Английский язык</label>
+                                </div>
+                                <div class="col-xs-12 col-md-8 col-lg-6 col-lgs-3">
+                                    <div class="form-group">
+                                        <!--<select class="select" ng-options="o.id as o.name for o in users.fData.english_levell"
+                                                ng-model="users.f.english_language_level_id"></select>-->
+                                        <ui-select class="select"
+                                                   search-enabled="false"
+                                                   ng-model="users.f.english_language_level_id">
+                                            <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="o.id as o in users.fData.english_levell">
+                                                <span>{{::o.name}}</span>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="search--divider"></div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 col-lgs-2">
+                            <button class="btn btn-success btn-block btn-animated"
+                                    ng-click="users.filterHandler()"
+                                    ng-class="{'animated':users.pendSearch}">
+                                <span class="btn-visible">Поиск</span>
+                                <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+                            </button>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 col-lgs-1">
+                            <div class=" full_filter full_filter--button" ng-show="u.full_filter">
+                                <button class="btn btn-warning btn-block" ng-click="users.clearFilter()">Сбросить
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="anchor"></div>
+                <div ng-if="users.u && !users.u.length" class="h4">По данным критериям поиска пользователей не найдено</div>
+                <div ng-if="users.u.length" class="title">Результат:</div>
+
+                <constart-user users="users.u"></constart-user>
+
+            </div>
+        </div>
+    </div>
+</section>

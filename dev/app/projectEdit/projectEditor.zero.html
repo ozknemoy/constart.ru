@@ -1,0 +1,110 @@
+<div id="page-content-wrapper" class="project">
+    <section class="section" id="section1" data-index="1">
+        <div class="section_wrap">
+            <div class="container-fluid">
+                <div class="project_edit">
+                    <div class="title">Создание проекта</div>
+                    <!-- steps -->
+                    <!--<ol class="steps">
+                        <li class="current"><span>Формат</span></li>
+                        <li><a href>Общая информация</a></li>
+                        <li><a href>Описание Проекта</a></li>
+                        <li><a href>Команда Проекта</a></li>
+                        <li><a href>Смета Проекта</a></li>
+                    </ol>-->
+                    <!-- steps end -->
+
+                    <div class="project_edit--choise">
+                        <div class="title--small">Выберите формат публикации вашего проекта:</div>
+                        <br>
+                        <div class="row">
+                            <div class="col-xs-12 col-mdl-4" ng-click="type_id=3"
+                                 ui-sref="projectEditor.about({'id':'new','type_id':3})">
+                                <label class="label_choise type1" ng-class="{'checked':type_id==3}">
+                                    <input type="radio" name="choise_type">
+                                    <span class="label_choise--icon"></span>
+                                    <span class="label_choise--title">Презентация бизнес-проекта</span>
+                                    <span>(Без сбора средств)</span>
+                                    <br><br>
+                                    <span class="label_choise--content">
+                                        Подходит проектам на стадии идеи или прототипа, когда инвестиции еще не нужны, но нужно: <br>
+                                        - проверить идею и получить обратную связь;<br>
+                                        - собрать команду;<br>
+                                        - привлечь единомышленников;<br>
+                                        - получить экспертизу проекта;<br>
+                                        - подготовиться к привлечению инвестиций.
+                                    </span>
+                                    <span class="label_choise--footer">
+                                        Включить сбор средств можно будет позже, если это понадобится проекту.
+                                        <br>
+                                        <span class="label_choise--action">Выбрать</span>
+                                    </span>
+
+                                </label>
+                            </div>
+                            <div class="col-xs-12 col-mdl-4" ng-click="type_id=1"
+                                 ui-sref="projectEditor.about({'id':'new','type_id':1})">
+                                <label class="label_choise type2" ng-class="{'checked':type_id==1}">
+                                    <input type="radio" name="choise_type">
+                                    <span class="label_choise--icon"></span>
+                                    <span class="label_choise--title">Сбор средств за вознаграждения</span>
+                                    <span>(Краудфандинг)</span>
+                                    <br><br>
+                                    <span class="label_choise--content">
+                                        Подходит проектам на стадии прототипа/первых продаж: получить обратную связь от потенциальных покупателей, проверить спрос и провести рекламную кампанию.
+                                    </span>
+                                    <span class="label_choise--footer">
+                                        Предпродажа конкретных вознаграждений за финансовый вклад в ваш проект.
+                                        <br>
+                                        <span class="label_choise--action">Выбрать</span>
+                                    </span>
+
+                                </label>
+                            </div>
+                            <div class="col-xs-12 col-mdl-4" ng-click="type_id=2"
+                                 ui-sref="projectEditor.about({'id':'new','type_id':2})">
+                                <label class="label_choise type3" ng-class="{'checked':type_id==2}">
+                                    <input type="radio" name="choise_type">
+                                    <span class="label_choise--icon"></span>
+                                    <span class="label_choise--title">Привлечение инвестиций</span>
+                                    <span>(Краудинвестинг/краудлендинг)</span>
+                                    <br><br>
+                                    <span class="label_choise--content">
+                                        Подходит высокорисковым проектам на стадии запуска и роста, которые уже доказали покупательский спрос и готовы к дальнейшему развитию и масштабированию.
+                                    </span>
+                                    <span class="label_choise--footer">
+                                        Продажа долей в проекте за инвестиции либо займы у инвесторов на развитие проекта.
+                                        <br>
+                                        <span class="label_choise--action">Выбрать</span>
+                                    </span>
+
+                                </label>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-xs-12 col-mdl-6 col-mdl-offset-3">
+                                <div class="alert alert-info">
+                                    <i class="fa fa-info fa-2x fa-fw fa-pull-left fa-border" aria-hidden="true"></i>
+                                    <div class="text-center">
+                                        Обратите внимание, что изменить формат проекта после данного выбора нельзя. Если вы решите, что вашему проекту необходим другой формат, будет нужно создать новый проект. Если вам сложно определиться с выбором, позвоните нам: (812) 931-72-78, и наши операторы с удовольствием помогут вам.
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div class="project_edit&#45;&#45;footer text-center">
+                        <button class="btn btn-success" ng-disabled="!type_id"
+                                ui-sref="projectEditor.about({'id':'new','type_id':type_id})">Далее</button>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+
+

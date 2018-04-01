@@ -1,0 +1,152 @@
+
+<section class="section">
+    <div class="section_wrap">
+        <div class="container-fluid">
+<div class="profile" ng-cloak ng-class="{'prj_m--open':u.temp.prj_mOpen}">
+
+    <!-- profile header block -->
+    <div class="profile--block">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="profile--image">
+                    <img ozk-img="{{::u.u.foto}}"
+                         base="{{::u.baseImgUrl}}"
+                         sex="{{::u.u.sex}}"
+                         src="assets/_img/blank_profile--male.png"
+                         f-src="assets/_img/blank_profile--female.png" alt="">
+                </div>
+                <div class="profile--descr">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-5">
+
+                            <span class="profile--name">
+                                {{::u.u.surname}}&nbsp;{{::u.u.name}}<span ng-if="::u.u.age">,&nbsp;
+                                <span>{{::u.u.age}}</span>&nbsp;
+                                {{::(u.u.age|getNoun:'год ':'года ':'лет ')}}</span>
+                            </span>
+
+                            <span class="profile--status">
+                                <span not-if="::u.u.is_verified" class="label label-round label-danger">
+                                    Не подтвержден
+                                </span>
+                                <span ng-if="::u.u.is_verified" class="label label-round label-success">
+                                    Подтвержден
+                                </span>
+                            </span>
+
+                            <div class="profile--info" ng-if="::u.u.country_id">
+                                <i class="fa fa-map-marker"></i>&nbsp;{{::u.u.CountryAndRegion}}
+                            </div>
+
+                            <div class="profile--projects--count">
+                                <div class="profile--projects--count--item" ng-if="::u.u.projectsCount">
+                                    Инициатор
+                                    <span>{{::u.u.projectsCount}}</span>&nbsp;
+                                    {{::u.u.projectsCount|getNoun:'проекта':'проектов':'проектов'}}
+                                </div>
+                                <div class="profile--projects--count--item" ng-if="::u.u.projectsInCount">
+                                    Участвую в
+                                    <span>{{::u.u.projectsInCount||0}}</span>&nbsp;
+                                    {{u.u.projectsInCount||0|getNoun:'проекте':'проектах':'проектах'}}
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-xs-12 col-md-7">
+                            <div class="profile--onsite" ng-if="::u.u.daysOnSite">
+                                На сайте&nbsp;{{::u.u.daysOnSite}}&nbsp;
+                                {{u.u.daysOnSite|getNoun:'день':'дня':'дней'}}
+                                <!--| online <span  ng-class="{'bg-danger': !u.u.is_online,'bg-success': u.u.is_online}"></span>-->
+                            </div>
+                            <!-- header balance -->
+                            <div class="profile--balance" ng-if="::u.isOwnUserState">
+                                <div class="profile--balance--item">
+                                    Доступно
+                                    <span> {{::(u.u.balance|thousand)}} <i class="fa fa-rub"></i></span>
+                                </div>
+                                <div class="profile--balance--item">
+                                    Заморожено
+                                    <span> {{::u.u.freeze_balance|thousand}} <i class="fa fa-rub"></i></span>
+                                </div>
+                            </div>
+                            <!-- header balance end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- profile header block end -->
+
+    <!--мобильное меню-->
+    <div class="prj_mb">
+        <div class="prj_mb--wrap">
+            <a class="prj_mb--item" ui-sref-active="current" ui-sref="user.about"
+               ng-click="u.temp.prj_mOpen=0">Информация</a>
+            <a class="prj_mb--item" ui-sref-active="current" ui-sref="user.projects"
+               not-if="!u.u.projectsCount && !u.isOwnUserState"
+               ng-click="u.temp.prj_mOpen=0">Проекты</a>
+            <a class="prj_mb--item"
+               ng-if="::u.isOwnUserState"
+               ng-click="u.temp.prj_mOpen=0"
+               ui-sref-active="current" ui-sref="user.history">История операций</a>
+            <a class="prj_mb--item"
+               not-if="::u.isOwnUserState" modal-open="app/_common/modals/u-email-to-user.html">
+              <i class="fa fa-envelope"></i> Отправить сообщение</a>
+            <a class="prj_mb--item"
+               ng-if="::u.isOwnUserState"
+               ui-sref="userEditor.about({'id':u.id})"><i class="fa fa-pencil"></i> Редактировать</a>
+            <pay-deposit class="prj_mb--item"
+               ng-if="::u.isOwnUserState"
+               ng-click="u.temp.prj_mOpen=0"><i class="fa fa-money"></i> Пополнить баланс
+            </pay-deposit>
+            <div class="prj_mb--close" ng-click="u.temp.prj_mOpen=0"><span></span>Закрыть</div>
+        </div>
+    </div>
+
+
+    <!-- profile navigation -->
+    <div class="profile_navigation">
+        <div class="kebab-wrapper" ng-click="u.temp.prj_mOpen=1" ng-class="{'active':u.temp.prj_mOpen}">
+            <div class="kebab">
+                <span></span>
+            </div>
+            <span class="kebab--title">Меню профиля</span>
+        </div>
+        <ul class="profile_navigation--wrap">
+            <li class="profile_navigation--item">
+                <a class="profile_navigation--link" ui-sref-active="current"
+                   ui-sref="user.about">Информация</a></li>
+            <li class="profile_navigation--item">
+                <a class="profile_navigation--link"
+                   not-if="!u.u.projectsCount && !u.isOwnUserState"
+                   ui-sref-active="current" ui-sref="user.projects">Проекты</a></li>
+            <li class="profile_navigation--item" ng-if="::u.isOwnUserState">
+                <a class="profile_navigation--link" ui-sref-active="current"
+                   ui-sref="user.history">История операций</a>
+            </li>
+            <li class="profile_navigation--item pull-right" ng-if="::u.isOwnUserState">
+                <a class="btn btn-danger" ui-sref="userEditor.about({'id':u.id})">
+                    <i class="fa fa-pencil"></i> Редактировать</a>
+                <pay-deposit class="btn btn-info"> <!--ng-click="pay('deposit')"
+                    modal-open="app/_common/modals/pay-deposit.html"
+                    value="{controllerAs:'pay'}"-->
+                    <i class="fa fa-money"></i> Пополнить баланс
+                </pay-deposit>
+            </li>
+            <li class="profile_navigation--item pull-right" not-if="::u.isOwnUserState">
+                <a class="btn btn-success" href modal-open="app/_common/modals/u-email-to-user.html">
+                    <i class="fa fa-envelope"></i> Отправить сообщение</a>
+            </li>
+        </ul>
+    </div>
+    <!-- profile navigation end -->
+
+</div>
+<main ui-view></main>
+
+</div>
+</div>
+</section>
+
+

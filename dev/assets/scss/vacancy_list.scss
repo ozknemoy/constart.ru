@@ -1,0 +1,172 @@
+@import 'mixin.scss';
+
+.vacancy_list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	button {
+		// opacity: .5;
+		vertical-align: top;
+	}
+	
+	
+	.vacancy_list--buttons {
+		visibility: hidden;
+		opacity: 0;
+		vertical-align: top;
+		@include transition(.3s linear);
+		i.icon.pen_blue {
+			background-position: center;
+			background-repeat: no-repeat;
+			width: 33px;
+			height: 33px;
+			cursor: pointer;
+		}
+		.icon {
+			position: relative;
+		}
+		a {
+			width: 33px;
+			height: 33px;
+			text-align: center;
+			display: inline-block;
+			vertical-align: top;
+			span {
+				margin-top: 3px;
+			}
+		}
+	}
+	&--block {
+		padding: 30px 0 0;
+		.title {
+			margin-bottom: 30px;
+		}
+		.carousel-indicators {
+			
+		}
+	}
+	&--item {
+		background:#fff;
+		border: 1px solid rgba(0,0,0,.2);
+		margin: 0 0 10px;
+		padding: 15px;
+		@include transition(.3s linear);
+		&:hover {
+			@include box-shadow(0px 0px 5px 1px rgba(0,0,0,0.2));
+			.vacancy_list--buttons {
+				visibility: visible;
+				opacity: 1;
+			}
+			button {
+				opacity: 1;
+			}
+		}
+		.icon {
+			position: absolute;
+			left: 0;
+			top: 1px;
+		}
+		.field_wrap {
+			position: relative;
+			padding: 0 0 0 25px;
+		}
+	}
+	&--header {
+		padding: 0 0 15px;	
+		position: relative;
+	}
+	&--data {
+		position: absolute;
+		right: 0;
+		top: 10px;
+		@include font(12px, $ubuntu_light);
+		color: $color-bluedark;
+	}
+	&--title {
+		@include font(25px, $font_sec);
+		color: $color-bluedark;
+		margin: 0 0 10px;
+		i {
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-width: 0 5px 5px 5px;
+			border-color: transparent transparent $color-bluedark transparent;
+			.collapsed & {
+				border-width: 5px 5px 0 5px;
+				border-color: $color-bluedark transparent transparent transparent;
+			}
+			display: inline-block;
+			vertical-align: middle;
+			@include transition(.3s linear);
+		}
+	}
+	&--status {
+		@include font(14px, $ubuntu_light);
+		margin-left: 10px;
+	}
+	&--field {
+		font-size: 18px;
+		color: $color-gray-dark;
+		@include transition(.3s linear);
+		span {
+			font-family: $font-sec;
+			color: $color-bluedark;
+		}
+	}
+	&--details {
+		padding: 0 0 15px;
+		p {
+			font-size: 14px;
+			line-height: 100%;
+			color: $color-bluedark;
+			margin: 0;
+		}
+		h6 {
+			@include font(18px, $font_sec);
+			line-height: 100%;
+			color: $color-bluedark;
+			margin: .7em 0 .3em;
+		}
+		&--tags {
+			padding: 10px 0 0;
+			font-size: 16px;
+		}
+	}
+	&--footer {
+		font-size: 20px;
+		position: relative;
+		&:after {
+			content: '';
+			display: table;
+			clear: both;
+		}
+		.share {
+			margin-top: 15px;
+		}
+	}
+
+	&--price {
+		@include font(25px, $font_sec);
+		color: $color-bluedark;
+		margin-right: 30px;
+		margin-top: -5px;
+		position: relative;
+		&:after {
+			background: $color-bluedark;
+			content: '';
+			display: block;
+			position: absolute;
+			right: -15px;
+			height: 75px;
+			width: 1px;
+			top: 5px;
+		}
+		span {
+			
+		}
+		i {
+			vertical-align: middle;
+		}
+	}
+}

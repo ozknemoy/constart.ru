@@ -1,0 +1,97 @@
+@import 'mixin.scss';
+
+.element_log {
+	position: relative;
+	&:before {
+		background: $color-gray;
+		content: '';
+		display: block;
+		width: 1px;
+		top: 0;
+		left: 75px;
+		bottom: 0;
+		position: absolute;
+	}
+	&--title {
+		margin: 30px 0 15px 150px;
+	}
+	&--day {
+		margin: 0 0 30px 150px;
+		position: relative;
+		&:after {
+			content: '';
+			display: table;
+			clear: both;
+		}
+		&--time {
+			background: #f2f2f2;
+			@include font(12px, $ubuntu_light);
+			position: absolute;
+			left: -150px;
+			width: 150px;
+			top: 0;
+			text-align: center;
+			padding: 10px 0;
+			z-index: 1;
+		}
+		&-item {
+			background: white;
+			padding: 15px 30px;
+			margin-bottom: 10px;
+			position: relative;
+			@include box-shadow(0px 0px 3px 0px rgba(0,0,0,0.2));
+			z-index: 1;
+			&:after {
+				content: '';
+				display: table;
+				clear: both;
+			}
+			&--l {
+				width: 50px;
+				height: 50px;
+				display: table-cell;
+				vertical-align: middle;
+				margin-right: 15px;
+			}
+			&--r {
+				display: table-cell;
+				vertical-align: middle;
+				padding: 0 20px 0 0;
+			}
+			&--time {
+				@include font(12px, $ubuntu_light);
+				position: absolute;
+				right: 15px;
+				top: 50%;
+				margin-top: -9px;
+			}
+			&--content {
+				font-size: 14px;
+			}
+			&--img {
+				width: 50px;
+				height: 50px;
+				position: relative;
+				display: inline-block;
+				overflow: hidden;
+				@include border-radius(100%);
+				img {
+					max-width: 100%;
+					max-height: 100%;
+				}
+			}
+			&--icon {
+				width: 30px;
+				height: 30px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin: -15px 0 0 -15px;
+				padding: 0;
+				text-align: center;
+				line-height: 30px;
+				@include border-radius(100%);
+			}
+		}
+	}
+}

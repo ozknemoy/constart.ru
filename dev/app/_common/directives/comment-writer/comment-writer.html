@@ -1,0 +1,22 @@
+<div class="form-group">
+    <form name="$ctrl.commentForm">
+        <textarea name="message" class="form-control" required
+                  ng-model="$ctrl.message"
+                  pattern="(.|\n)[^<>]{10,1000}"
+                  placeholder="Напишите свой комментарий"></textarea>
+        <div class="alert alert-danger"
+             ng-if="$ctrl.commentForm.message.$touched &&
+                    ($ctrl.commentForm.message.$error.required || $ctrl.commentForm.message.$error.pattern)">
+            <small>Введите комментарий. От 10 до 2000 символов. Запрещены символы < и ></small>
+        </div>
+    </form>
+</div>
+<div class="form-group">
+    <button class="btn btn-success btn-animated"
+            ng-class="{'animated':$ctrl.pend}"
+            ng-click="$ctrl.submit()"
+            ng-disabled="$ctrl.commentForm.$invalid || $ctrl.pend">
+        <span class="btn-visible">Отправить</span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+</div>

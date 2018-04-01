@@ -1,0 +1,41 @@
+
+<div class="project_vacancy--create">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="title" ng-if="v.isNew">Создание вакансии</div>
+            <div class="title" not-if="v.isNew">Редактирование вакансии</div>
+        </div>
+
+        <div class="col-xs-12">
+            <form name="v.eForm">
+                <div class="form-group"><!--a-zA-Z0-9а-яА-Я+-,?.\:"'-->
+                    <input type="text" class="form-control" placeholder="Заголовок записи" name="header"
+                           pattern="(.)[^><]{10,150}" required
+                           ng-model="v.vac.header">
+                    <div class="alert alert-danger" ng-if="v.eForm.header.$invalid && v.eForm.header.$touched">
+                        <small>Заголовок вакансии должен содержать от 10 до 150 символов. Запрещены символы < и ></small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="Содержание"
+                              id="one"
+                              ckeditor="v.optionsExt"
+                              name="body" required
+                              ng-model="v.vac.body"></textarea>
+                    <div class="alert alert-danger" ng-if="v.eForm.body.$invalid && v.eForm.body.$touched">
+                        <small>Описание должно содержать от 10 до 10000 символов</small>
+                    </div>
+                </div>
+            </form>
+
+            <button class="btn btn-success btn-animated"
+                    ng-class="{'animated':v.pend}"
+                    ng-click="v.save()"
+                    ng-disabled="v.eForm.$invalid || v.pend">
+                <span class="btn-visible" ng-if="v.isNew">Опубликовать</span>
+                <span class="btn-visible" not-if="v.isNew">Сохранить</span>
+                <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+            </button>
+        </div>
+    </div>
+</div>

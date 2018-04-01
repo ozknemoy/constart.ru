@@ -1,0 +1,311 @@
+<!--<script>
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://beta.constart.ru:81/project/396/view', false);
+    xhr.send();
+    if (xhr.status != 200) {
+        alert( xhr.status + ': ' + xhr.statusText );
+    } else {
+        alert( xhr.responseText ); // responseText &#45;&#45; текст ответа.
+    }
+
+</script>-->
+<!-- project info top -->
+<div class="row">
+    <div class="col-xs-12 col-lg-7 col-lg-push-5 col-lgs-6 col-lgs-push-6">
+        <!-- project details -->
+        <div class="project_social">
+            <div class="project_social--title">Поделиться в:</div>
+            <div class="project_social--content">
+                <a class="btn btn-xs btn-info" href ng-click="project.openSocial('FB')">
+                    <i class="fa fa-fw fa-facebook"></i>
+                </a>
+                <a class="btn btn-xs btn-primary" href ng-click="project.openSocial('VK')">
+                    <i class="fa fa-fw fa-vk"></i>
+                </a>
+                <a class="btn btn-xs btn-warning" href ng-click="project.openSocial('OK')">
+                    <i class="fa fa-fw fa-odnoklassniki"></i>
+                </a>
+            </div>
+        </div>
+        <div class="project_details" not-if="project.proj.type_id==3">
+            <!--ng-if="project.proj.investments_found_sum||project.proj.loan_found_sum||project.proj.reward_found_sum"-->
+            <div class="row">
+                <div class="col-xs-12 col-sm-5">
+                    <div class="project_details--total">
+                        <span class="project_details--total--collected">
+                            {{::(project.details.collected_sum|thousand)}}<span class="fa fa-rub"></span>
+                        </span>
+                        <span class="project_details--total--sub">
+                            {{project.proj.type_id==1?'собрано':'инвестировано'}} из {{::(project.proj.founding_sum|thousand)}}<span class="fa fa-rub"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-5">
+                    <div class="project_details--time">
+                        <span class="project_details--time--count"><i class="fa fa-clock-o"></i>
+                            {{::project.temp.remain}}
+                            <span>{{::project.temp._remain}}</span></span>
+                        до завершения сбора средств
+                    </div>
+                </div>
+                <!--
+                <div class="col-xs-12 col-sm-2">
+                    <div class="project_details--equity" ng-mouseenter="showOwnMoney=1" ng-mouseleave="showOwnMoney=0">
+                        Собственных средств
+                    </div>
+                </div>-->
+            </div>
+
+            <div class="progress_wrap">
+                <div class="progress">
+                    <div class="progress-bar default" role="progressbar"  aria-valuemin="0" aria-valuemax="100"
+                         ng-style="{'width': project.details.sum_percent +'%'}"></div>
+                    <!--<div class="progress-bar&#45;&#45;equity" ng-show="showOwnMoney"
+                         ng-style="{'min-width': project.details.own_money_percent +'%'}"></div>-->
+                </div>
+                <!--прогресбар не более 100%-->
+                <div class="progress-bar--count" ng-style="{'left': project.details.sum_percent_100 +'%'}">
+                {{::project.details.sum_percent}}%</div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12" not-if="project.proj.type_id==1">
+                    <div class="project_details--attract">
+                        <div class="project_details--attract--title">Проект привлекает:</div>
+                        <div class="project_details--attract-wrap">
+                            <!--Инвестиции-->
+                            <a  ui-sref="proj.fin({'num':1})" class="project_details--attract--item" ng-class="{'avalible':project.proj.investments_found_sum}">
+                                <span class="table">
+                                    <span class="table-cell">
+                                       <i class="fa fa-certificate" aria-hidden="true"></i>
+                                        Инвестиции <br>{{project.proj.investments_found_sum||0|thousand}}
+                                    </span>
+                                </span>
+                                <span class="project_details--attract--info" ng-if="project.proj.investments_found_sum">
+                                    <span class="project_details--attract--total">
+                                        <span class="project_details--total--collected">
+                                            {{::(project.proj.investments_collected_sum|thousand)}}
+                                            <span class="fa fa-rub"></span></span>
+                                        <span class="project_details--total--sub">инвестировано из
+                                            {{::(project.proj.investments_found_sum|thousand)}}
+                                            <span class="fa fa-rub"></span></span>
+                                    </span>
+                                    <span class="progress_wrap">
+                                        <span class="progress small">
+                                            <span class="progress-bar default"
+                                                  role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                                                  ng-style="{'min-width': project.details.investments_percent +'%'}"></span>
+                                        </span>
+                                        <span class="progress-bar--count"
+                                              ng-style="::{'left': project.details.investments_percent +'%'}">
+                                            {{::project.details.investments_percent}} %
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+                            <!--Займ-->
+                            <a ui-sref="proj.fin({'num':2})" class="project_details--attract--item " ng-class="::{'avalible':project.proj.loan_found_sum}">
+                                <span class="table">
+                                    <span class="table-cell">
+                                        <i class="fa fa-money" aria-hidden="true"></i>
+                                        Займ<br>{{::(project.proj.loan_found_sum|thousand)}}
+                                    </span>
+                                </span>
+                                <span class="project_details--attract--info" ng-if="project.proj.loan_found_sum">
+                                    <span class="project_details--attract--total">
+                                        <span class="project_details--total--collected">
+                                            {{::(project.proj.loan_collected_sum|thousand)}}
+                                               <span class="fa fa-rub"></span></span>
+                                        <span class="project_details--total--sub">инвестировано из
+                                            {{::(project.proj.loan_found_sum|thousand)}}
+                                            <span class="fa fa-rub"></span></span>
+                                    </span>
+                                    <span class="progress_wrap">
+                                        <span class="progress small">
+                                            <span class="progress-bar default"
+                                                  role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                                                  ng-style="{'min-width': project.details.loan_percent +'%'}"></span>
+                                        </span>
+                                        <span class="progress-bar--count" ng-style="{'left': project.details.loan_percent +'%'}">
+                                            {{::project.details.loan_percent}} %
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+                            <!--Вознаграждения-->
+                            <a ui-sref="proj.fin({'num':0})" class="project_details--attract--item" ng-class="::{'avalible':project.proj.reward_found_sum}">
+                                <span class="table">
+                                    <span class="table-cell">
+                                        <i class="fa fa-credit-card" aria-hidden="true"></i>
+                                        Вознаграждения<br>{{::(project.proj.reward_found_sum|thousand)}}
+                                    </span>
+                                </span>
+                                <span class="project_details--attract--info" ng-if="::project.proj.reward_found_sum">
+                                    <span class="project_details--attract--total">
+                                        <span class="project_details--total--collected">
+                                            {{::(project.proj.reward_collected_sum|thousand)}}
+                                            <span class="fa fa-rub"></span></span>
+                                        <span class="project_details--total--sub">собрано из
+                                            {{::(project.proj.reward_found_sum|thousand)}}
+                                            <span class="fa fa-rub"></span></span>
+                                    </span>
+                                    <span class="progress_wrap">
+                                        <span class="progress small">
+                                            <span class="progress-bar default"
+                                                  role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                                                  ng-style="{'min-width': project.details.reward_percent +'%'}"></span>
+                                        </span>
+                                        <span class="progress-bar--count" ng-style="{'left': project.details.reward_percent +'%'}">
+                                            {{::project.details.reward_percent}} %
+                                        </span>
+                                    </span>
+                                </span>
+                            </a>
+                            <!--спонсорство end -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-3"></div>
+            </div>
+
+        </div>
+        <!-- project details end -->
+
+        <!-- project awards list -->
+        <div class="pr_awards"
+             ng-if="::project.proj.resident_id || project.proj.is_metro_project || project.proj.checked_by_expert_id || project.proj.is_participate_contest">
+            <div class="pr_awards--item" ng-if="project.proj.resident_id!=null">
+                <div class="pr_awards--link">
+                    <span class="pr_awards--img rezident">
+                        <img ng-src="{{project.baseDocUrl+project.residents[1+project.proj.resident_id].foto}}" alt="">
+                    </span>
+                    <span class="pr_awards--content">Резидент</span>
+                </div>
+            </div>
+
+            <!--<div class="pr_awards--sep" ng-if="project.proj.checked_by_expert_id && project.proj.resident_id!==null"></div>-->
+
+            <!--<div class="pr_awards--item" ng-if="project.proj.checked_by_expert_id">
+                <div class="pr_awards--link">
+                    <span class="pr_awards--img"><img src="assets/img/pr_test17@2x.png" alt=""></span>
+                    <span class="pr_awards--content">Прошел экспертную проверку</span>
+                </div>
+            </div>-->
+            <div class="pr_awards--sep" ng-if="project.proj.is_metro_project && project.proj.resident_id!==null"></div>
+
+            <div class="pr_awards--item" ng-if="::project.proj.is_metro_project">
+                <div class="pr_awards--link">
+                    <span class="pr_awards--img"><img src="assets/img/partner_logo--11.png" alt=""></span>
+                    <span class="pr_awards--content">Проект газеты Metro</span>
+                </div>
+            </div>
+
+            <div class="pr_awards--sep" ng-if="project.proj.is_participate_contest &&
+                  (project.proj.resident_id!=null || project.proj.checked_by_expert_id)"></div>
+
+            <div class="pr_awards--item" ng-if="project.proj.is_participate_contest && project.id!=83">
+                <div class="pr_awards--link">
+                    <span class="pr_awards--img"><img src="assets/img/pr_test16@2x.png" alt=""></span>
+                    <span class="pr_awards--content">
+                        Участник конкурса КОНСТАРТ
+                    </span>
+                </div>
+            </div>
+
+            <div class="pr_awards--item" ng-if="::project.id==83">
+                <a href="" class="pr_awards--link">
+                    <span class="pr_awards--img"><img src="assets/img/pr_win2.png" alt=""></span>
+                    <span class="pr_awards--content">
+                        Успешный проект
+                    </span>
+                </a>
+            </div>
+
+        </div>
+        <!-- project awards list end -->
+
+    </div>
+    <!-- project gallery -->
+    <project-gallery ng-class="project.proj.type_id==3 ?
+                    'col-xs-12 col-lg-5 col-lgs-6 col-lgs-offset-3':
+                    'col-xs-12 col-lg-5 col-lg-pull-7 col-lgs-6 col-lgs-pull-6'"
+         value="::[project.proj.video,project.proj.gallery]">
+    </project-gallery>
+</div>
+
+<!--  news-->
+<news-slider ng-if="::project.news.allCount" value="project.news.list" title="Новости проекта"></news-slider>
+<!--  news end -->
+
+<!-- project info top end  -->
+
+<div class="row">
+    <div class="col-xs-12" ng-if="::project.proj.descr_1">
+        <div class="project_description">
+            <div class="wysiwyg">
+                <div class="title">Подробное описание проекта</div>
+                <div ng-bind-html="::project.proj.descr_1"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" ng-if="::project.proj.descr_2">
+        <div class="project_description">
+            <div class="wysiwyg">
+                <div class="title">Цель проекта</div>
+                <div ng-bind-html="::project.proj.descr_2"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" ng-if="::project.proj.descr_3">
+        <div class="project_description">
+            <div class="wysiwyg">
+                <div class="title">Целевая аудитория</div>
+                <div ng-bind-html="::project.proj.descr_3"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" ng-if="::project.proj.descr_4">
+        <div class="project_description">
+            <div class="wysiwyg">
+                <div class="title">Проблема потребителя, которую решает проект</div>
+                <div ng-bind-html="::project.proj.descr_4"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" ng-if="::project.proj.descr_5">
+        <div class="project_description">
+            <div class="wysiwyg">
+                <div class="title">Описание рынка</div>
+                <div ng-bind-html="::project.proj.descr_5"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" ng-if="::project.proj.descr_6">
+        <div class="project_description">
+            <div class="wysiwyg">
+                <div class="title">Конкуренты</div>
+                <div ng-bind-html="::project.proj.descr_6"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" ng-if="::project.proj.descr_7">
+        <div class="project_description">
+            <div class="wysiwyg">
+                <div class="title">Конкурентные преимущества проекта</div>
+                <div ng-bind-html="::project.proj.descr_7"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" ng-if="::project.proj.descr_8">
+        <div class="project_description">
+            <div class="wysiwyg">
+                <div class="title">Что сделано и что нужно проекту</div>
+                <div ng-bind-html="::project.proj.descr_8"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--кнопка для мобилок-->
+<div class="project_support text-center" ng-include="'app/_common/tmpl/project-support-n-like.html'"></div>

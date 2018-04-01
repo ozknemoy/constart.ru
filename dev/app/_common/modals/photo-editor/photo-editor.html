@@ -1,0 +1,31 @@
+
+<button type="button" class="close"  ng-click="$dismiss()" aria-label="Close"><span
+        aria-hidden="true">&times;</span></button>
+<div class="modal-body">
+    <label class="btn btn-info btn-block btn-file" for="imgInput">Выберите фото
+        <input id="imgInput"  accept="image/*" value="." style="display:none"
+               type="file"></label>
+
+    <div ng-if="fe.modalFotoIsOpen">
+        <div class="text-center"><h4>Выберите область</h4></div>
+        <div class="cropArea" ng-style="fe.styleH">
+            <img-crop image="fe.myImage"
+                      area-type="{{fe.areaType || 'rectangle'}}"
+                      result-image="fe.myCroppedImage"
+                      area-min-size='150'
+                      aspect-ratio="fe.fotoW/fe.fotoH"
+                      result-image-size='{w: fe.fotoW,h: fe.fotoH}'>
+            </img-crop>
+        </div>
+        <br>
+        <div class="modal-footer text-center">
+            <button class="btn btn-success btn-animated"
+                    ng-class="{'animated':fe.pendUpload}"
+                    data-ng-click="fe.uploadImg(fe.myCroppedImage)"
+                    ng-disabled="fe.pendUpload">
+                <span class="btn-visible">Сохранить</span>
+                <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+            </button>
+        </div>
+    </div>
+</div>

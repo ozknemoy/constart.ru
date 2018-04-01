@@ -1,0 +1,168 @@
+
+
+<div id="anchor"></div>
+<!-- список проектов -->
+<div ng-if="!cpd.value.length && cpd.value" ng-show="cpd.isProjects">
+    К сожалению, по Вашим критериям поиска проектов не найдено
+</div>
+
+<div ng-if="cpd.value.length && !cpd.empty">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lgs-3">
+            <div class="title" ng-if="cpd.isProjects">Результат:</div>
+
+            <!-- только для своих юзеров-->
+            <ui-select class="select"
+                       ng-if="cpd.ownUser"
+                       search-enabled="false"
+                       ng-model="cpd.f.status">
+                <ui-select-match placeholder="выберите тип">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="o.id as o in cpd.projStatuses track by o.id">
+                    <span>{{::o.name}}</span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-8 col-lgs-9">
+            <div class="catalog_view catalog_view--list btn-group pull-right">
+                <button class="catalog_view--item btn btn-default"
+                        ng-click="cpd.projView=0"
+                        ng-class="{'active':cpd.projView==0}">
+                    <i class="fa fa-th-list"></i>
+                </button>
+                <button class="catalog_view--item btn btn-default"
+                        ng-click="cpd.projView=1"
+                        ng-class="{'active':cpd.projView==1}">
+                    <i class="fa fa-th"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <h3 not-if="cpd.filtered.length">У вас нет проектов в данном статусе</h3>
+</div>
+<div class="elem_list" ng-if="cpd.value.length">
+    <div class="elem_list--item--wrap"
+         ng-class="cpd.projView==1?'plate':''"
+         dir-paginate="i in (cpd.filtered =(cpd.value | filter:cpd.f))|itemsPerPage: 12 track by i.id">
+        <!--статусы и редактирование в user state-->
+        <div ng-if="!cpd.isProjects && !cpd.empty">
+            <div class="elem_list--published bg-success" ng-if="::i.status>3">Опубликован</div>
+            <div class="elem_list--published bg-danger" ng-if="::i.status<2">Не опубликован</div>
+            <div class="elem_list--published bg-warning" ng-if="::i.status==3">На модерации</div>
+            <div class="elem_list--published bg-info" ng-if="::i.status==2">Не прошел модерацию</div>
+        </div>
+        <!--<div class="elem_list&#45;&#45;actions" ng-if=" ::!cpd.isProjects">
+            <a ui-sref="projectEditor.about(::{'id':i.id})"><i class="fa fa-pencil"></i></a>
+        </div>-->
+        <!--статусы и редактирование в user state    end -->
+
+        <!--показываю кнопку везде кроме своего профиля-->
+        <div class="elem_list--support" not-if="::cpd.ownUser">
+            <!--для растягивания кнопки меняю классы-->
+            <div ng-class="{'btn-group':i.status<6}">
+                <a class="btn btn-sm btn-success" ui-sref="proj.fin(::{'id':i.id})"
+                   ng-if="i.status<6"
+                   onclick="yaCounter40097510.reachGoal('snippet-project-click-buy-button')">
+                    {{::i.nextOnButton}}
+                </a>
+                <like-button class="btn btn-sm btn-primary"
+                             ng-class="::{'pointer-none':cpd.isNotAuth,'btn-block':i.status>5}"
+                             like="{{i.like}}"
+                             project-id="{{i.id}}"
+                             callback="project.proj.like=1;i.like_count=i.like_count+1">
+                    <i class="fa fa-heart"></i>&nbsp;{{i.like_count}}
+                </like-button>
+            </div>
+        </div>
+
+        <a ui-sref="proj.about(::{'id':i.id})" class="elem_list--item">
+            <span class="elem_list--start" ng-if="::i.is_participate_contest"
+                  ng-class="{'win':i.id==83}">
+                <span class="elem_list--start--icon"></span>
+                <span class="elem_list--start--desc">
+                    {{i.id==83?'победитель конкурса':'участник конкурса'}}
+                </span>
+            </span>
+            <span class="elem_list--img">
+                <img ozk-img="{{::i.cover}}" base="{{::cpd.baseImgUrl}}" alt="" src="/assets/img/default_img.png">
+            </span>
+            <!--text holder  -->
+            <div class="elem_list--descr">
+                    <span class="elem_list--title">
+                        <span class="elem_list--title--wrapper">
+                            <span class="elem_list--title--wrap">
+                                {{::i.name}}
+                            </span>
+                        </span>
+                        <span class="elem_list--location" ng-if="::i.country_id">
+                            <i class="fa fa-map-marker"></i>
+                            {{cpd.getCountryAndRegion(i.country_id,i.region_id)}}
+                        </span>
+                    </span>
+                <div class="elem_list--short-descr"><p>{{::i.short_descr}}</p></div>
+
+                <span class="elem_list--descr--footer">
+                <!--скрываю стату если  empty=2 -->
+                    <span not-if="cpd.empty==2">
+                        <span ng-if="::i.founding_sum" class="project_details--attract--info">
+                        <span class="project_details--attract--total">
+                            <span class="project_details--total--collected">
+                                {{::i.collectedSum}}
+                                <span class="fa fa-rub"></span>&nbsp;собрано
+                            </span>
+                        </span>
+                        <span class="progress_wrap">
+                            <span class="progress small">
+                                <span class="progress-bar default" role="progressbar"  aria-valuemin="0" aria-valuemax="100"
+                                      ng-style="::{'width': i.percent100 +'%'}">
+                                    {{::i.percent}}%
+                                </span>
+                            </span>
+                        </span>
+                    </span>
+
+                    <span class="elem_list--descr--footer--wrap">
+                        <!--не закончен но со сбором денег-->
+                        <span ng-if="i.status<6 && i.type_id!=3">
+                            <span class="elem_list--descr--footer--item foot1"
+                                  ng-if="::i.posted_date">
+                                <i class="icon clock"></i>
+                                <span>{{::i.remain}}</span>&thinsp;{{::i._remain}}&nbsp;осталось
+                            </span>
+                            <span class="elem_list--descr--footer--item foot2"
+                                  ng-if="::i.posted_date">
+                                <span>{{::i.pass}}</span>&thinsp;{{::i._pass}}
+                            </span>
+                        </span>
+                        <!--без сбора денег-->
+                        <span ng-if="i.type_id==3">
+                            <span class="elem_list--descr--footer-it">
+                                <i class="fa fa-cube"></i>{{cpd.stages[i.stage].shortname}}</span>
+                            <span class="elem_list--descr--footer-it">
+                                <i class="fa fa-flag"></i>{{i.cat}}</span>
+                        </span>
+                       <!-- закончен -->
+                        <span ng-if="i.status>5" class="elem_list--descr--footer--item foot1">
+                            <i class="icon fa fa-lg"
+                               ng-class="{'fa-thumbs-o-up':i.status==8,
+                                          'fa-thumbs-o-down':i.status==9,
+                                          'fa-pencil-square-o':i.status==6 || i.status==7}"></i>
+                            <span>Сбор средств завершен</span>
+                        </span>
+
+
+                        <span class="elem_list--descr--footer--item foot3"
+                              ng-if="::i.inProjectCount">
+                            <span>{{::i.inProjectCount}}</span>&thinsp;
+                            {{::i._inProjectCount}}
+                        </span>
+                    </span>
+                    </span>
+
+                </span>
+            </div>
+        </a>
+    </div>
+</div>
+<nav scroll-to="#anchor" ng-if="cpd.value.length" class="pagination" data-dir-pagination-controls></nav>

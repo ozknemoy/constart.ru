@@ -1,0 +1,25 @@
+
+<div class="modal-body" ng-swipe-left=Lightbox.nextImage() ng-swipe-right=Lightbox.prevImage()>
+    <button type="button" class="close" aria-hidden="true" ng-click="$dismiss()"><span aria-hidden="true">×</span></button>
+    <br>
+    <div class="ekko-lightbox-container">
+        <div class=lightbox-image-container>
+            <img ng-if=!Lightbox.isVideo(Lightbox.image) lightbox-src={{Lightbox.imageUrl}} class="img-responsive">
+
+            <div ng-if=Lightbox.isVideo(Lightbox.image) class="embed-responsive embed-responsive-16by9">
+                <video ng-if=!Lightbox.isSharedVideo(Lightbox.image)
+                       lightbox-src={{Lightbox.imageUrl}} controls
+                       autoplay></video>
+                <embed-video ng-if=Lightbox.isSharedVideo(Lightbox.image) lightbox-src={{Lightbox.imageUrl}}
+                             ng-href={{Lightbox.imageUrl}} iframe-id=lightbox-video class=embed-responsive-item>
+                    <a ng-href={{Lightbox.imageUrl}}>Watch video</a></embed-video>
+            </div>
+            <div class=lightbox-image-caption ng-if="Lightbox.imageCaption"><span>{{Lightbox.imageCaption}}</span></div>
+        </div>
+
+        <div class="ekko-lightbox-nav-overlay" style="display: block;" ng-if="Lightbox.images.length>1">
+            <a href="#" class="glyphicon glyphicon-chevron-left" ng-click=Lightbox.prevImage()></a>
+            <a href="#" class="glyphicon glyphicon-chevron-right" ng-click=Lightbox.nextImage()></a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,240 @@
+@import 'mixin.scss';
+
+.messages {
+	border-bottom: 1px solid $color-gray;
+	position: relative;
+	margin: 0 -65px;
+	&:after, &:before {
+		content: '';
+		display: table;
+		clear: both;
+	}
+	// sidebar
+	&_sidebar {
+		position: relative;
+		overflow: hidden;
+		float: left;
+		width: 33.33333333%;
+		&--wrap {
+			position: absolute;
+			left: 0;
+			top: 34px;
+			bottom: 0;
+			right: 0;
+			.slimScrollBar {
+				right: -1px !important;
+			}
+		}
+		&--users {
+			border-left: 1px solid $color-gray;
+			border-right: 1px solid $color-gray;
+			list-style: none outside;
+			padding: 0;
+			margin: 0;
+			&--item {
+				border-top: 1px solid $color-gray;
+				position: relative;
+				cursor: pointer;
+				@include transition(.2s linear);
+				&:hover {
+					background: white;
+					z-index: 2;
+				}
+				&.selected {
+					background: white;
+					@include box-shadow(0px 0px 3px 1px rgba(0,0,0,0.1));
+					z-index: 1;
+					// background: lighten($color_blue, 60%);
+				}
+				&:first-child {
+					border: 0;
+				}
+				&:after, &:before {
+					content: '';
+					display: table;
+					clear: both;
+				}
+			}
+
+			// sidebar user image
+			&--img {
+				float: left;
+				position: relative;
+				width: 20%;
+				&:before {
+					content: '';
+					display: block;
+					padding-top: 100%;
+				}
+				span {
+					width: 70%;
+					height: 70%;
+					overflow: hidden;
+					display: block;
+					top: 15%;
+					position: absolute;
+					left: 15%;
+					@include border-radius(50%);
+				}
+				img {
+					width: 100%;
+					position: absolute;
+					left: 0;
+					top: 0;
+					right: 0;
+					bottom: 0;
+				}
+			}
+
+			// sidebar user content
+			&--content {
+				float: left;
+				width: 70%;
+				padding: 15px 0 0;
+			}
+
+			// sidebar user name
+			&--name {
+				@include font(14px, $ubuntu_light);
+				color: $color_bluedark;
+				white-space: nowrap;
+				display: block;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+			
+			// sidebar user text
+			&--text {
+				@include font(14px, $ubuntu_light);
+				color: $color_bluedark;
+				white-space: nowrap;
+				display: block;
+				text-overflow: ellipsis;
+				overflow: hidden;	
+			}
+			
+			// sidebar user date
+			&--time {
+				@include font(12px, $ubuntu_light);
+				color: $color_blue;
+				position: absolute;
+				right: 5px;
+				top: 15px;
+			}
+		}
+	}
+
+	// content
+	&_content {
+		border-top: 1px solid $color-gray;
+		border-right: 1px solid $color-gray;
+		position: absolute;
+		left: 33.33333333%;
+		right: 0;
+		top: 0;
+		bottom: 0;
+		padding: 0 0 55px;
+		&:before {
+			background: rgba(242,242,242,1);
+			background: -moz-linear-gradient(top, rgba(242,242,242,1) 0%, rgba(242,242,242,0) 100%);
+			background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(242,242,242,1)), color-stop(100%, rgba(242,242,242,0)));
+			background: -webkit-linear-gradient(top, rgba(242,242,242,1) 0%, rgba(242,242,242,0) 100%);
+			background: -o-linear-gradient(top, rgba(242,242,242,1) 0%, rgba(242,242,242,0) 100%);
+			background: -ms-linear-gradient(top, rgba(242,242,242,1) 0%, rgba(242,242,242,0) 100%);
+			background: linear-gradient(to bottom, rgba(242,242,242,1) 0%, rgba(242,242,242,0) 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#f2f2f2', GradientType=0 );
+			content: '';
+			display: block;
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			height: 50px;
+			z-index: 2;	
+			content: '';
+		}
+		&--chat {
+			display: table;
+			height: 100%;
+		}
+		&--wrap {
+			display: table-cell;
+			vertical-align: bottom;
+			text-align: center;
+		}
+		&--date {
+			background: $color_blue;
+			border: 1px solid rgba(0,0,0,.2);
+			padding: 5px;
+			@include font(12px, $ubuntu_light);
+			text-align: center;
+			display: inline-block;
+			color: white;
+			margin: 20px 0 0;
+			@include border-radius(3px);
+		}
+		&--item {
+			&:after, &:before {
+				content: '';
+				display: table;
+				clear: both;
+			}
+			&--incoming {
+				.messages_content--post {
+					float: left;
+				}
+			}
+			&--outgoing {
+				.messages_content--post {
+					background: lighten($color_blue, 63%);
+					float: right;
+				}
+				
+			}
+		}
+		&--post {
+			background: white;
+			border: 1px solid rgba(0,0,0,.2);
+			padding: 10px;
+			@include font(14px, $ubuntu_light);
+			margin: 10px;
+			width: 55%;
+			text-align: left;
+			position: relative;
+			@include border-radius(3px);
+		}
+		&--time {
+			@include font(12px, $ubuntu_light);
+			position: absolute;
+			right: 5px;
+			bottom: 5px;
+		}
+		&--text {
+			padding: 0 30px 0 0;
+		}
+
+		// input
+		&--input {
+			position: absolute;
+			left: 10px;
+			right: 10px;
+			bottom: 10px;
+			.input-group {
+				width: 100%;
+			}
+			&--field {
+				text-align: left;
+				resize: vertical;
+				height: auto;
+				max-height: 200px;
+				overflow-y: scroll;
+				-moz-appearance: textfield-multiline;
+				-webkit-appearance: textarea;
+			}
+			.input-group-btn {
+				vertical-align: bottom;
+			}
+		}
+	}
+
+}

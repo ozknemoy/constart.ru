@@ -1,0 +1,176 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-3">
+        <div class="form-group">
+            <label>Поиск по названию</label>
+            <input type="text" ng-model="ca.filter.project.name" class="form-control ng-pristine ng-valid ng-empty ng-touched">
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-3">
+        <div class="form-group">
+            <label>Вид вложения</label>
+            <ui-select class="select"
+                       search-enabled="false"
+                       ng-model="ca.filter.invest_type">
+                <ui-select-match placeholder="Поиск по типу платежа">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="o.id as o in ca.invest_type">
+                    <span>{{::o.name}}</span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-3">
+        <div class="form-group">
+            <label>Статус</label>
+            <ui-select class="select"
+                       on-select="ca.checkStatus()"
+                       search-enabled="false"
+                       ng-model="ca.filter._status">
+                <ui-select-match placeholder="Поиск по типу платежа">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="o.id as o in ca._status">
+                    <span>{{::o.name}}</span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-3" ng-hide="ca.hideStatusProj">
+        <div class="form-group">
+            <label>Статус проекта</label>
+            <ui-select class="select"
+                       search-enabled="false"
+                       ng-model="ca.filter._statusProj">
+                <ui-select-match placeholder="Поиск по типу платежа">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="o.id as o in ca._statusProj">
+                    <span>{{::o.name}}</span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+</div>
+
+<br>
+<table class="operation_table mcols">
+    <tr>
+        <td>№ записи</td>
+        <td>Проект</td>
+        <td>Вид вложения</td>
+        <td class="min_col">Доля в проекте</td>
+        <td>К оплате</td>
+        <td>Договор</td>
+        <!--<td>Осталось дней</td>-->
+    </tr>
+
+    <tr dir-paginate="a in (ca.agreements | filter:ca.filter) | itemsPerPage: 12 track by a.id"  pagination-id="a">
+        <td data-text="№ записи">{{::a.id}}</td>
+        <td data-text="Проект">
+            <a ui-sref="proj.about({'id':a.project_id})">
+                <i ng-if="::a.project.status==8" class="fa fa-thumbs-up text-success"></i>
+                <i ng-if="::a.project.status==9" class="fa fa-thumbs-down text-danger"></i>
+                {{::a.project.name}}
+            </a>
+        </td>
+        <td data-text="Вид вложения">{{::ca.invest_type[a.invest_type].name}}</td>
+        <td data-text="Доля в проекте/займе" class="min_col">
+            <span ng-if="::a.share">{{::(a.share | myround:7)}}%</span>
+        </td>
+        <td data-text="К оплате" class="nowrap">{{::a.price}}&thinsp;<i class="fa fa-rub"></i></td>
+        <td data-text="Договор" class="center">
+           <!-- <a ng-href="{{ca.baseUrl+'register-arrangements/get-pdf-contract?id='+a.id}}" target="_self">
+                <i class="fa fa-file"></i> Договор
+            </a>-->
+            <a href ng-click="ca.getFile(a.id,$event,a.investor.is_verified)">
+                <i class="fa fa-file"></i>&thinsp;Договор
+            </a>
+
+            <div class="table_docs">
+                <div class="row">
+                    <!--левая часть-->
+                    <div class="col-xs-12 col-xss-6">
+                        <p>Инициатор: <br>
+                            <a ui-sref="user.about(::{'id':a.projectOwner.id})"><i class="fa fa-user"></i>
+                                {{::a.projectOwner.name}}&thinsp;{{::a.projectOwner.surname}}
+                            </a>
+                        </p>
+                        <div ng-if="ca.isInvestor">
+                            <span ng-if="a.project_owner_sign" class="text-success">Подписано</span>
+                            <span ng-if="!a.project_owner_sign" class="text-danger">Не подписано</span>
+                        </div>
+                        <div ng-if="ca.isInitiator">
+                            <!--кнопка  до сбора средств-->
+                            <button ng-if="!a.project_owner_sign && a.project.status<6"
+                                    modal-open="app/_common/modals/agreements-pre-sign.html"
+                                    ng-click="ca.signAgreement(a)"
+                                    class="btn btn-success btn-xs btn-block">
+                                Подписать&nbsp;<i class="fa fa-question-circle" aria-hidden="true"></i>
+                            </button>
+                            <!--кнопка после сбора средств-->
+                            <sms-request ng-if="!a.project_owner_sign && a.project.status==6"
+                                         request-sms-url="register-arrangements/get-sign-code?id={{::a.id}}"
+                                         request-url="register-arrangements/sign?id={{::a.id}}&code="
+                                         reload="true"
+                                         class="btn btn-success btn-xs btn-block">
+                                Подписать&nbsp;
+                            </sms-request>
+
+                            <div class="alert alert-info" ng-if="a.project.status==6 && !a.project_owner_sign">
+                                {{::a.remain}}
+                            </div>
+                            <span ng-if="a.project_owner_sign" class="text-success">Подписано</span>
+                        </div>
+                    </div>
+
+                    <!--правая часть-->
+                    <div class="col-xs-12 col-xss-6">
+                        <p>Инвестор: <br>
+                            <a ui-sref="user.about(::{'id':a.investor_id})">
+                                <i class="fa fa-user"></i> {{::a.investor.name}}&thinsp;{{::a.investor.surname}}
+                            </a>
+                        </p>
+                        <div ng-if="ca.isInvestor">
+                            <div class="form-group">
+                                <!--кнопка до сбора средств с модалкой подсказкой-->
+                                <button ng-if="!a.investor_sign && a.project.status<6"
+                                        modal-open="app/_common/modals/agreements-pre-sign.html"
+                                        ng-click="ca.signAgreement(a)"
+                                        class="btn btn-success btn-xs btn-block">
+                                    Подписать&nbsp;<i class="fa fa-question-circle"></i>
+                                </button>
+                                <!--кнопка после сбора средств-->
+                                <sms-request ng-if="!a.investor_sign && a.project.status==6"
+                                             ng-class="{'pointer-none':!a.investor.is_verified}"
+                                             request-sms-url="register-arrangements/get-sign-code?id={{::a.id}}"
+                                             request-url="register-arrangements/sign?id={{::a.id}}&code="
+                                             reload="true"
+                                             class="btn btn-success btn-xs btn-block">
+                                    Подписать&nbsp;
+                                </sms-request>
+                            </div>
+
+                            <span ng-if="a.investor_sign" class="text-success">Подписано</span>
+
+
+                            <div not-if="::a.investor.is_verified">
+                                <div class="form-group"><!--ng-click="ca.toSecondPage()"-->
+                                    <button ui-sref="userEditor.about(::{'id':a.investor_id})"
+
+                                            class="btn btn-success btn-xs btn-block">Верифицировать</button>
+                                </div>
+
+                                <p>Для того чтобы подписать договор, Вы должны быть верифицированы. Не затягивайте с верификацией, это может занять время.</p>
+                            </div>
+
+                            <div class="alert alert-info" ng-if="a.project.status==6 && !a.investor_sign">
+                                {{::a.remain}}
+                            </div>
+                        </div>
+                        <div ng-if="ca.isInitiator">
+                            <div ng-if="a.investor_sign" class="text-success">Подписано</div>
+                            <div ng-if="!a.investor_sign" class="text-danger">Не подписано</div>
+                            <div ng-if="!a.investor.is_verified" class="text-danger">Не верифицирован</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+<nav class="pagination"  pagination-id="a" data-dir-pagination-controls></nav>

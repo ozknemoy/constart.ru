@@ -1,0 +1,326 @@
+$image-path: '../img' !default;
+$fallback-extension: 'png' !default;
+$retina-suffix: '@2x';
+$color-blue: #0099a8;
+$color-bluedark: #004a61;
+
+$color-dark: #2C3E50;
+$color-dark-light: #34495E;
+
+$color-green: #84bc36;
+
+$color-success: #84bc36;
+$color-danger: #eb6229;
+$color-warning: #fcbf11;
+$color-info: #0099a8;
+$color-primary: #012939;
+
+// $color-green: #299936;
+$color-green-light: #5ac828;
+$color-gray: #cacaca;
+$color-gray-sec: #d9d9de;
+// $color-gray-dark: #99a1a4;
+$color-gray-dark: #878787;
+
+
+//$color-danger: #ed5823;
+$white: #ffffff;
+$font: 'Conv_RoomThin', sans-serif;
+$font_sec: 'Conv_RoomBold', sans-serif;
+$ubuntu: 'ubunturegular', sans-serif;
+$ubuntu_bold: 'ubuntubold', sans-serif;
+$ubuntu_light: 'ubuntulight', sans-serif;
+$futura: 'futura', sans-serif;
+$rub: 'rub', sans-serif;
+$cubic-out: cubic-bezier(.32,2.04,.85,.54);
+$cubic-in: cubic-bezier(.72,1.2,.71,.72);
+$slider-line-height: 10px !default;
+$slider-border-radius: 10px !default;
+$slider-horizontal-width: 100% !default;
+$slider-vertical-height: 210px !default;
+
+$hamburger-padding-x                       : 10px !default;
+$hamburger-padding-y                       : 10px !default;
+$hamburger-layer-width                     : 30px !default;
+$hamburger-layer-height                    : 4px !default;
+$hamburger-layer-spacing                   : 6px !default;
+$hamburger-layer-color                     : #fff !default;
+$hamburger-layer-border-radius             : 4px !default;
+$hamburger-hover-opacity                   : 0.7 !default;
+$hamburger-hover-transition-duration       : 0.15s !default;
+$hamburger-hover-transition-timing-function: linear !default;
+$hamburger-hover-use-filter: false !default;
+$hamburger-hover-filter    : opacity(50%) !default;
+$hamburger-types: (
+  3dx,
+  3dx-r,
+  3dy,
+  3dy-r,
+  arrow,
+  arrow-r,
+  arrowalt,
+  arrowalt-r,
+  boring,
+  collapse,
+  collapse-r,
+  elastic,
+  elastic-r,
+  emphatic,
+  emphatic-r,
+  slider,
+  slider-r,
+  spring,
+  spring-r,
+  stand,
+  stand-r,
+  spin,
+  spin-r,
+  squeeze,
+  vortex,
+  vortex-r
+) !default;
+
+$bg-color: $color-bluedark;
+$kebab-color: #2e464c;
+$kebab-dot-width: 5px;
+
+// Mixins
+@mixin kebab-dot {
+  display: inline-block;
+  width: $kebab-dot-width;
+  height: $kebab-dot-width;
+  border-radius: 100%;
+  background: $kebab-color;
+}
+
+@mixin background-image($name, $size:false, $repeat:false, $position:false, $color:false){
+    background-image: url(#{$image-path}/#{$name}.#{$fallback-extension});
+
+    @media only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+      background-image: url(#{$image-path}/#{$name}#{$retina-suffix}.#{$fallback-extension});
+    }
+    @if($size){
+        -webkit-background-size: $size;
+        -moz-background-size: $size;
+        -o-background-size: $size;
+        background-size: $size;
+    }
+    @if($repeat){
+        background-repeat: $repeat;
+    }
+    @if($position){
+        background-position: $position;
+    }
+    @if($color){
+        background-color: $color;
+    }
+}
+@mixin element($element) {
+    &_#{$element} {
+        @content;
+    }
+}
+@mixin modifier($modifier) {
+    &--#{$modifier} {
+        @content;
+    }
+}
+@mixin background-opacity($color, $opacity: 0.3) {
+    background: rgba($color, $opacity);
+}
+
+
+
+@mixin background-cover(){
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+@mixin border-box(){
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+@mixin border-radius($args){
+    -webkit-border-radius: $args;
+    -moz-border-radius: $args;
+    border-radius: $args;
+}
+@mixin transition($args) {
+    -webkit-transition: $args;
+    -moz-transition: $args;
+    -ms-transition: $args;
+    -o-transition: $args;
+    transition: $args;
+}
+
+@mixin transform($transforms) {
+       -moz-transform: $transforms;
+         -o-transform: $transforms;
+        -ms-transform: $transforms;
+    -webkit-transform: $transforms;
+          transform: $transforms;
+}
+// rotate
+@mixin rotate ($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+ 
+// scale
+@mixin scale($scale) {
+     @include transform(scale($scale));
+} 
+// translate
+@mixin translate ($x, $y) {
+   @include transform(translate($x, $y));
+}
+// skew
+@mixin skew ($x, $y) {
+   @include transform(skew(#{$x}deg, #{$y}deg));
+}
+//transform origin
+@mixin transform-origin ($origin) {
+    moz-transform-origin: $origin;
+         -o-transform-origin: $origin;
+        -ms-transform-origin: $origin;
+    -webkit-transform-origin: $origin;
+          transform-origin: $origin;
+}
+// delay
+@mixin delay($delay) {
+    -webkit-transition-delay: $delay;
+         -o-transition-delay: $delay;
+       -moz-transition-delay: $delay;
+            transition-delay: $delay;
+}
+
+@mixin box-shadow($shadow) {
+  -webkit-box-shadow: $shadow;
+     -moz-box-shadow: $shadow;
+          box-shadow: $shadow;
+}
+
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie); //IE8
+}
+@mixin font($size, $font) {
+    font-size: $size;
+    font-family: $font;
+}
+@mixin color() {
+    color: $color-main;
+}
+@mixin slider_background-image ($colorstart:#f5f5f5, $colorend:#f9f9f9, $backcolor: #f7f7f7) {
+  background-color: $backcolor;
+  background-image: -moz-linear-gradient(top, $colorstart, $colorend);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from($colorstart), to($colorend));
+  background-image: -webkit-linear-gradient(top, $colorstart, $colorend);
+  background-image: -o-linear-gradient(top, $colorstart, $colorend);
+  background-image: linear-gradient(to bottom, $colorstart, $colorend);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$colorstart}', endColorstr='#{$colorend}',GradientType=0);
+}
+@mixin slider_box-sizing ($value) {
+  -webkit-box-sizing: $value;
+     -moz-box-sizing: $value;
+          box-sizing: $value;
+}
+@mixin slider_box-shadow ($value...) {
+  -webkit-box-shadow: $value;
+     -moz-box-shadow: $value;
+          box-shadow: $value;
+}
+@mixin slider_border-radius ($value) {
+  -webkit-border-radius: $value;
+     -moz-border-radius: $value;
+          border-radius: $value;
+}
+
+@mixin triangle ($size, $color, $direction) {
+  height: 0;
+  width: 0;
+
+  $width: nth($size, 1);
+  $height: nth($size, length($size));
+
+  $foreground-color: nth($color, 1);
+  $background-color: transparent !default;
+  @if (length($color) == 2) {
+    $background-color: nth($color, 2);
+  }
+
+  @if ($direction == up) or ($direction == down) or ($direction == right) or ($direction == left) {
+
+    $width: $width / 2;
+
+    @if $direction == up {
+      border-left: $width solid $background-color;
+      border-right: $width solid $background-color;
+      border-bottom: $height solid $foreground-color;
+
+    } @else if $direction == right {
+      border-top: $width solid $background-color;
+      border-bottom: $width solid $background-color;
+      border-left: $height solid $foreground-color;
+
+    } @else if $direction == down {
+      border-left: $width solid $background-color;
+      border-right: $width solid $background-color;
+      border-top: $height solid $foreground-color;
+
+    } @else if $direction == left {
+      border-top: $width solid $background-color;
+      border-bottom: $width solid $background-color;
+      border-right: $height solid $foreground-color;
+    }
+  }
+
+  @else if ($direction == up-right) or ($direction == up-left) {
+    border-top: $height solid $foreground-color;
+
+    @if $direction == up-right {
+      border-left:  $width solid $background-color;
+
+    } @else if $direction == up-left {
+      border-right: $width solid $background-color;
+    }
+  }
+
+  @else if ($direction == down-right) or ($direction == down-left) {
+    border-bottom: $height solid $foreground-color;
+
+    @if $direction == down-right {
+      border-left:  $width solid $background-color;
+
+    } @else if $direction == down-left {
+      border-right: $width solid $background-color;
+    }
+  }
+
+  @else if ($direction == inset-up) {
+    border-width: $height $width;
+    border-style: solid;
+    border-color: $background-color $background-color $foreground-color;
+  }
+
+  @else if ($direction == inset-down) {
+    border-width: $height $width;
+    border-style: solid;
+    border-color: $foreground-color $background-color $background-color;
+  }
+
+  @else if ($direction == inset-right) {
+    border-width: $width $height;
+    border-style: solid;
+    border-color: $background-color $background-color $background-color $foreground-color;
+  }
+
+  @else if ($direction == inset-left) {
+    border-width: $width $height;
+    border-style: solid;
+    border-color: $background-color $foreground-color $background-color $background-color;
+  }
+}

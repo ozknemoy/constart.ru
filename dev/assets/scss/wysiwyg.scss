@@ -1,0 +1,99 @@
+@import 'mixin.scss';
+
+.wysiwyg {
+	p {
+		@include font(14px, $ubuntu_light);
+		line-height: 125%;
+		margin: 10px 0 30px;
+	}
+	div[ng-bind-html=""] {
+		div {
+			@include font(14px, $ubuntu_light);
+			line-height: 125%;
+			margin: 10px 0 30px;
+		}
+	}
+	a {
+		font-size: 100%;
+		&:hover {
+			color: $color-bluedark;
+		}
+	}
+	
+	ul {
+		margin: 10px 0 30px 16px;
+		padding: 0;
+		li {
+			@include font(14px, $ubuntu_light);
+			line-height: 125%;
+			margin: 0 0 15px;
+		}
+	}
+	ol {
+		list-style-position: outside;
+		margin: 10px 0 30px 14px;
+		padding: 0;
+		li {
+			@include font(14px, $ubuntu_light);
+			line-height: 125%;
+			margin: 0 0 15px;
+		}
+	}
+	table {
+		tr {
+			td {
+				border: 1px solid $color-gray;
+				padding: 5px;
+				vertical-align: top;
+			}
+		}
+	}
+	h1 {
+
+	}
+	h2 {
+		@include font(30px, $font_sec);
+		margin: 30px 0;
+		color: $color-bluedark;
+	}
+	h3 {
+		@include font(28px, $font_sec);
+		margin: 30px 0;
+		color: $color-bluedark;
+	}
+	h4 {
+		@include font(26px, $font_sec);
+		margin: 30px 0;
+		color: $color-bluedark;
+	}
+	h5 {
+		@include font(24px, $font_sec);
+		margin: 30px 0;
+		color: $color-bluedark;
+	}
+	h6 {
+		@include font(22px, $font_sec);
+		margin: 30px 0;
+		color: $color-bluedark;
+	}
+	img {
+		// border: 1px solid #cacaca;
+		// padding: 3px;
+		max-width: 100%;
+		height: auto;
+	}
+	b {
+		font-family: $ubuntu_bold;
+	}
+	.title {
+		margin: 0 0 20px;
+		&:after {
+			background: $color-blue;
+			content: '';
+			height: 3px;
+			width: 50px;
+			margin: 10px 0 0;
+			display: block;
+		}
+	}
+}

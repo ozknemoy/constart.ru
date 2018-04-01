@@ -1,0 +1,103 @@
+<section class="section" id="section1" data-index="1"><div class="section_wrap"><div class="container-fluid">
+
+    <input type="file" id="passport_photo_1"
+           ng-model="ue.temp.passport_photo_1"
+           accept="image/*"
+           ngf-select="a.upload($file)"
+           ngf-max-size="2MB"
+           ngf-model-invalid="errorFile1">
+    <input type="hidden" ng-model="ue.u.passport_photo_1" required name="passport_photo_1">
+
+
+
+
+<button class="btn btn-default" data-target="#astros" data-toggle="modal">ред астронавтов</button>
+
+<ul class="nav nav-pills">
+    <li class="active"><a href="" data-target="#astro" data-toggle="pill">astro</a></li>
+    <li><a href="" data-target="#film" data-toggle="pill">film</a></li>
+    <li><a href="" data-target="#star" data-toggle="pill">star</a></li>
+
+</ul>
+
+<div class="tab-content">
+    <div id="astro" class="tab-pane fade in active">
+
+
+            <div ng-repeat="e in a.a" class="coll-sx-12 col-sm-6 col-lg-4">
+                <div class="alert alert-success">
+                    <p>имя: {{e.name}}</p>
+                    <p>фамилия: {{e.surname}}</p>
+                </div>
+                <div class="btn btn-info" data-target="#astros" data-toggle="modal"
+                     ng-click="a.redA=a.a[$index];a.redAId=$index">редактировать</div>
+                <br><br>
+            </div>
+
+
+        <button class="btn btn-warning btn-block" ng-click="a.a.push({})">Добавить</button>
+
+    </div>
+
+    <div id="film" class="tab-pane fade">
+        <div class="alert alert-info" ng-repeat="e in a.f">
+            <h3>{{e.title}}, {{e.year}}</h3>
+            <p>{{e.director}}</p>
+            <span>{{e.storyline}}</span>
+        </div>
+    </div>
+
+    <div id="star" class="tab-pane fade">
+        <div class="alert alert-success" ng-repeat="e in a.stars">
+            <h3>{{e.name}}</h3>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="astros">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
+            <div class="modal-header">
+                <h3 class="modal-title">Редактирование астронавтов</h3>
+            </div>
+            <div class="modal-body form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="name">имя</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control " id="name" ng-model="a.redA.name">
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="surname">фамилия</label>
+                    <input type="text" class="form-control" id="surname" ng-model="a.redA.surname">
+                </div>
+                <div class="form-group" ng-repeat="f in a.redA.films">
+                    <label for="fs">фильм {{$index}}</label>
+                    <input type="text" disable class="form-control" id="fs" ng-model="f.title">
+                </div>
+                <div class="checkbox">
+                    <label for="fsc{{$index}}" ng-repeat="f in a.f">
+                        <input type="checkbox" value="{{f.id}}" id="fsc{{$index}}" ng-model="a.redA.films[$index].id">{{f.title}} </label>
+                </div>
+
+                {{a.redA.films}}
+
+            </div>
+            <div class="modal-footer">
+                <div class="btn btn-group">
+                        <div class="btn btn-success" ng-click="a.saveAstro(a.redAId,a.redA.id)">Сохранить</div>
+                        <div class="btn btn-danger" ng-click="a.deleteAstro(a.redAId,a.redA.id)">Удалить</div>
+                    <div class="btn btn-warning" data-dismiss="modal">Отмена</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+</div>
+    </section>

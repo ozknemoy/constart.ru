@@ -1,0 +1,332 @@
+@import 'mixin.scss';
+
+.assets {
+	padding: 30px 0 0;
+	&--block {
+		background: white;
+		padding: 30px;
+		@include box-shadow(0px 0px 3px 0px rgba(0,0,0,0.2));
+		.title {
+			margin: 0 0 20px;
+		}
+		.date {
+			float: right;
+			@include font(14px, $ubuntu_light);
+			color: $color-bluedark;
+		}
+	}
+	&--edit {
+		display: inline-block;
+		color: $color-bluedark;
+		vertical-align: top;
+		margin-top: 10px;
+	}
+	&--title {
+		@include font(20px, $ubuntu_light);
+		margin: 0 0 20px;
+		position: relative;
+		padding: 10px 0 0 50px;
+		min-height: 40px;
+		&--icon {
+			@include background-image('icon_box--small', $size: 37px 40px);
+			width: 37px;
+			height: 40px;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		&--hidden {
+			background: white;
+			visibility: hidden;
+			opacity: 0;
+			padding: 10px;
+			position: absolute;
+			right: 0;
+			bottom: 100%;
+			min-width: 470px;
+			@include font(14px, $ubuntu_light);
+			@include transition(.3s linear);
+			@include box-shadow(0px 0px 3px 0px rgba(0,0,0,0.2));
+			.elem_list--descr--footer {
+				position: relative;
+				.progress_wrap {
+					margin-right: 50px;
+				}
+			}
+			.elem_list--short-descr {
+				padding: 0 0 10px;
+			}
+			.progress--title.total {
+				margin: 0 15px 10px 0;
+			}
+			.project_details--time {
+				display: inline-block;
+				vertical-align: top;
+				i {
+					margin-top: -5px;
+				}
+			}
+		}
+		&:hover {
+			.assets--title--hidden {
+				opacity: 1;
+				// height: auto;
+				visibility: visible;
+			}
+		}
+	}
+	&--author {
+		@include font(20px, $ubuntu_light);
+		color: $color-bluedark;
+		position: relative;
+		padding: 7px 0 0 50px;
+		min-height: 40px;
+		&--img {
+			display: block;
+			width: 40px;
+			height: 40px;
+			position: absolute;
+			left: 0;
+			top: 0;
+			overflow: hidden;
+			vertical-align: middle;
+			@include border-radius(100%);
+			img {
+				max-width: 100%;
+				max-height: 100%;
+			}
+		}
+	}
+	&--location {
+		color: $color-gray-dark;
+		@include font(16px, $ubuntu_light);
+		margin: 20px 0 30px;
+	}
+
+	.elem_list {
+		padding: 0;
+	}
+	.btn + .elem_list {
+		margin: 20px 0 0 -5px;
+	}
+
+	// gallery
+	.gallery_full {
+		width: 100%;
+		float: none;
+	}
+	.gallery_thumbs {
+		width: auto;
+		float: none;
+		margin: 0 -5px 30px;
+		&:after {
+			content: '';
+			clear: both;
+			display: block;
+		}
+		&--item {
+			width: 20%;
+			padding: 5px 5px 0;
+		}
+	}
+
+	// field
+	&--field {
+		margin-bottom: 10px;
+		&:after {
+			content: '';
+			clear: both;
+			display: block;
+		}
+		&-left {
+			float: left;
+			@include font(16px, $ubuntu_bold);
+			color: $color-bluedark;
+		}
+		&-right {
+			float: right;
+			color: $color-bluedark;
+			@include font(16px, $ubuntu_light);
+			.price {
+				@include font(22px, $ubuntu);
+				i {
+					margin-top: 5px;
+				}
+			}
+		}
+	}
+
+	// description
+	&--description {
+		padding: 30px;
+	}
+
+	.carousel {
+		margin: 45px 0 0; 
+	}
+
+	// edit
+	.field {
+		font-size: 20px;
+		color: $color-gray-dark;
+		position: relative;
+		margin: 25px 0 0;
+		&--label {
+			@include font(20px, $ubuntu);
+			cursor: pointer;
+			color: $color-gray-dark;
+			margin-top: 20px;
+		}
+		i {
+			position: static;
+			width: 15px;
+			height: 15px;
+			margin: -2px 3px 0 4px;
+		}
+		span {
+			font-family: $font_sec;
+			color: $color-bluedark;
+			&.tip {
+				background: $color-bluedark;
+				width: 20px;
+				height: 20px;
+				color: white;
+				cursor: pointer;
+				line-height: 22px;
+				text-align: center;
+				position: relative;
+				display: inline-block;
+				margin: 4px 0 0 0;
+				vertical-align: top; 
+				@include font(14px, $ubuntu);
+				@include border-radius(20px);
+			}
+			&.field_edit--link {
+				@include font(20px, $ubuntu);
+				cursor: pointer;
+				color: $color-gray-dark;
+				span {
+					color: $color-bluedark;
+				}
+			}
+		}
+		.dropdown {
+			background: #999999;
+			position: absolute;
+			top: 100%;
+			left: 47px;
+			z-index: 1000;
+			// display: none;
+			min-width: 240px;
+			padding: 0;
+			@include box-shadow(none);
+			margin: 0;
+			.wrap {
+				padding: 10px 35px 20px 20px;
+				&:after {
+					background: #bfbfbf;
+					content: '';
+					position:absolute;
+					right: 0;
+					top: 0;
+					bottom: 0;
+					width: 20px;
+				}
+			}
+			a {
+				color: white;
+				display: block;
+				color: #dddddd;
+				padding: 0;
+				@include font(16px, $ubuntu);
+				&:hover {
+					color: white;
+				}
+			}
+			p {
+				color: white;
+				margin: 10px 0 0;
+    			font-size: 18px;
+			}
+  		}
+  		&.edit {
+  			.field_edit--link {
+  				color: $color-danger;
+  				cursor: pointer;
+  				&:after {
+					width: 0;
+					height: 0;
+					border-style: solid;
+					border-width: 5px 5px 0 5px;
+					border-color: $color-danger transparent transparent transparent;
+					content: '';
+					display: inline-block;
+					vertical-align: top;
+					margin: 12px 6px 0 8px;
+					.description & {
+						display: none;
+					}
+				}
+  			}
+  			i {
+  				&:before {
+  					border: 2px solid $color-danger;
+  					content: '';
+  					display: block;
+  					width: 45px;
+  					height: 45px;
+  					left: 50%;
+  					top: 50%;
+  					margin: -22.5px 0 0 -22.5px;
+  					position: absolute;
+  					@include border-radius(50px);
+  				}
+  				&.pen_blue {
+  					display: none;
+  				}
+  			}
+  		}
+  		.hid {
+  			display: none;
+  		}
+  		.description_short--text {
+  			@include font(14px, $ubuntu);
+  			padding: 15px 0 0;
+  			color: $color-bluedark;
+  		}
+	}
+
+	&--params {
+		border: 1px solid $color-bluedark;
+		padding: 0 30px 30px 30px;
+		margin-top: 50px;
+		.title {
+			background: #f2f2f2;
+			display: inline-block;
+			margin: 0 0 -20px -10px;
+			position: relative;
+			top: -17px;
+			padding: 0 10px;
+			&--small {
+				margin-top: 30px;
+			}
+		}
+		.assets--field-description {
+			color: $color-gray-dark;
+			@include font(14px, $ubuntu_light);
+			font-style: italic;
+		}
+	}
+	&--footer {
+		padding: 30px 0;
+		span {
+			display: inline-block;
+			vertical-align: top;
+			margin: 10px 0 0 10px;
+			span {
+				font-size: 20px;
+				margin: -3px 3px 0 0;
+			}
+		}
+	}
+}

@@ -1,0 +1,23 @@
+@import 'mixin.scss';
+
+.feedback {
+	&_button{
+		background: $color-success;
+		position: fixed;
+		height: 36px;
+		line-height: 36px;
+		width: 36px;
+		cursor: pointer;
+		color: $white;
+		right: 10px;
+		bottom: 72px;
+		z-index: 1002;
+		text-align: center;
+		@include border-radius(5px);
+		@include transition(.2s linear);
+		&:hover {
+			background: lighten($color-success, 10%);
+		}
+	}
+	
+}

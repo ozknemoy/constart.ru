@@ -1,0 +1,616 @@
+
+<button type="button" class="close" ng-click="$dismiss()">
+    <span aria-hidden="true">&times;</span>
+</button>
+<div class="modal-header">
+    <div class="title">Реквизиты юридического лица</div>
+</div>
+
+<div class="modal-body">
+    <form name="le.legalForm">
+        <div class="form-group">
+            <label>Организационно-правовая форма: <span class="text-danger">*</span></label>
+
+            <ui-select class="select" ng-model="le.temp.t.legal_type" append-to-body="false">
+                <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="o.id as o in le.temp.legals">
+                    <span ng-bind="o.name"></span>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+
+        <!--для юридического лица-->
+        <div ng-if="le.temp.t.legal_type && le.temp.t.legal_type!=1">
+            <div class="form-group">
+                <label>Полное наименование юридического лица: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" required name="ur_fullname"
+                       ng-model="le.temp.l.ur_fullname">
+                <div class="alert alert-danger"
+                     ng-if="le.legalForm.ur_fullname.$touched&&le.legalForm.ur_fullname.$error.required">
+                    <small>Введите полное наименование</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Сокращенное наименование юридического лица: <span
+                        class="text-danger">*</span></label>
+                <input type="text" class="form-control" required name="ur_name"
+                       ng-model="le.temp.l.ur_name">
+                <div class="alert alert-danger"
+                     ng-if="le.legalForm.ur_name.$touched&&le.legalForm.ur_name.$error.required">
+                    <small>Введите cокращенное наименование</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                        <label>ИНН: <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" required name="ur_inn"
+                               mask='9999999999' restrict="reject"
+                               ng-model="le.temp.l.ur_inn">
+                        <div class="alert alert-danger"
+                             ng-if="le.legalForm.ur_inn.$touched&&
+                         (le.legalForm.ur_inn.$error.required || le.legalForm.ur_inn.$error.mask)">
+                            <small>Введите ИНН</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                        <label>КПП: <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" required name="ur_kpp"
+                               mask='999999999' restrict="reject"
+                               ng-model="le.temp.l.ur_kpp">
+                        <div class="alert alert-danger"
+                             ng-if="le.legalForm.ur_kpp.$touched&&
+                         (le.legalForm.ur_kpp.$error.required || le.legalForm.ur_kpp.$error.mask)">
+                            <small>Введите КПП</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                        <label>ОГРН: <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" required name="ur_ogrn"
+                               mask='99999 9999 9999' restrict="reject" mask-clean="true"
+                               ng-model="le.temp.l.ur_ogrn">
+                        <div class="alert alert-danger"
+                             ng-if="le.legalForm.ur_ogrn.$touched&&
+                         (le.legalForm.ur_ogrn.$error.required || le.legalForm.ur_ogrn.$error.mask)">
+                            <small>Введите ОГРН</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="datepickerAng form-group">
+                        <label>Дата регистрации: <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control "
+                               uib-datepicker-popup name="ii_num_date"
+                               ng-model="le.temp.l.ii_num_date" required
+                               datepicker-options="le.dateOptions"
+                               is-open="ii_open3" show-button-bar="false"
+                               ng-click="ii_open3 = true"/>
+                        <div class="alert alert-danger"
+                             ng-if="le.legalForm.ii_num_date.$touched && (le.legalForm.ii_num_date.$error.required ||
+                      le.legalForm.ii_num_date.$error.date)">
+                            <small>Введите дату</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label>Телефон: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" required name="phone"
+                       ui-mask="+7(999) 999 99 99"
+                       ng-model="le.temp.l.ur_phone">
+                <div class="alert alert-danger"
+                     ng-if="(le.legalForm.phone.$error.required || le.legalForm.phone.$error.mask)&&
+              le.legalForm.phone.$touched">Введите правильный телефон
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Юридический адрес: <span class="text-danger">*</span></label>
+                        <textarea class="form-control" row="2" required name="ur_addres"
+                                  ng-model="le.temp.l.ur_addres"></textarea>
+                <div class="alert alert-danger"
+                     ng-if="le.legalForm.ur_addres.$touched && le.legalForm.ur_addres.$error.required">
+                    <small>Введите адрес</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Фактический адрес: <span class="text-danger">*</span></label>
+                        <textarea class="form-control" row="2" required name="ur_fact_addres"
+                                  ng-model="le.temp.l.ur_fact_addres"></textarea>
+                <div class="alert alert-danger"
+                     ng-if="le.legalForm.ur_fact_addres.$touched && le.legalForm.ur_fact_addres.$error.required">
+                    <small>Введите адрес</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>ФИО руководителя: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" required name="ur_boss"
+                       ng-model="le.temp.l.ur_boss">
+                <div class="alert alert-danger"
+                     ng-if="le.legalForm.ur_boss.$touched && le.legalForm.ur_boss.$error.required">
+                    <small>Введите ФИО руководителя</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox default">
+                    <input type="checkbox" ng-model="le.temp.l.ur_has_middleman">
+                    <span></span>
+                    Инициатор действует по доверенности
+                </label>
+            </div>
+
+            <div ng-if="le.temp.l.ur_has_middleman">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <label>Номер доверенности:</label>
+                            <input type="text" class="form-control" required name="ur_num_warrant"
+                                   ng-model="le.temp.l.ur_num_warrant">
+                            <div class="alert alert-danger"
+                                 ng-if="le.legalForm.ur_num_warrant.$touched && le.legalForm.ur_num_warrant.$error.required">
+                                <small>Введите номер доверенности</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="datepickerAng form-group">
+                            <label>Дата подписания доверенности:</label>
+                            <input type="date" class="form-control"
+                                   uib-datepicker-popup required name="ur_date_warrant"
+                                   datepicker-options="le.dateOptions"
+                                   ng-model="le.temp.l.ur_date_warrant"
+                                   is-open="ii_open5" show-button-bar="false"
+                                   ng-click="ii_open5=1"/>
+                            <div class="alert alert-danger" ng-if="le.legalForm.ur_date_warrant.$touched &&
+                                 (le.legalForm.ur_date_warrant.$error.required || le.legalForm.ur_date_warrant.$error.date)">
+                                <small>Введите дату</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Загрузите скан доверенности <span class="text-danger">*</span></label>
+                    <div class="form-group">
+                        <div class="file_upload">
+                            <label class="btn btn-success btn-sm btn-block btn-animated"
+                                   ng-class="{'animated pointer-none':le.temp.pend}">
+                                <span class="btn-visible"><span class="fa fa-image" aria-hidden="true"></span>
+                                        Скан доверенности
+                                </span>
+                                <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+
+                                <input type="file"
+                                       ng-model="le.temp.t.ur_photo_0"
+                                       name="ur_photo_0_temp"
+                                       ng-click="le.blur.ur_photo_0=1"
+                                       accept=".png,.jpg,.jpeg"
+                                       ngf-select="le.uploadDocs($file,'ur_photo_0')"
+                                       ngf-max-size="2MB"
+                                       ngf-model-invalid="ur_errorFile1">
+                                <input type="hidden" ng-model="le.temp.l.ur_photo_0" required name="ur_photo_0">
+                            </label>
+                            <span class="file_title">{{le.temp.l.ur_photo_0.slice(-20)}}</span>
+                        </div>
+                        <span class="alert alert-danger" ng-if="le.legalForm.ur_photo_0_temp.$error.maxSize">
+                        <small>Вы пытаетесь загрузить файл размером {{ur_errorFile1.size / 1000000|number:1}}MB .
+                            максимально допустимый размер 2M</small>
+                        </span>
+                        <span ng-show="le.blur.ur_photo_0 && le.legalForm.ur_photo_0.$error.required"
+                              class="alert alert-danger"><small>Загрузите скан</small>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Сайт:</label>
+                <input type="text" class="form-control" name="site"
+                       ng-model="le.temp.l.site">
+            </div>
+
+            <div class="form-group">
+                <label>Загрузите скан документов <span class="text-danger">*</span></label>
+                <div class="form-group">
+                    <div class="file_upload">
+                        <label class="btn btn-success btn-sm btn-block btn-animated"
+                               ng-class="{'animated pointer-none':le.temp.pend}">
+                                    <span class="btn-visible"><span class="fa fa-image" aria-hidden="true"></span>
+                                            Протокол/ Решение о назначении/ избрании единоличного исполнительного органа
+                                        </span>
+                            <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+
+                            <input type="file"
+                                   ng-model="le.temp.t.ur_photo_1"
+                                   name="ur_photo_1_temp"
+                                   ng-click="le.blur.ur_photo_1=1"
+                                   accept=".png,.jpg,.jpeg"
+                                   ngf-select="le.uploadDocs($file,'ur_photo_1')"
+                                   ngf-max-size="2MB"
+                                   ngf-model-invalid="ur_errorFile1">
+                            <input type="hidden" ng-model="le.temp.l.ur_photo_1" required name="ur_photo_1">
+                        </label>
+                        <span class="file_title">{{le.temp.l.ur_photo_1.slice(-20)}}</span>
+                    </div>
+                            <span class="alert alert-danger" ng-if="le.legalForm.ur_photo_1_temp.$error.maxSize">
+                        <small>Вы пытаетесь загрузить файл размером {{ur_errorFile1.size / 1000000|number:1}}MB .
+                            максимально допустимый размер 2M</small></span>
+                            <span ng-show="le.blur.ur_photo_1 && le.legalForm.ur_photo_1.$error.required"
+                                  class="alert alert-danger"><small>Загрузите скан</small></span>
+                </div>
+                <div class="form-group">
+                    <div class="file_upload">
+                        <label class="btn btn-success btn-sm btn-block btn-animated"
+                               ng-class="{'animated pointer-none':le.temp.pend}">
+                                    <span class="btn-visible"><span class="fa fa-image" aria-hidden="true"></span>
+                                            Свидетельство о государственной регистрации юридического лица
+                                        </span>
+                            <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+
+                            <input type="file"
+                                   ng-model="le.temp.t.ur_photo_2"
+                                   name="ur_photo_2_temp"
+                                   ng-click="le.blur.ur_photo_2=1"
+                                   accept=".png,.jpg,.jpeg"
+                                   ngf-select="le.uploadDocs($file,'ur_photo_2')"
+                                   ngf-max-size="2MB"
+                                   ngf-model-invalid="ur_errorFile2">
+                            <input type="hidden" ng-model="le.temp.l.ur_photo_2" required name="ur_photo_2">
+                        </label>
+                        <span class="file_title">{{le.temp.l.ur_photo_2.slice(-20)}}</span>
+                    </div>
+                            <span class="alert alert-danger" ng-if="le.legalForm.ur_photo_2_temp.$error.maxSize">
+                        <small>Вы пытаетесь загрузить файл размером {{ur_errorFile2.size / 1000000|number:1}}MB .
+                            максимально допустимый размер 2M</small></span>
+                            <span ng-show="le.blur.ur_photo_2 && le.legalForm.ur_photo_2.$error.required"
+                                  class="alert alert-danger"><small>Загрузите скан</small></span>
+                </div>
+                <div class="form-group">
+                    <div class="file_upload">
+                        <label class="btn btn-success btn-sm btn-block btn-animated"
+                               ng-class="{'animated pointer-none':le.temp.pend}">
+                                    <span class="btn-visible"><span class="fa fa-image" aria-hidden="true"></span>
+                                            Свидетельство о постановке на налоговый учет
+                                        </span>
+                            <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+
+                            <input type="file"
+                                   ng-model="le.temp.t.ur_photo_3"
+                                   name="ur_photo_3_temp"
+                                   ng-click="le.blur.ur_photo_3=1"
+                                   accept=".png,.jpg,.jpeg"
+                                   ngf-select="le.uploadDocs($file,'ur_photo_3')"
+                                   ngf-max-size="2MB"
+                                   ngf-model-invalid="ur_errorFile3">
+                            <input type="hidden" ng-model="le.temp.l.ur_photo_3" required name="ur_photo_3">
+                        </label>
+                        <span class="file_title">{{le.temp.l.ur_photo_3.slice(-20)}}</span>
+                    </div>
+                            <span class="alert alert-danger" ng-if="le.legalForm.ur_photo_3_temp.$error.maxSize">
+                        <small>Вы пытаетесь загрузить файл размером {{ur_errorFile3.size / 1000000|number:1}}MB .
+                            максимально допустимый размер 2M</small></span>
+                            <span ng-show="le.blur.ur_photo_3 && le.legalForm.ur_photo_3.$error.required"
+                                  class="alert alert-danger"><small>Загрузите скан</small></span>
+                </div>
+                <div class="form-group">
+                    <div class="file_upload">
+                        <label class="btn btn-success btn-sm btn-block btn-animated"
+                               ng-class="{'animated pointer-none':le.temp.pend}">
+                                    <span class="btn-visible"><span class="fa fa-image" aria-hidden="true"></span>
+                                            Устав (все страницы в одном файле формата .pdf или архив zip или rar. Не больше 20МБ)
+                                        </span>
+                            <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+
+                            <input type="file"
+                                   ng-model="le.temp.t.ur_photo_4"
+                                   name="ur_photo_4_temp"
+                                   ng-click="le.blur.ur_photo_4=1"
+                                   accept=".pdf,.rar,.zip"
+                                   ngf-select="le.uploadDocs($file,'ur_photo_4','/file/upload-doc')"
+                                   ngf-max-size="20MB"
+                                   ngf-model-invalid="ur_errorFile4">
+                            <input type="hidden" ng-model="le.temp.l.ur_photo_4" required name="ur_photo_4">
+                        </label>
+                        <span class="file_title">{{le.temp.l.ur_photo_4.slice(-20)}}</span>
+                    </div>
+                            <span class="alert alert-danger" ng-if="le.legalForm.ur_photo_4_temp.$error.maxSize">
+                        <small>Вы пытаетесь загрузить файл размером {{ur_errorFile4.size / 1000000|number:1}}MB .
+                            максимально допустимый размер 50M</small></span>
+                            <span ng-show="le.blur.ur_photo_4 && le.legalForm.ur_photo_4.$error.required"
+                                  class="alert alert-danger"><small>Загрузите скан</small></span>
+                </div>
+
+            </div>
+
+            <div class="modal-sep"></div>
+
+            <div class="title--small">Банковские реквизиты</div>
+
+            <div class="form-group">
+                <label>Название банка: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" required name="ur_bank_name"
+                       ng-model="le.temp.l.ur_bank_name">
+                <div class="alert alert-danger"
+                     ng-if="le.legalForm.ur_bank_name.$touched && le.legalForm.ur_bank_name.$error.required">
+                    <small>Введите название банка</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>БИК: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="ur_bank_bik" required
+                       ng-model="le.temp.l.ur_bank_bik"
+                       mask='999999999' restrict="reject">
+                <div class="alert alert-danger"
+                     ng-if="le.legalForm.ur_bank_bik.$touched &&
+             (le.legalForm.ur_bank_bik.$error.required||le.legalForm.ur_bank_bik.$error.mask)">
+                    <small>Введите правильный БИК банка</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Корреспондентский счет банка: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="ur_bank_corr" required
+                       ng-model="le.temp.l.ur_bank_corr"
+                       mask='99999 99999 99999 99999' restrict="reject" mask-clean="true">
+                <div class="alert alert-danger"
+                     ng-if="le.legalForm.ur_bank_corr.$touched &&
+             (le.legalForm.ur_bank_corr.$error.required||le.legalForm.ur_bank_corr.$error.mask)">
+                    <small>Введите правильный кор. счет банка</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Расчетный счет: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" name="ur_bank_account" required
+                       ng-model="le.temp.l.ur_bank_account"
+                       ui-mask='99999 99999 99999 99999'
+                       ui-mask-placeholder-char="space">
+                <div class="alert alert-danger"
+                     ng-if="le.legalForm.ur_bank_account.$touched &&
+             (le.legalForm.ur_bank_account.$error.required||le.legalForm.ur_bank_account.$error.mask)">
+                    <small>Введите правильный номер расчетного счета банка</small>
+                </div>
+            </div>
+        </div>
+
+
+        <!--для ИП-->
+        <div ng-if="le.temp.t.legal_type && le.temp.t.legal_type==1">
+            <div class="form-group">
+                <label>Наименование ИП: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" required name="ii_name"
+                       ng-model="le.temp.l.ii_name"
+                       ng-model-options="{debounce:300}">
+                <div class="alert alert-danger"
+                     ng-if="le.legalForm.ii_name.$touched&&le.legalForm.ii_name.$error.required">
+                    <small>Введите название ИП</small>
+                </div>
+            </div>
+
+                <!--<div class="form-group">
+                    <label>ИНН: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" required name="ii_inn"
+                           mask='999999999999' restrict="reject"
+                           ng-model="le.temp.l.ii_inn">
+                    <div class="alert alert-danger"
+                         ng-if="le.legalForm.ii_inn.$touched&&
+                         (le.legalForm.ii_inn.$error.required || le.legalForm.ii_inn.$error.mask)">
+                        <small>Введите ИНН</small>
+                    </div>
+                </div>-->
+
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                        <label>Свидетельство о государственной регистрации индивидуального предпринимателя:
+                            <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" required name="ii_reg"
+                               mask='99999 99999 99999' restrict="reject" mask-clean="true"
+                               ng-model="le.temp.l.ii_reg">
+                        <div class="alert alert-danger"
+                             ng-if="le.legalForm.ii_reg.$touched &&
+                     (le.legalForm.ii_reg.$error.required||le.legalForm.ii_reg.$error.mask)">
+                            <small>Введите номер свидетельства</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <div class="datepickerAng form-group">
+                        <label>Дата выдачи свидетельства о государственной регистрации индивидуального
+                            предпринимателя:
+                            <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control"
+                               uib-datepicker-popup name="ii_reg_date"
+                               ng-model="le.temp.l.ii_reg_date" required
+                               datepicker-options="le.dateOptions"
+                               is-open="ii_open1" show-button-bar="false"
+                               ng-click="ii_open1 = true"/>
+                        <div class="alert alert-danger"
+                             ng-if="le.legalForm.ii_reg_date.$touched && (le.legalForm.ii_reg_date.$error.required || le.legalForm.ii_reg_date.$error.date)">
+                            <small>Введите дату</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <div class="form-group">
+                        <label>
+                            Свидетельство о присвоении идентификационного номера налогоплательщика Российской Федерации:
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" required name="ii_num_id"
+                               mask='9999 9999 9999' restrict="reject" mask-clean="true"
+                               ng-model="le.temp.l.ii_num_id">
+                        <div class="alert alert-danger"
+                             ng-if="le.legalForm.ii_num_id.$touched && le.legalForm.ii_num_id.$error.required">
+                            <small>Введите номер свидетельства</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="datepickerAng col-xs-12 col-sm-6">
+                    <div class="form-group">
+                        <label>Дата выдачи свидетельства о присвоении идентификационного номера
+                            налогоплательщика
+                            Российской Федерации: <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control"
+                               uib-datepicker-popup name="ii_num_date"
+                               ng-model="le.temp.l.ii_num_date" required
+                               datepicker-options="le.dateOptions"
+                               is-open="ii_open2" show-button-bar="false"
+                               ng-click="ii_open2 = true"/>
+                        <div class="alert alert-danger"
+                             ng-if="le.legalForm.ii_num_date.$touched && (le.legalForm.ii_num_date.$error.required || le.legalForm.ii_num_date.$error.date)">
+                            <small>Введите дату</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Загрузите скан документов <span class="text-danger">*</span></label>
+                <div class="form-group">
+                    <div class="file_upload">
+                        <label class="btn btn-success btn-sm btn-block btn-animated"
+                               ng-class="{'animated pointer-none':le.temp.pend}">
+
+                                        <span class="btn-visible"><span class="fa fa-image" aria-hidden="true"></span>
+                                            Скан Свидетельства о гос регистрации ИП
+                                        </span>
+                            <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+
+                            <input type="file"
+                                   ng-model="le.temp.t.ii_photo_1"
+                                   name="ii_photo_1_temp"
+                                   ng-click="le.blur.ii_photo_1=1"
+                                   accept=".png,.jpg,.jpeg"
+                                   ngf-select="le.uploadDocs($file,'ii_photo_1')"
+                                   ngf-max-size="2MB"
+                                   ngf-model-invalid="ii_errorFile1">
+                            <input type="hidden" ng-model="le.temp.l.ii_photo_1" required name="ii_photo_1">
+                        </label>
+                        <span class="file_title">{{le.temp.l.ii_photo_1.slice(-20)}}</span>
+                    </div>
+                            <span class="alert alert-danger" ng-if="le.legalForm.ii_photo_1_temp.$error.maxSize">
+                        <small>Вы пытаетесь загрузить файл размером {{ii_errorFile1.size / 1000000|number:1}}MB .
+                            максимально допустимый размер 2M</small></span>
+                            <span ng-show="le.blur.ii_photo_1 && le.legalForm.ii_photo_1.$error.required"
+                                  class="alert alert-danger"><small>Загрузите скан</small></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="file_upload">
+                        <label class="btn btn-success btn-sm btn-block btn-animated"
+                               ng-class="{'animated pointer-none':le.temp.pend}">
+                                    <span class="btn-visible"><span class="fa fa-image" aria-hidden="true"></span>
+                                            Скан Свидетельства о присвоении ИНН Российской Федерации
+                                        </span>
+                            <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+
+                            <input type="file"
+                                   ng-model="le.temp.t.ii_photo_2"
+                                   name="ii_photo_2_temp"
+                                   ng-click="le.blur.ii_photo_2=1"
+                                   accept=".png,.jpg,.jpeg"
+                                   ngf-select="le.uploadDocs($file,'ii_photo_2')"
+                                   ngf-max-size="2MB"
+                                   ngf-model-invalid="ii_errorFile2">
+                            <input type="hidden" ng-model="le.temp.l.ii_photo_2" required name="ii_photo_2">
+                        </label>
+                        <span class="file_title">{{le.temp.l.ii_photo_2.slice(-20)}}</span>
+                    </div>
+                            <span class="alert alert-danger" ng-if="le.legalForm.ii_photo_2_temp.$error.maxSize">
+                        <small>Вы пытаетесь загрузить файл размером {{ii_errorFile2.size / 1000000|number:1}}MB .
+                            максимально допустимый размер 2M</small></span>
+                            <span ng-show="le.blur.ii_photo_2 && le.legalForm.ii_photo_2.$error.required"
+                                  class="alert alert-danger"><small>Загрузите скан</small></span>
+
+                </div>
+            </div>
+
+            <div class="modal-sep"></div>
+
+            <div class="title--small">Банковские реквизиты</div>
+
+            <div class="form-group">
+                <label>Название банка: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" required name="ii_bank_name"
+                       ng-model="le.temp.l.ii_bank_name">
+                <div class="alert alert-danger"
+                     ng-if="le.legalForm.ii_bank_name.$touched && le.legalForm.ii_bank_name.$error.required">
+                    <small>Введите название банка</small>
+                </div>
+
+                <div class="form-group">
+                    <label>БИК: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="ii_bank_bik" required
+                           ng-model="le.temp.l.ii_bank_bik"
+                           mask='999999999' restrict="reject">
+                    <div class="alert alert-danger"
+                         ng-if="le.legalForm.ii_bank_bik.$touched &&
+             (le.legalForm.ii_bank_bik.$error.required||le.legalForm.ii_bank_bik.$error.mask)">
+                        <small>Введите правильный БИК банка</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Корреспондентский счет банка: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="ii_bank_corr" required
+                           ng-model="le.temp.l.ii_bank_corr"
+                           mask='99999 99999 99999 99999' restrict="reject" mask-clean="true">
+                    <div class="alert alert-danger"
+                         ng-if="le.legalForm.ii_bank_corr.$touched &&
+             (le.legalForm.ii_bank_corr.$error.required||le.legalForm.ii_bank_corr.$error.mask)">
+                        <small>Введите правильный кор. счет банка</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Расчетный счет: <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="ii_bank_account" required
+                           ng-model="le.temp.l.ii_bank_account"
+                           ui-mask='99999 99999 99999 99999'
+                           ui-mask-placeholder-char="space">
+                    <div class="alert alert-danger"
+                         ng-if="le.legalForm.ii_bank_account.$touched &&
+             (le.legalForm.ii_bank_account.$error.required||le.legalForm.ii_bank_account.$error.mask)">
+                        <small>Введите правильный номер расчетного счета банка</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer text-center">
+    <button ng-if="!le.temp.editableLegals" class="btn btn-success btn-animated"
+            ng-disabled="le.temp.pend || (le.legalForm.$invalid && le.temp.t.legal_type)"
+            ng-click="le.createLegals(le.temp.l,le.temp.t.legal_type)"
+            ng-class="{'animated':le.temp.pend}">
+                <span class="btn-visible">
+                   <span class="fa fa-image" aria-hidden="true"></span> Добавить
+                </span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+    <button ng-if="le.temp.editableLegals" class="btn btn-success btn-animated"
+            ng-disabled="le.temp.pend || (le.legalForm.$invalid && le.temp.t.legal_type)"
+            ng-click="le.saveEditedLegals(le.temp.l,le.temp.t.legal_type)"
+            ng-class="{'animated':le.temp.pend}">
+                <span class="btn-visible">
+                   <span class="fa fa-image" aria-hidden="true"></span>  Сохранить
+                </span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+</div>

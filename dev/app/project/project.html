@@ -1,0 +1,204 @@
+
+
+<div class="project_header" ng-class="{'prj_m--open':project.temp.prj_mOpen}">
+    <div class="project_header--image"
+         ng-style="::project.temp.f">
+    </div>
+    <h1 class="title project_header--title">
+        {{::project.proj.name}}
+    </h1>
+
+    <div class="project_header--wrap">
+        <a try-to-see-user="{{::project.proj.owner.id}}" href class="project_header--user">
+            <span class="project_header--user--img">
+                <!--<img src="assets/img/blank-user.png" ozk-img="{{::project.proj.owner.foto}}"
+                     base="{{::project.baseImgUrl}}" alt="">-->
+                <img ozk-img="{{::project.proj.owner.foto}}"
+                     base="{{::project.baseImgUrl}}"
+                     sex="{{::project.proj.owner.sex}}"
+                     src="assets/_img/blank_profile--male.png"
+                     f-src="assets/_img/blank_profile--female.png" alt="">
+            </span>
+            {{::project.proj.owner.name}}&nbsp;{{::project.proj.owner.surname}}
+        </a>
+
+        <div class="row">
+            <div class="col-xs-12 col-md-8 col-md-offset-2">
+                <div class="project_header--description">
+                    <p>{{::project.proj.short_descr}}</p>
+                </div>
+                <div class="project_header--types">
+                    <div class="project_header--types--item" ng-if="project.CountryAndRegion[0]">
+                        <i class="fa fa-map-marker"></i>
+                        {{::project.CountryAndRegion[1]}},
+                        <br>
+                        {{::project.CountryAndRegion[0]}}
+                    </div>
+                    <div class="project_header--types--item">
+                        <i class="fa fa-cube"></i>
+                        {{::project.stages[project.proj.stage].shortname}}
+                    </div>
+                    <div class="project_header--types--item">
+                        <i class="fa fa-flag"></i>
+                        {{::project.proj.category}}<!--,
+                        <br>
+                        {{::project.proj.category_sub}}-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="project.dataGeted">
+        <div class="project_header--date"
+             ng-if="::project.proj.posted_date">
+            Опубликован {{::(project.proj.posted_date|dateEnToRu)}}
+        </div>
+        <div class="project_header--date"
+             not-if="::project.proj.posted_date">
+            Не опубликован
+        </div>
+    </div>
+
+
+    <div class="project_header--links">
+        <div class="kebab-wrapper" ng-click="project.temp.prj_mOpen=1" ng-class="{'active':project.temp.prj_mOpen}">
+            <div class="kebab">
+                <span></span>
+            </div>
+            <span class="kebab--title">Меню проекта</span>
+        </div>
+        <div class="project_header--mob">
+            <a ui-sref="proj.about" ui-sref-active="active" class="project_header--links--item">О проекте</a>
+            <a ui-sref="proj.fin" not-if="project.proj.type_id==3"
+               ui-sref-active="active" class="project_header--links--item">
+                {{project.proj.type_id==1?'Поддержать проект':'Инвестировать в проект'}}
+            </a><!--ng-if="project.proj.investments_found_sum||project.proj.loan_found_sum||project.proj.reward_found_sum"-->
+            <a ui-sref="proj.team" ui-sref-active="active" class="project_header--links--item">Команда</a>
+            <a ui-sref="proj.budget" ui-sref-active="active" class="project_header--links--item"
+               not-if="project.isCF || project.proj.type_id==3">Смета</a><!--project.total.current_yield||project.total.estimate_monthly||project.total.estimate_capital-->
+            <a ui-sref-active="active" class="project_header--links--item"
+               ng-if="project.news.allCount || project.proj.isCurrentUserProject">
+                <span ui-sref="proj.news"></span>
+                <span class="cursor-pointer " ui-sref="proj.news.all">Новости</span>
+            </a>
+            <a ui-sref="proj.comments" ui-sref-active="active" class="project_header--links--item">
+                Комментарии
+            </a>
+            <a ui-sref-active="active" class="project_header--links--item"
+               ng-if="project.proj.lookingCount || project.proj.isCurrentUserProject">
+                <span ui-sref="proj.vacancies"></span>
+                <span class="cursor-pointer " ui-sref="proj.vacancies.all">Вакансии</span>
+            </a>
+            <!--<a ui-sref="proj.reward" ui-sref-active="active" class="project_header&#45;&#45;links&#45;&#45;item hide-when-not-active-ib">Вознаграждения</a>-->
+        </div>
+        <div class="btn-group pull-right" ng-if="project.proj.status<3 && project.proj.isCurrentUserProject">
+            <a ui-sref="projectEditor.about(::{'id': project.id})" class="btn btn-danger btn-sm">
+                <i class="fa fa-pencil"></i>&nbsp;Редактировать
+            </a>
+        </div>
+
+
+        <div id="project_message" class="pull-right" style="padding:8px 0 0;font-size:10px">
+            <!--кнопки дублеры  Связаться -->
+            <!--кнопка для зарегеного юзера-->
+            <button type="button" class="btn btn-opacity btn-sm"
+                    uib-tooltip="Связаться" tooltip-placement="bottom"
+                    ng-if="project.isAuthenticated && !project.proj.isCurrentUserProject"
+                    value="'Связаться с Инициатором проекта'"
+                    modal-open="app/_common/modals/u-email-to-user.html">
+                <i class="fa fa-envelope"></i>
+            </button>
+            <!--кнопка для НЕзарегеного юзера -->
+            <button type="button" class="btn btn-opacity btn-sm"
+                    uib-tooltip="Связаться" tooltip-placement="bottom"
+                    not-if="::project.isAuthenticated"
+                    modal-open="app/_common/modals/p-try-to-mail-proj-owner.html">
+                <i class="fa fa-envelope"></i>
+            </button>
+
+
+            &nbsp;
+            <button type="button" class="btn btn-success btn-sm"
+                    ui-sref="proj.fin({'num':0})"
+                    not-if="project.proj.isCurrentUserProject || project.proj.type_id==3">
+                {{project.proj.type_id==1?'Поддержать проект ':'Инвестировать в проект '}}
+                <span class="btn btn-success-darken btn-sm">{{project.proj.inProjectCount||0}}</span>
+            </button>
+            &nbsp;
+            <like-button class="btn btn-primary btn-sm"
+                         ng-if="project.isAuthenticated"
+                        like="{{project.proj.like}}"
+                        callback="project.proj.like=1;project.proj.like_count=project.proj.like_count+1">
+                <i class="fa fa-heart"></i>&nbsp;
+                {{project.proj.like?'Вам нравится ':'Мне нравится '}}
+                <span class="btn btn-primary-darken btn-sm">{{project.proj.like_count || 0}}</span>
+            </like-button>
+            <login-button class="btn btn-primary btn-sm"
+                          uib-tooltip="Лайкать могут только авторизованные пользователи"
+                          tooltip-placement="bottom"
+                         not-if="project.isAuthenticated">
+                <i class="fa fa-heart"></i>&nbsp;Мне нравится&nbsp;
+                <span class="btn btn-primary-darken btn-sm">{{project.proj.like_count || 0}}</span>
+            </login-button>
+        </div>
+    </div>
+    <!--  header links end -->
+
+    <!--  mobile menu   -->
+    <div class="prj_mb">
+        <div class="prj_mb--wrap">
+            <a ui-sref="proj.about" ui-sref-active="active" class="prj_mb--item active">О проекте</a>
+            <a ui-sref="proj.fin" ui-sref-active="active" class="prj_mb--item"
+               not-if="project.proj.type_id==3"
+               scroll-to px="275">
+                <i class="fa fa-star"></i>
+                {{project.proj.type_id==1?' Поддержать проект':' Инвестировать в проект'}}
+            </a><!--ng-if="project.proj.investments_found_sum||project.proj.loan_found_sum||project.proj.reward_found_sum"-->
+            <a ui-sref="proj.team" ui-sref-active="active" class="prj_mb--item"
+               scroll-to px="275">Команда</a>
+            <a ui-sref="proj.budget" ui-sref-active="active" class="prj_mb--item"
+               scroll-to px="275"
+               not-if="project.isCF || project.proj.type_id==3">Смета</a><!--ng-if="project.total.current_yield||project.total.estimate_monthly||project.total.estimate_capital"-->
+            <a ui-sref="proj.news.all" ui-sref-active="active" class="prj_mb--item"
+               scroll-to px="275"
+               ng-if="project.news.allCount || project.proj.isCurrentUserProject">Новости</a>
+            <a ui-sref="proj.comments" ui-sref-active="active" class="prj_mb--item active">Комментарии</a>
+            <a ui-sref="proj.vacancies.all" ui-sref-active="active" class="prj_mb--item"
+               scroll-to px="275"
+               ng-if="project.proj.lookingCount || project.proj.isCurrentUserProject">Вакансии</a>
+            <a href class="prj_mb--item"
+               ng-if="project.proj.status<3&& project.proj.isCurrentUserProject"
+               ui-sref="projectEditor.about({'id': project.id})">
+                <i class="fa fa-pencil"></i>&nbsp;Редактировать</a>
+
+            <a href class="prj_mb--item"
+               value="'Связаться с Инициатором проекта'"
+               modal-open="app/_common/modals/u-email-to-user.html"
+               ng-click="project.temp.prj_mOpen=0"
+               ng-if="project.isAuthenticated && !project.proj.isCurrentUserProject">
+                <i class="fa fa-envelope"></i>&nbsp;Связаться
+            </a>
+            <a href class="prj_mb--item"
+               modal-open="app/_common/modals/p-try-to-mail-proj-owner.html"
+               ng-click="project.temp.prj_mOpen=0"
+               ng-if="!project.isAuthenticated">
+                <i class="fa fa-envelope"></i>&nbsp;Связаться
+            </a>
+            <div class="prj_mb--close" ng-click="project.temp.prj_mOpen=0"><span></span>Закрыть</div>
+        </div>
+    </div>
+    <!--  mobile menu end -->
+</div>
+
+
+<div id="page-content-wrapper" class="project">
+    <section class="section">
+        <div class="section_wrap">
+
+            <ui-view class="container-fluid ui-view-anim"></ui-view>
+
+        </div>
+    </section>
+</div>
+

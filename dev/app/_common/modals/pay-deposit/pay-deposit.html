@@ -1,0 +1,32 @@
+<button type="button" class="close" ng-click="$dismiss()">
+    <span aria-hidden="true">&times;</span>
+</button>
+<div class="modal-header">
+    <div class="title text-center">Пополнение счета</div>
+</div>
+<div class="modal-body">
+    <form name="pay.payForm">
+            <div class="profile_fields--item row">
+                <div class="profile_fields--left col-xs-12 col-sm-6">Введите сумму:</div>
+                <div class="profile_fields--right col-xs-12 col-sm-6">
+                    <input type="text" name="amountMoney" ozk-number required ng-model="pay.amountMoney">
+                </div>
+            </div>
+            <!--<div class="profile_fields&#45;&#45;item row">
+                <div class="profile_fields&#45;&#45;left col-xs-12 col-sm-6">
+                    К оплате с учетом комиссии платежной системы:
+                </div>
+                <div class="profile_fields&#45;&#45;right col-xs-12 col-sm-6">
+                    {{pay.amountMoney*pay.tax||0|myround:2:'math'|thousand}}<i class="fa fa-rub"></i>
+                </div>
+            </div>-->
+
+            <div class="text-center">
+                <button class="btn btn-danger" ng-click="$dismiss()">Отменить</button>
+                <button class="btn btn-success"
+                        ng-click="pay.doDeposit(pay.amountMoney)"
+                        ng-disabled="pay.payForm.$invalid">Оплатить
+                </button>
+            </div>
+    </form>
+</div>

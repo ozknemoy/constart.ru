@@ -1,0 +1,27 @@
+@import 'mixin.scss';
+
+.contact_list {
+	padding: 30px 0 0;
+	&--groups {
+		background: white;
+		border: 1px solid #cbcbcb;
+		@include box-shadow(0 0 3px 0 rgba(0,0,0,0.2));
+		&--link {
+			border-left: 3px solid transparent;
+			display: block;
+			color: $color-bluedark;
+			@include font(14px, $ubuntu_light);
+			padding: 5px 10px;
+			@include transition(.2s linear);
+			&.active {
+				background: $color-blue;
+				border-color: $color-bluedark;
+				color: white;
+			}
+			&:hover {
+				background: $color-blue;
+				color: white;
+			}
+		}
+	}
+}

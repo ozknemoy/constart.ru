@@ -1,0 +1,189 @@
+
+<section class="section" id="section1" data-index="1">
+    <div class="section_wrap">
+        <div class="container-fluid">
+<div class="search">
+    <div class="search--filter">
+        <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                <div class="form-group">
+                    <label>Название проекта</label>
+                    <input type="text" class="form-control" ng-model="projects.f.name">
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <div class="form-group">
+                    <label>Страна:</label>
+                    <ui-select class="select"
+                               search-enabled="false"
+                               ng-model="projects.f.country_id"
+                               ng-change="projects.changeCountry()">
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="o.id as o in ::projects.geo track by o.id">
+                            <span>{{::o.name}}</span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <div class="form-group">
+                    <label>Регион:</label>
+                    <!--<select class="select" ng-model="projects.f.region_id"
+                            ng-options="region.id as region.name for region in projects.geo[projects.f.country_id-1].regions">
+                    </select>-->
+                    <ui-select class="select"
+                               ng-model="projects.f.region_id"
+                               ng-disabled="!projects.f.country_id">
+                        <ui-select-match placeholder="поиск...">{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="o.id as o in projects.regionsOfContry | filter: $select.search track by o.id">
+                            <span>{{o.name}}</span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!--<div class="col-xs-12 col-sm-4">
+                <div class="form-group">
+                    <label>Направление:</label>
+                    <ui-select class="select"
+                               disabled="true"
+                               ng-model="projects.f.project_category"
+                               ng-change="projects.f.project_category_sub=null">
+                        <ui-select-match placeholder="поиск...">
+                            {{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="o as o in ::projects.project_category | filter: $select.search track by o.id">
+                            <span>{{::o.name}}</span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>-->
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label>Категория:</label>
+                    <ui-select class="select"
+                               search-enabled="false"
+                               ng-change="projects.handleSubCategory()"
+                               ng-disabled="!projects.f.project_category || !projects.f.project_category.items"
+                               ng-model="projects.f.project_category_sub">
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="o.id as o in projects.f.project_category.items track by o.id">
+                            <span>{{o.name}}</span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label>Подкатегория:</label>
+                    <ui-select class="select"
+                               search-enabled="false"
+                               ng-disabled="!projects.f.project_category || !projects.f.project_category.items || projects.catThirdWithoutItems"
+                               ng-model="projects.f.project_category_sub_sub">
+                        <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="o.id as o in projects.categoriesThirdLevel track by o.id">
+                            <span>{{o.name}}</span>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <button class="btn btn-success collapsed btn-filter" type="button"
+                    onclick="yaCounter40097510.reachGoal('search-prj-more-filters')"
+                    ng-click="projects.collapse.full_filter=!projects.collapse.full_filter">
+                Еще фильтры&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-up"></span></button>
+        </div>
+
+        <div class="collapse full_filter" uib-collapse="!projects.collapse.full_filter">
+            <div class="row">
+                <div class="col-xs-4 col-lg-3 text-right form-horizontal">
+                    <label class="control-label">Стадия проекта</label>
+                </div>
+                <div class="col-xs-8 col-lg-9">
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <label class="checkbox default" ng-repeat="s in projects.fData.stages">
+                                <input type="checkbox" ng-value="s.id" ng-model="projects.f.stages[s.id]">
+                                <span></span>
+                                {{::s.shortname}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search--divider"></div>
+
+            <div class="slider_range">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-lg-3 text-right">
+                        <label>Объем привлекаемых средств</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6 col-lgs-6">
+                        <div class="row">
+                            <div class="col-xs-12 col-xs-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon">От</div>
+                                    <input type="text" class="form-control text-center" ozk-number
+                                           ng-model="projects.f.founding_sum_min" min="10000" max="1000000000">
+                                    <div class="input-group-addon"><span class="fa fa-rub"></span></div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-xs-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon">До</div>
+                                    <input type="text" class="form-control text-center" ozk-number
+                                           ng-model="projects.f.founding_sum_max" min="10000" max="1000000000">
+                                    <div class="input-group-addon"><span class="fa fa-rub"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search--divider"></div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-lg-3 text-right form-horizontal"></div>
+                <div class="col-xs-12 col-sm-8 col-lg-9">
+                    <div class="form-group">
+                        <label class="checkbox default">
+                            <input type="checkbox" ng-model="projects.f.is_ended_up">
+                            <span></span>
+                            Проект успешно завершен
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="search--divider"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 col-lgs-2">
+                <button class="btn btn-success btn-block btn-animated"
+                        ng-click="projects.filterHandler()"
+                        ng-class="{'animated':projects.pendSearch}">
+                    <span class="btn-visible">Поиск</span>
+                    <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+                </button>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 col-lgs-1">
+                <div class="full_filter full_filter--button" ng-show="projects.collapse.full_filter">
+                    <button class="btn btn-warning btn-block" ng-click="projects.getCleanFilter()">Сбросить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- filter end -->
+
+    <constart-project value="projects.projects" is-projects="1"></constart-project>
+
+
+</div>
+
+</div>
+</div>
+</section>

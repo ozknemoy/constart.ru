@@ -1,0 +1,75 @@
+
+
+<div class="masonry--item">
+    <div class="awards--item--content bg-info">
+        <div class="awards--body">
+            <div class="awards--price">Вы можете материально поддержать проект на любую сумму.</div>
+            <p not-if="$ctrl.isAuth=='no'">Введите сумму и нажмите "Поддержать проект"</p>
+            <p ng-if="$ctrl.isAuth=='no'">Заполните поля и нажмите "Поддержать проект":</p>
+            <div class="row">
+                <div class="col-xs-12 col-xss-8 col-xss-offset-2 col-sm-6 col-sm-offset-3 col-md-8 col-md-offset-2">
+                    <!--<div class="input-group">
+                        <input type="text" class="form-control text-right"
+                               ng-model="$ctrl.price"
+                               ng-change="$ctrl.getAmountRewD()"
+                               ozk-number
+                               min="1" max="99000000">
+                        <span class="input-group-addon"><i class="fa fa-rub fa-fw"></i></span>
+                    </div>-->
+                    <div class="form-group">
+                        <label ng-if="$ctrl.isAuth=='no'">Сумма:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control"
+                                   ng-model="$ctrl.price"
+                                   ng-change="$ctrl.getAmountRewD()"
+                                   ozk-number
+                                   min="10" max="9999999">
+                            <span class="input-group-addon"><i class="fa fa-rub fa-fw"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="$ctrl.isAuth=='no'">
+                        <label>Введите e-mail:</label>
+                        <input type="email" class="form-control" ng-model="$ctrl.email">
+                    </div>
+                    <!--<reg-light callback="$ctrl.email=email" ng-if="$ctrl.isAuth=='no'"></reg-light>-->
+                </div>
+            </div>
+        </div>
+        <div class="awards--footer">
+            <label class="checkbox styled" style="background:none;text-align:left"
+                   ng-if="$ctrl.enoughMoney">
+                <input type="checkbox"
+                       data-hook="checkboxFromCAccount"
+                       ng-model="$ctrl.fromCanstartAccount">
+                <span data-hook="_checkboxFromCAccount"></span>
+                Оплатить с личного счета&nbsp;(доступно&nbsp;{{$ctrl.isAuth}}<i class="fa fa-rub"></i>)
+            </label>
+            <!--кнопки дублёры -->
+            <!-- для внешнего счета логинов и для неавторизованых -->
+            <button class="btn btn-success btn-animated"
+                    data-hook="notLoginOuterButton"
+                    ng-class="{'animated':$ctrl.pend}"
+                    ng-if="$ctrl.isAuth=='no' || !$ctrl.fromCanstartAccount"
+                    onclick="yaCounter40097510.reachGoal('click-kf-buy-button')"
+                    ng-click="$ctrl.buyByNotAuth()"
+                    ng-disabled="$ctrl.amountRewD<1 || (!$ctrl.email && $ctrl.isAuth=='no')">
+                <span class="btn-visible">Поддержать проект</span>
+                <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+            </button>
+            <!-- для внутреннего счета логина-->
+            <button class="btn btn-success btn-animated"
+                    data-hook="forLoginInnerButton"
+                    ng-class="{'animated':$ctrl.pend}"
+                    ng-if="$ctrl.isAuth!=='no' && $ctrl.fromCanstartAccount"
+                    onclick="yaCounter40097510.reachGoal('click-kf-buy-button')"
+                    ng-click="$ctrl.buyByAuth()"
+                    ng-disabled="$ctrl.amountRewD<1 || $ctrl.pend">
+                <span class="btn-visible">Поддержать проект</span>
+                <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,8 @@
+<!--одна модалка для отправки писем юзеру и владельцу проекта-->
+<button type="button" class="close" ng-click="$dismiss()"><span
+        aria-hidden="true">&times;</span></button>
+<!--передаю $ctrl.value в проекте а в юзере заголовок по умолчанию-->
+<div class="modal-header">
+    <div class="title">{{::$ctrl.value || 'Связаться с пользователем'}}</div>
+</div>
+<email-to-user></email-to-user>

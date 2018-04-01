@@ -1,0 +1,242 @@
+<!--<style>.mce-container.mce-menubar.mce-toolbar{display:none}</style>-->
+<div class="project_edit--step">
+    <!-- gallery -->
+    <div class="form-group">
+        <label class="project_edit--title">Галерея проекта:</label>
+
+        <form name="pe.descForm">
+        <div class="gallery_field">
+            <add-video class="btn btn-success" value="{{pe.p.video}}" callback="pe.addVideo(video)">
+                <i class="fa fa-youtube-square" aria-hidden="true"></i>&nbsp;Добавить видео
+            </add-video>
+            &nbsp;
+            <label class="btn btn-success btn-animated"
+                   ng-class="{'animated':pe.pend.uploadG}"
+                   ng-disabled="pe.pend.uploadG">
+                <input type="file"  accept=".jpeg,.jpg,.png" style="display:none"
+                       name="gallery"
+                       ng-model="picFile"
+                       ngf-max-size="2MB"
+                       ngf-select="pe.upload($file)"
+                       ngf-model-invalid="pe.error.gallery">
+
+                <span class="btn-visible"><span class="fa fa-image" aria-hidden="true"></span> Добавить изображение</span>
+                <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+            </label>
+            <!--ошибки -->
+            <div class="alert alert-danger" ng-if="pe.descForm.gallery.$error.maxSize">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true">
+                </i> <small>Вы пытаетесь загрузить файл размером {{pe.error.gallery.size / 1000000|number:1}}MB .
+                максимально допустимый размер 2M</small>
+            </div>
+            <div class="alert alert-danger" ng-if="pe.error.limitGallery">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true">
+                </i> <small>Вы превысили лимит фотографий в галлерее.
+                Вы можете удалить одну из ранее загруженных фотографий и загрузить новую</small>
+            </div>
+            <div class="alert alert-danger" ng-if="pe.error.uploadGallery">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true">
+                </i> <small>{{pe.error.uploadGallery}}</small>
+            </div>
+            <!--ошибки end-->
+
+            <div class="gallery_field--wrap">
+                <div class="row no-padding">
+                    <!--видео-->
+                    <div class="col-xs-6 col-xss-4 col-md-2 col-lgs-1 no-padding" ng-if="pe.p.video">
+                        <div class="gallery_field--item">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <embed-video class="embed-responsive-item"  width="640" height="360"
+                                             ng-href="{{pe.p.video}}"></embed-video>
+                            </div>
+                            <div class="gallery_field--item--info">
+                                <div class="gallery_field--item--title">
+                                    <div class="gallery_field--item--actions">
+                                        <button class="btn btn-danger" ng-click="pe.p.video=null">
+                                            <i class="fa fa-close"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--фото-->
+                    <div class="col-xs-6 col-xss-4 col-md-2 col-lgs-1 no-padding" ng-repeat='f in pe.p.gallery'>
+                        <div class="gallery_field--item">
+                            <div class="gallery_field--item--img"
+                                 ng-style="{'background-image':'url('+pe.baseImgUrl+f.thumbUrl+')'}"></div>
+                            <div class="gallery_field--item--info">
+                                <div class="gallery_field--item--title">
+                                    <div class="gallery_field--item--actions">
+                                        <button class="btn btn-danger" ng-click="pe.deleteFotoFromGallery($index)">
+                                            <i class="fa fa-close"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+    <!-- gallery end -->
+
+    <div class="project_edit--block">
+        <div class="row" ><!--oc-lazy-load="['assets/js/deferred/angular-ckeditor/var/ckeditor-all-in-one.js']"-->
+
+            <!--<textarea id="descr_9" ckeditor="pe.optionsExt" ng-model="pe.p.descr_9" ></textarea>-->
+
+            <div class="col-xs-12">
+                <label class="project_edit--title">Описание проекта:</label>
+                <label class="project_edit--title_descr">Постарайтесь кратко и емко ответить на наши вопросы. При ответах старайтесь придерживаться
+                    конкретных цифр, названий, данных. Избегайте общих фраз.</label>
+
+                <label class="project_edit--block--title">Подробное описание проекта:</label>
+                <div class="tinymce">
+                        <textarea class="form-control"
+                                  ckeditor="pe.optionsExt"
+                                  id="descr_1"
+                                  ng-model="pe.p.descr_1" ng-model-options="{debounce:300}"
+                                  tabindex="0"></textarea>
+                </div>
+                <label class="project_edit--title_descr">Опишите подробнее ваш проект, его уникальность, обозначьте технологию или методику, лежащую в основе.</label>
+
+                <div ng-if="pe.p.type_id==2 || pe.p.type_id==3">
+                    <label class="project_edit--block--title">Цель проекта:</label>
+                    <div class="tinymce">
+                    <textarea class="form-control"
+                              ckeditor="pe.options"
+                              id="descr_2"
+                              ng-model="pe.p.descr_2" ng-model-options="{debounce:300}"
+                              tabindex="1"></textarea>
+                    </div>
+                    <label class="project_edit--title_descr">Обозначьте цель сбора инвестиций для вашего проекта на данном этапе.</label>
+
+                    <label class="project_edit--block--title">Кто является целевой аудиторией вашего проекта?</label>
+                    <div class="tinymce">
+                   <textarea class="form-control"
+                             ckeditor="pe.options"
+                             id="descr_3"
+                             ng-model="pe.p.descr_3" ng-model-options="{debounce:300}"
+                             tabindex="2"></textarea>
+                    </div>
+                    <label class="project_edit--title_descr">Кто именно будет покупать ваш продукт? Укажите пол, возраст, опишите социальную группу, дайте краткую характеристику. </label>
+
+                    <label class="project_edit--block--title">Опишите конкретную проблему потребителя, которую решает ваш проект?</label>
+                    <div class="tinymce">
+                    <textarea class="form-control"
+                              ckeditor="pe.options"
+                              id="descr_4"
+                              ng-model="pe.p.descr_4" ng-model-options="{debounce:300}"
+                              tabindex="3"></textarea>
+                    </div>
+                    <label class="project_edit--title_descr">Кратко обозначьте существующую проблему вашей целевой аудитории.</label>
+
+                    <label class="project_edit--block--title">Опишите ситуацию на рынке, где будет представлен проект?</label>
+                    <div class="tinymce">
+                    <textarea class="form-control"
+                              ckeditor="pe.options"
+                              id="descr_5"
+                              ng-model="pe.p.descr_5" ng-model-options="{debounce:300}"
+                              tabindex="4"></textarea>
+                    </div>
+                    <label class="project_edit--title_descr">Опишите общие рыночные предпосылки успешности вашего проекта.</label>
+
+                    <div class="form-group">
+                        <label class="checkbox default">
+                            <input type="checkbox" ng-model="pe.p.is_need_research"
+                                   ng-true-value="1" ng-false-value="0">
+                            <span></span>
+                            Если вам нужно маркетинговое исследование рынка (SWOT-анализ, PEST-анализ), объем рынка (PAM, TAM, SAM, SOM)  – на CONSTART
+                            есть специалисты, готовые оказать данную услугу. Отметьте, если это необходимо проекту.
+                        </label>
+                    </div>
+
+                    <label class="project_edit--block--title">Укажите конкурентов: прямых, непрямых, ключевых.</label>
+                    <div class="tinymce">
+                    <textarea class="form-control"
+                              ckeditor="pe.options"
+                              id="descr_6"
+                              ng-model="pe.p.descr_6" ng-model-options="{debounce:300}"
+                              tabindex="5"></textarea>
+                    </div>
+                    <label class="project_edit--title_descr">Назовите основных конкурентов. Почему вы считаете их таковыми? Вариант
+                        "конкурентов нет" не рассматривается как как реалистичный. </label>
+
+                    <label class="project_edit--block--title">Опишите ваши конкурентные преимущества?</label>
+                    <div class="tinymce">
+                    <textarea class="form-control"
+                              ckeditor="pe.options"
+                              id="descr_7"
+                              ng-model="pe.p.descr_7" ng-model-options="{debounce:300}"
+                              tabindex="6"></textarea>
+                    </div>
+                    <label class="project_edit--title_descr">Опишите, как ваш проект может составить здоровую конкуренцию. В чем уникальность вашего проекта?</label>
+
+                    <label class="project_edit--block--title">Что уже сделано для реализации проекта и что проекту необходимо?</label>
+                    <div class="tinymce">
+                   <textarea class="form-control"
+                             ckeditor="pe.options"
+                             id="descr_8"
+                             ng-model="pe.p.descr_8" ng-model-options="{debounce:300}"
+                             tabindex="7"></textarea>
+                    </div>
+                    <label class="project_edit--title_descr">Расскажите о том, какие цели уже достигнуты и что нужно проекту на данном этапе?</label>
+
+                    <div class="form-group">
+                        <label class="checkbox default">
+                            <input type="checkbox" ng-model="pe.p.is_request_expert"
+                                   ng-true-value="1" ng-false-value="0">
+                            <span></span>
+                            Если вашему проекту нужна экспертиза проекта: помощь в позиционировании, определении целевой аудитории, оценка спроса,
+                            CONSTART может предложить такую услугу. Отметьте, если это необходимо проекту.
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="project_edit--footer text-center">
+    <button class="btn btn-success btn-animated"
+            ng-disabled="pe.pend.save"
+            ng-class="{'animated':pe.pend.save}"
+            ng-click="pe.tryChangeState('about')">
+        <span class="btn-visible"><i class="fa fa-angle-left"></i> Общая информация</span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+    <button class="btn btn-success btn-animated"
+            ng-disabled="pe.pend.save"
+            ng-class="{'animated':pe.pend.save}"
+            ng-click="pe.tryChangeState('team')">
+        <span class="btn-visible">Команда проекта <i class="fa fa-angle-right"></i></span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+</div>
+
+
+<!--<div class="modal fade" tabindex="-1" role="dialog" id="modalAddVideo" aria-labelledby="modalAddVideo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div class="modal-header">
+                Добавление видео
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="label">Введите адрес видео </label>
+                    <input type="text" class="form-control" ng-model="pe.p.video">
+                    <p class="project_edit&#45;&#45;title_descr">Идеальная длительность видео о проекте равна примерно 3 минутам. Предлагаем схему:
+                        представление, краткое описание проекта, предложение для инвесторов, обозначение нужд проекта, призыв к действию.</p>
+                </div>
+            </div>
+            <div class="modal-footer text-center">
+                <button class="btn btn-success" data-dismiss="modal" aria-label="Close">Добавить</button>
+            </div>
+        </div>
+    </div>
+</div>-->

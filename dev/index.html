@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="" data-ng-app="constart">
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/ico/apple-touch-icon-60x60.png?123">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/ico/apple-touch-icon-76x76.png?123">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/ico/apple-touch-icon-114x114.png?123">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/ico/apple-touch-icon-144x144.png?123">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/ico/apple-touch-icon-180x180.png?123">
+    <link rel="icon" type="image/png" href="assets/ico/favicon-32x32.png?123" sizes="32x32">
+    <link rel="icon" type="image/png" href="assets/ico/android-chrome-192x192.png?123" sizes="192x192">
+    <link rel="icon" type="image/png" href="assets/ico/favicon-96x96.png?123" sizes="96x96">
+    <link rel="icon" type="image/png" href="assets/ico/favicon-16x16.png?123" sizes="16x16">
+    <link rel="mask-icon" href="assets/ico/safari-pinned-tab.svg?123" color="#5bbad5">
+    <meta name="apple-mobile-web-app-title" content="Constart">
+    <meta name="application-name" content="Constart">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="mstile-144x144.png?123">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="google-site-verification" content="etzcrvaiphRiNSzjk5AFA1hYwt3GL62cQ2ChmHbBAX0">
+
+    <meta itemprop="name">
+    <meta itemprop="description">
+    <meta itemprop="image">
+
+    <meta property="og:locale" content="ru_RU"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:title">
+    <meta property="og:image">
+    <meta property="og:description">
+    <meta property="og:url">
+    <meta property="og:site_name">
+    <meta property="og:see_also">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:description">
+    <meta name="twitter:title">
+    <meta name="twitter:image:src">
+    <meta name="twitter:site">
+    <meta name="twitter:creator">
+
+    <meta name="yandex-verification" content="3a4a280d26cfe1b9"/>
+
+    <title>Первая глобальная краудсорсинг-платформа CONSTART.RU</title>
+    <meta name="description" content="CONSTART – это первая глобальная краудсорсинг-платформа, в которой идеи, инвесторы и профессионалы находят друг друга.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google Tag Manager --><script>if(!/localhost/i.test(location.href))(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W4K6NK6');</script>
+
+    <!--самый первай для загрузки-->
+    <style>[ng-cloak],.ng-cloak{display: none !important}</style>
+    <script defer src="app/vendors.js"></script>
+    <script defer src="app/index.js"></script>
+    <link rel="stylesheet" href="assets/css/screen.css">
+
+    <link rel="stylesheet" ng-href="assets/css/angular-custom.min.css">
+    <script>(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)}, i[r].l = 1*new Date(); a = s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1;a.src =g; m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga')</script>
+</head>
+<body data-ng-controller="MainController as main">
+<!--Google Tag Manager--><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W4K6NK6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div id="wrapper">
+    <aside id="sidebar-wrapper">
+        <menu-toggle close="1" class="sidebar_navigation" ng-cloak>
+            <a ui-sref="projects" ui-sref-active="current" class="sidebar_navigation--link">
+                <span class="sidebar_navigation--icon icon1"></span>Проекты</a>
+            <a ui-sref="users" ui-sref-active="current" class="sidebar_navigation--link">
+                <span class="sidebar_navigation--icon icon2"></span>
+                {{::main.isCS?'Пользователи':'Участники'}}
+            </a>
+            <div ng-if="::main.isCS">
+                <a href ui-sref="businessCalendar" class="sidebar_navigation--link">
+                    <span class="sidebar_navigation--icon icon7"></span>
+                    Бизнес-календарь
+                </a>
+                <a href ui-sref="help({'id':'a1'})" class="sidebar_navigation--link">
+                    <span class="sidebar_navigation--icon icon4"></span>
+                    О CONSTART
+                </a>
+                <a ui-sref="help({'id':'a3'})" class="sidebar_navigation--link">
+                    <span class="sidebar_navigation--icon icon6"></span>
+                    Стоимость услуг
+                </a>
+                <a ui-sref="help" class="sidebar_navigation--link">
+                    <span class="sidebar_navigation--icon icon5"></span>
+                    Помощь
+                </a>
+            </div>
+
+            <a ui-sref="memorandumOdvf" ng-if="::main.isOdvf" class="sidebar_navigation--link">
+                <span class="sidebar_navigation--icon icon8"></span>
+                ОДВФ
+            </a>
+        </menu-toggle>
+
+        <div class="sidebar--footer" ng-cloak>
+            <div class="social">
+                <a ng-if="::main.refs.vk" ng-href="{{main.refs.vk}}" target="_blank" class="vk"><i class="fa fa-vk"></i></a>
+                <a ng-if="::main.refs.instagram" ng-href="{{main.refs.instagram}}" target="_blank" class="in"><i class="fa fa-instagram"></i></a>
+                <a ng-if="::main.refs.youtube" ng-href="{{main.refs.youtube}}" target="_blank"><i class="fa fa-youtube"></i></a>
+                <a ng-if="::main.refs.facebook" ng-href="{{main.refs.facebook}}" target="_blank"><i class="fa fa-facebook"></i></a>
+            </div>
+
+            <div ng-if="::main.isOdvf" class="copyright">&copy; 2016 ОДВФ \ CONSTART</div>
+            <div ng-if="::main.isCS" class="copyright">&copy; 2016 CONSTART <br> ООО "Констарт"</div>
+        </div>
+
+    </aside>
+    <nav-bar class="navigation"></nav-bar>
+
+    <section id="page-content-wrapper">
+
+         <ui-view></ui-view>
+
+    </section>
+
+    <footer ng-if="::main.isCS">
+        <div class="footer_wrap">
+            <div class="footer--links">
+                <p><a ui-sref="help({'id':'a1'})">О CONSTART</a>|</p>
+                <p><a ui-sref="help({'id':'a8'})">Контакты</a>|</p>
+                <p><a ui-sref="help({'id':'a3'})">Цены на услуги</a>|</p>
+                <p><a ui-sref="help({'id':'u1'})">Правила пользования платформой</a>|</p>
+                <p><a ui-sref="help({'id':'a64'})">Пользовательское соглашение</a>|</p>
+                <p><a ui-sref="help">Помощь</a></p>
+            </div>
+            <div class="social">
+                <a ng-if="::main.refs.vk" ng-href="{{main.refs.vk}}" target="_blank" class="vk"><i class="fa fa-vk"></i></a>
+                <a ng-if="::main.refs.instagram" ng-href="{{main.refs.instagram}}" target="_blank" class="in"><i class="fa fa-instagram"></i></a>
+                <a ng-if="::main.refs.youtube" ng-href="{{main.refs.youtube}}" target="_blank"><i class="fa fa-youtube"></i></a>
+                <a ng-if="::main.refs.facebook" ng-href="{{main.refs.facebook}}" target="_blank"><i class="fa fa-facebook"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</div>
+<toast></toast>
+<scroll-up class="btn_up"></scroll-up>
+
+
+
+<script type='text/javascript'>
+    //https://browser-update.org/ru/#test-bu
+    // допилил чтоб грузилось по win.onload
+    var $buoop = {vs:{i:9,f:-9,o:-9,s:6,c:-9},api:4,reminder:48,text:"Ваш браузер устарел. Чтобы обновить его, нажмите здесь. Мобильная версия сайта тестировалась на браузере chrome"};//<a href=\"http://browsehappy.com/\">Обновите свой браузер</a>
+    function $buo_f(){var e = document.createElement("script");e.src = "//browser-update.org/update.min.js";document.body.appendChild(e);}window.onload=function(){$buo_f()}
+</script>
+</body>
+</html>

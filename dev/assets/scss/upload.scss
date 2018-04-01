@@ -1,0 +1,307 @@
+@import 'mixin.scss';
+
+// file button
+.btn-file {
+	position: relative;
+	input[type="file"] {
+		position: absolute;
+		width: 0;
+		height: 0;
+		opacity: 0;
+		font-size: 0;
+	}
+}
+
+// image upload
+.modal_label {
+	@include background-image('icon_camera', $size: 38px 28px, $position: center, $repeat: no-repeat, $color: $color-gray-dark);
+	display: block;
+	width: 100%;
+	height: 100%;
+	position: relative;
+	cursor: pointer;
+	overflow: hidden;
+	@include transition(.3s linear);
+	@include delay(.1s);
+	input {
+		opacity: 0;
+		position: absolute;
+		width: 0;
+		height: 0;
+	}
+	.upload_icon{
+		@include background-image('upload_hover', $size: 56px 55px);
+		position: absolute;
+		top: -100%;
+		left: 50%;
+		width: 56px;
+		height: 55px;
+		margin-left: -28px;
+		@include transition(.3s linear);
+		@include delay(.3s);
+	}
+	.txt {
+		position: absolute;
+		width: 100%;
+		bottom: -100%;
+		left: 0;
+		color: white;
+		text-align: center;
+		@include font(14px, $ubuntu_light);
+		@include transition(.3s linear);
+		@include delay(.3s);
+	}
+	&:hover {
+		background-size: 0 0;
+		@include delay(0);
+		.upload_icon {
+			top: 25px;
+			@include delay(0s);
+		}
+		.txt {
+			bottom: 25px;
+			@include delay(0s);
+		}
+	}
+}
+.crop {
+	text-align: center;
+	.jcrop-keymgr {
+		opacity: 0;
+	}
+	button {
+		margin-top: 20px;
+	}
+}
+#imgCrop {
+	img.imgLoaded {
+		max-width: 100%;
+	}
+}
+#preview-pane {
+	background: #fff;
+	position: absolute;
+	width: 156px;
+	height: 150px;
+	overflow: hidden;
+	left: -186px;
+	margin: -75px 0 0;
+	top: 50%;
+	display: none;
+	@include border-radius(30px 0 0 30px);
+	.preview-container {
+		width: 120px;
+		height: 150px;
+		position: relative;
+		overflow: hidden;
+		@include border-radius(30px);
+	}
+}
+.jcrop-holder {
+	margin: 0 auto;
+}
+.jcrop-vline,
+.jcrop-hline {
+	background: #ffffff url("../img/Jcrop.gif");
+	font-size: 0;
+	position: absolute;
+}
+.jcrop-vline {
+	height: 100%;
+	width: 1px !important;
+}
+.jcrop-vline.right {
+	right: 0;
+}
+.jcrop-hline {
+	height: 1px !important;
+	width: 100%;
+}
+.jcrop-hline.bottom {
+ 	bottom: 0;
+}
+
+// flie uploader
+.file_uploader {
+	display: block;
+	border: 1px solid $color-gray;
+	position: relative;
+	padding: 5px;
+	text-align: center;
+	cursor: pointer;
+	input[type="file"] {
+		position: absolute;
+		width: 0;
+		height: 0;
+		opacity: 0;
+		font-size: 0;
+		&:focus + .preview {
+			border: 1px solid $color-bluedark;
+		}
+	}
+	.preview {
+		background: $white;
+		display: block;
+		img {
+			width: 100%;
+		}
+	}
+	.description {
+		background: $white;
+		display: block;
+		padding: 15px;
+		&--title {
+			display: block;
+			font-size: 16px;
+			color: $color-bluedark;
+		}
+		.restriction {
+			@include font(14px, $ubuntu_light);
+		}
+	}
+}
+
+// file
+.file_upload {
+	&:after {
+		content: '';
+		clear: both;
+		display: block;
+	}
+	label {
+		display: block;
+		position: relative;
+		cursor: pointer;
+		float: left;
+		margin: 0;
+		input[type="file"] {
+			position: absolute;
+			width: 0;
+			height: 0;
+			opacity: 0;
+			font-size: 0;
+		}
+		.button_green {
+
+		}
+		.file_title {
+			@include font(14px, $ubuntu_light);
+			color: $color-gray-dark;
+			margin: 0 5px;
+		}
+		
+		&.loaded {
+			.button_green {
+				background: $color-gray-dark;
+			}
+			& + .file_delete {
+				visibility: visible;
+				opacity: 1;
+			}
+			.file_title {
+				display: inline-block;
+			}
+		}
+	}
+	.file_delete {
+		// @include background-image('cross_gray', $size: 26px 26px);
+		// display: inline-block;
+		// vertical-align: middle;
+		// cursor: pointer;
+		// width: 26px;
+		// height: 26px;
+		opacity: 0;
+		visibility: hidden;
+		@include transition(.3s linear);
+		// &:hover {
+		// 	@include background-image('cross');
+		// }
+	}
+	.image {
+		position: relative;
+		clear: both;
+		margin: 10px 0 0;
+	}
+}
+
+.img_upload {
+	padding: 0 0 20px;
+	&:after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+	.file_label {
+		width: 50%;
+		float: left;
+		.file--title {
+			background: none;
+			display: block;
+			margin: 10px 0 0;
+			color: $color-gray-dark;
+			height: auto;
+			line-height: normal;
+			padding: 0;
+
+		}
+	}
+	.image {
+		float: left;
+		position: relative;
+		width: 50%;
+		button {
+			position: absolute;
+			top: 10px;
+			left: 10px;
+		}
+		img {
+			max-width: 100%;
+		}
+	}
+
+}
+
+// image uploaded
+.files_upload {
+	.modal_label {
+		display: inline-block;
+		width: auto;
+	}
+}
+.image_block {
+	&--uploaded {
+		display: inline-block;
+		vertical-align: top;
+		width: 87px;
+		height: 140px;
+		margin-right: 10px;
+		&:hover {
+			.image_block--title, .btn-reset {
+				display: inline-block;
+			}
+		}
+	}
+	&--title {
+		color: $color-gray-dark;
+		font-size: 14px;
+		display: none;
+	}
+	&--image {
+		display: block;
+		width: 87px;
+		height: 87px;
+		position: relative;
+		overflow: hidden;
+		img {
+			max-width: 100%;
+			max-height: 100%;
+		}
+	}
+	input:checked ~ .image_block--title {
+		display: inline-block;
+	}
+	.btn-reset {
+		float: right;
+		display: none;
+	}
+}

@@ -1,0 +1,39 @@
+@import 'mixin.scss';
+.breadcrumbs {
+	background: white;
+	@include font(12px, $ubuntu_light);
+	color: #014960;
+	text-transform: uppercase;
+	margin: 0 -65px;
+	padding: 12px 65px 13px;
+	@include box-shadow(0px 0px 3px 0px rgba(0,0,0,0.2));
+	i {
+		margin: -20px 10px 0 0;
+		display: none;
+	}
+	a {
+		color: $color-blue;
+	}
+	span {
+		color: $color-blue;
+	}
+	.sep {
+		margin: 0 5px;
+	}
+}
+
+// .breadcrumbs {
+// 	font-size: 20px;
+// 	color: #014960;
+// 	text-transform: uppercase;
+// 	padding: 30px 0 20px;
+// 	i {
+// 		margin: -20px 10px 0 0;
+// 	}
+// 	a {
+// 		color: $color-blue;
+// 	}
+// 	span {
+// 		color: $color-blue;
+// 	}
+// }

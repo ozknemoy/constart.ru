@@ -1,0 +1,1012 @@
+
+<div class="project_edit--step">
+    <label class="title">Финансирование проекта</label>
+
+    <div class="section_block--content">
+        <div class="finance--slide">
+            <section ng-if="pe.p.type_id==2">
+                <div class="title--small">Сбор средств с помощью:</div>
+                <p class="alert alert-info"><i class="fa fa-info-circle"></i> Какими методами вы планируете привлечение
+                    средств? Необходимо ознакомиться с нашими рекомендациями по каналам инвестирования в информационном
+                    разделе. Открытие процедуры краудинвестинга доступно только для юридических лиц, процедуры
+                    краудлендинга доступны и физическим, и юридическим лицам.</p>
+
+                <div class="form-group">
+                    <div class="radio rounded">
+                        <label>
+                            <input type="radio" ng-value="undefined" name="selectLegals"
+                                   ng-click="pe.clearCrowdinvesting()"
+                                   ng-model="pe.temp.selectLegals">
+                            <span></span>Физ. лицо
+                        </label>
+                    </div>
+                    <div class="radio rounded">
+                        <label>
+                            <input type="radio" value="1" name="selectLegals" ng-model="pe.temp.selectLegals">
+                            <span></span>Юр. лицо
+                        </label>
+                    </div>
+                </div>
+
+                <div class="finance--slide--content" ng-if="pe.temp.selectLegals">
+                    <div class="form-group">
+                        <div><label>Выберите юридическое лицо или ИП</label></div>
+                        <legals-edit callback="pe.legalsChanges(ind,type,obj)" class="btn btn-success"
+                                     ng-if="!pe.l.length"
+                                     create="true">Добавить</legals-edit>
+                        <div class="row" ng-if="pe.l.length">
+                            <div class="col-xs-12 col-sm-6">
+                                <ui-select class="select"
+                                           search-enabled="false"
+                                           on-select="pe.temp.legalType = $item.legal_type"
+                                           ng-model="pe.p.user_legal_id">
+                                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                    <ui-select-choices repeat="o.id as o in pe.l track by $index">
+                                        <span>{{::o.name}}</span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <label class="checkbox default">
+                        <input type="checkbox" ng-model="pe.p.is_need_create_legal"
+                               ng-true-value="1" ng-false-value="0">
+                        <span></span>
+                        Если вам необходимо оформление юридического лица, специалисты CONSTART готовы оказать данную услугу.
+                        Если эта услуга нужна – отметьте.
+                    </label>
+                </div>
+            </section>
+
+
+            <!-- crowdfunding-->
+            <section ng-if="pe.p.type_id==1">
+                <div class="finance--slide--wrap">
+                    <!--прячу  чекбокч если это чисто кф проект-->
+                    <div class="finance--title" ng-hide="pe.p.type_id == 1">
+                        <label class="finance--title--checkbox checkbox default">
+                            <input type="checkbox" ng-model="pe.temp.collReward">
+                            <span></span>
+                            Краудфандинг (инвестиции за вознаграждение)
+                        </label>
+                    </div>
+
+                    <div class="collapse" uib-collapse="!pe.temp.collReward">
+                        <div class="finance--slide--content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="finance--price">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6 col-md-3">
+                                                <label>Требуется собрать</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control text-right"
+                                                           ozk-number min="0"
+                                                           ng-model="pe.p.reward_found_sum">
+                                                    <span class="input-group-addon"><i class="fa fa-rub"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="finance--slide--toggle" uib-collapse="pe.temp.collSubFund">
+                                <div class="finance--slide--title">
+                                    <!--<button class="btn btn-success
+                                        ng-click="pe.preEditReward({sell_count:1})">
+                                        <i class="fa fa-gift"></i> Создать вознаграждение
+                                    </button>-->
+                                    <reward-editor class="btn btn-success"
+                                            project-id="{{pe.id}}"
+                                            rewards="pe.r"
+                                            callback="pe.callbackReward(rewards)"
+                                    ><i class="fa fa-gift"></i> Создать вознаграждение</reward-editor>
+                                    <label class="project_edit--title_descr">Сильный краудфандинговый проект обычно
+                                        насчитывает порядка десяти видов вознагражений различной стоимости. Кратко опишите
+                                        вознаграждения, установите их стоимость, количество и приложите иллюстрации. </label>
+                                </div>
+                                <!--ng-click="pe.preEditReward(r,$index,1)"-->
+                                <div class="finance_awards row">
+                                    <div ng-repeat="r in pe.r track by r.id"
+                                         class="finance_awards--item col-xs-12 col-xss-6 col-sm-4 col-lg-3 col-lgs-2">
+                                        <reward-editor
+                                                project-id="{{pe.id}}"
+                                                editable="true"
+                                                ind="{{$index}}"
+                                                rewards="pe.r"
+                                                callback="pe.callbackReward(rewards)">
+                                            <div class="finance_awards--item--wrap">
+                                                <div class="finance_awards--img" ng-if="r.cover"
+                                                     ng-style="{'background-image':'url('+pe.baseImgUrl + r.cover+')'}"></div>
+                                                <div class="finance_awards--img" ng-if="!r.cover"></div>
+                                                <div class="finance_awards--title">{{r.name}}</div>
+                                                <div class="finance_awards--footer">
+                                                    <div class="finance_awards--price">{{r.price}} <span class="fa fa-rub"></span></div>
+                                                    <div class="finance_awards--count" ng-if="r.sell_count">{{r.sell_count}}
+                                                        <i class="fa fa-gift"></i></div>
+                                                </div>
+                                            </div>
+                                        </reward-editor>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="btn-slidetoggle" ng-hide="pe.p.type_id == 1"
+                                 ng-click="pe.temp.collSubFund=!pe.temp.collSubFund">
+                                <i class="fa fa-angle-up fa-fw"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="estimate_total finance--block">
+                    <div class="list-group-item" style="border:none;padding: 15px;">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-8">
+                                <p class="text-primary h4">Срок сбора средств:</p>
+                                <label class="project_edit--title_descr">Укажите сроки сбора средств. Минимальный
+                                    рекомендуемый срок - 30 дней, максимально возможный - 180 дней.</label>
+                            </div>
+                            <div class="col-xs-12 col-sm-4 text-right">
+                                <div class="input-group">
+                                    <input type="text" class="form-control text-right"
+                                           ng-model="pe.p.found_period" ng-model-options="{debounce:500}"
+                                           ozk-number min="1" max="180">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+            <!-- crowdfunding end -->
+
+
+            <section ng-if="pe.p.type_id==2">
+                <!-- crowdinvesting -->
+                <div class="finance--slide--wrap" ng-class="{'pointer-none':!pe.p.user_legal_id && !pe.p.is_need_create_legal}">
+
+                    <div class="finance--title">
+                        <label class="finance--title--checkbox checkbox default">
+                            <input type="checkbox" ng-model="pe.temp.collInv">
+                            <span></span>
+                            Краудинвестинг (инвестиции за долю) (доступно только для юридических лиц - укажите юр. лицо в выборе выше)
+                        </label>
+                    </div>
+
+                    <div class="collapse" uib-collapse="!pe.temp.collInv || (!pe.p.user_legal_id && !pe.p.is_need_create_legal)">
+                        <div class="finance--slide--content">
+                            <div class="row">
+                                <div class="col-xs-12 col-lg-6">
+                                    <div class="finance--slide--sep hidden-lg"></div>
+                                    <div><label>Выберите шаблон договора</label></div>
+                                    <button class="btn btn-success" modal-open="app/_common/modals/pe-budget-ki.html;lg"
+                                       modal-ctrl="ProjectEditorController;pe">Выбрать</button><!--data-toggle="modal" data-target="#modalDoc"-->
+                                    <a class="doc_link" target="_blank" download
+                                       ng-href="{{pe.baseDocUrl+'contract-tmpl-ki-'+pe.temp.legalType+'-'+
+                                       pe.p.investments_contract_tmpl_id+'.pdf'}}">
+                                        <i class="fa fa-file-pdf-o"></i> Договор {{pe.p.investments_contract_tmpl_id}}</a>
+                                </div>
+                            </div>
+
+                            <div id="inv2" class="finance--slide--toggle collapse" uib-collapse="pe.temp.collSubInd">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-9 col-lg-10">
+                                                <p class="list-group--title text-primary">Размер продаваемой доли</p>
+                                                <label class="project_edit--title_descr">Какую долю вашей компании вы готовы
+                                                    продать инвесторам? Обычно продаваемая доля составляет не более 49% от
+                                                    стоимости всего проекта, чтобы инициатор сохранял контрольный пакет акций.
+                                                    Если вы хотите продать проект целиком, укажите 100%.</label>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 col-lg-2 text-right">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control text-right"
+                                                           ozk-number
+                                                           min="1" max="100"
+                                                           ng-change="pe.countInvest();pe.countSumTable('current_yield','founding_sum')"
+                                                           ng-model="pe.p.investments_share" ng-model-options="{debounce:300}">
+                                                    <span class="input-group-addon"><i class="fa fa-percent"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-9 col-lg-10">
+                                                <p class="list-group--title text-primary">Стоимость минимальной продаваемой доли</p>
+                                                <label class="project_edit--title_descr"></label>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 col-lg-2 text-right">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control text-right"
+                                                           ozk-number
+                                                           min="1"
+                                                           ng-change="pe.countInvest();pe.countSumTable('current_yield','founding_sum')"
+                                                           ng-model="pe.p.investments_min_cost" ng-model-options="{debounce:300}">
+                                                    <span class="input-group-addon"><i class="fa fa-rub"></i></span>
+                                                </div>
+                                                <!--<span class="text-info">
+                                                    {{pe.p.investments_min_cost | thousand}}
+                                                    <i class="fa fa-rub"></i></span>-->
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-9 col-lg-10">
+                                                <p class="list-group--title text-primary">Количество выпускаемых долей</p>
+                                                <label class="project_edit--title_descr">Разделите продаваемую долю компании
+                                                    на количество долей, которые вы хотите выпустить. При решении опирайтесь
+                                                    на то, каких инвесторов вы хотите привлечь: крупных, средних? При вводе
+                                                    количества долей также опирайтесь на конечную стоимость минимальной доли.</label>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 col-lg-2 text-right">
+                                                <input type="text" class="form-control text-right"
+                                                       ozk-number
+                                                       min="1"
+                                                       ng-change="pe.countInvest();pe.countSumTable('current_yield','founding_sum')"
+                                                       ng-model="pe.p.investments_share_count" ng-model-options="{debounce:300}">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-9 col-lg-10">
+                                                <p class="list-group--title text-info">Требуется собрать</p>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 col-lg-2 text-right">
+                                                <span class="text-info">
+                                                    {{pe.p.investments_found_sum || 0}}
+                                                    <i class="fa fa-rub"></i></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!--<li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-9 col-lg-10">
+                                                <p class="list-group&#45;&#45;title text-info">Размер минимальной доли</p>
+                                                <label class="project_edit&#45;&#45;title_descr">Какова минимальная доля в процентах
+                                                    от продаваемой доли?</label>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 col-lg-2 text-right">
+                                                <span class="text-info">
+                                                    {{pe.p.investments_min_share|myround:5}}
+                                                    <i class="fa fa-percent"></i></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-9 col-lg-10">
+                                                <p class="list-group&#45;&#45;title text-info">Размер дивидендов на 1 минимальную долю в месяц</p>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 col-lg-2 text-right">
+                                                <span class="text-info">
+                                                    {{pe.p.investments_min_dividends | myround | thousand}}
+                                                    <i class="fa fa-rub"></i></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-9 col-lg-10">
+                                                <p class="list-group&#45;&#45;title text-info">Общая выплата по дивидендам в месяц</p>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 col-lg-2 text-right">
+                                                <span class="text-info">
+                                                    {{pe.p.investments_dividends | myround | thousand}}
+                                                    <i class="fa fa-rub"></i></span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-9 col-lg-10">
+                                                <p class="list-group&#45;&#45;title text-info">Годовая доходность инвестиций</p>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 col-lg-2 text-right">
+                                                <span class="text-info">
+                                                    {{pe.temp.ci_invest_profit_per_year | myround:2}}
+                                                    <i class="fa fa-percent"></i> годовых</span>
+                                            </div>
+                                        </div>
+                                    </li>-->
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6">
+                                                <pay-own-project class="btn btn-success"
+                                                                 ng-class="{'pointer-none':!pe.p.investments_found_sum ||
+                                                         !pe.p.investments_share || !pe.p.investments_share_count}"
+                                                                 type="Invest"
+                                                                 ng-click="pe.saveProject()"
+                                                                 ng-if="!pe.p.investments_payed">Запустить сбор средств</pay-own-project>
+                                                <div class="btn btn-info" ng-if="pe.p.investments_payed">ОПЛАЧЕНО</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!--<div class="col-xs-12 col-lg-6">
+                                        <div class="finance&#45;&#45;price">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-6">
+                                                    <pay-own-project class="btn btn-success"
+                                                                     ng-class="{'pointer-none':!pe.p.investments_found_sum ||
+                                                         !pe.p.investments_share || !pe.p.investments_share_count}"
+                                                                     type="Invest"
+                                                                     ng-click="pe.saveProject()"
+                                                                     ng-if="!pe.p.investments_payed">Запустить сбор средств</pay-own-project>
+                                                    <div class="btn btn-info" ng-if="pe.p.investments_payed">ОПЛАЧЕНО</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="finance&#45;&#45;slide&#45;&#45;vsep visible-lg"></div>
+                                    </div>-->
+                                </ul>
+                            </div>
+
+                            <div class="btn-slidetoggle" ng-click="pe.temp.collSubInd=!pe.temp.collSubInd"><i class="fa fa-angle-up fa-fw"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- crowdinvesting end -->
+
+                <!-- crowdlanding ng-click="pe.temp.collLend=!pe.temp.collLend"-->
+                <div class="finance--slide--wrap">
+
+                    <div class="finance--title">
+                        <label class="finance--title--checkbox checkbox default">
+                            <input type="checkbox" ng-model="pe.temp.collLoan">
+                            <span></span>
+                            Краудлендинг (привлечение займа)
+                        </label>
+                    </div>
+
+                    <div class="collapse" uib-collapse="!pe.temp.collLoan">
+                        <div class="finance--slide--content">
+                            <div class="row">
+                                <div class="col-xs-12 col-lg-6">
+                                    <div class="finance--price">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6">
+                                                <label>Требуется собрать</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control text-right"
+                                                           ozk-number
+                                                           min="0"
+                                                           ng-change="pe.checkLoanSum();pe.countSumTable('current_yield','founding_sum')"
+                                                           ng-model="pe.p.loan_found_sum" ng-model-options="{debounce:2000}">
+                                                    <span class="input-group-addon"><i class="fa fa-rub"></i></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6">
+                                                <label>&nbsp;</label>
+                                                <br>
+                                                <pay-own-project class="btn btn-success"
+                                                        ng-class="{'pointer-none':!pe.p.loan_found_sum ||
+                                                        !pe.p.loan_interest_rate || !pe.p.loan_period ||
+                                                        !pe.p.loan_payment_order || !pe.p.loan_main_debt}"
+                                                        type="Loan"
+                                                        ng-click="pe.saveProject()"
+                                                        ng-if="!pe.p.loan_payed">
+                                                    Запустить сбор средств</pay-own-project>
+                                                <div class="btn btn-info" ng-if="pe.p.loan_payed">ОПЛАЧЕНО</div>
+                                            </div>
+
+                                            <label class="col-xs-12 project_edit--title_descr">
+                                                Сумма сбора должна быть кратна 10.
+                                            </label>
+                                        </div>
+                                        <div class="finance--slide--vsep"></div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-lg-6">
+                                    <div class="finance--slide--sep hidden-lg"></div>
+                                    <div><label>Выберите шаблон договора</label></div>
+                                    <button class="btn btn-success" modal-open="app/_common/modals/pe-budget-kl.html;lg"
+                                            modal-ctrl="ProjectEditorController;pe">Выбрать</button>
+                                    <a class="doc_link" target="_blank" download
+                                       ng-href="{{pe.baseDocUrl+'contract-tmpl-kl-'+pe.temp.legalType+'-'+
+                                       pe.p.loan_contract_tmpl_id+'.pdf'}}">
+                                        <i class="fa fa-file-pdf-o"></i> Договор {{pe.p.loan_contract_tmpl_id}}</a>
+                                </div>
+                            </div>
+
+                            <div id="inv3" class="finance--slide--toggle collapse in">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-9 col-lg-9">
+                                                <p class="list-group--title text-primary">Желаемая процентная ставка</p>
+                                                <label class="project_edit--title_descr">Укажите процентную ставку, которую
+                                                    считаете адекватной вашему проекту. Помните, что с вашей ставкой должны
+                                                    согласиться инвесторы - это происходит по обоюдному согласию.</label>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 col-lg-3 text-right">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control text-right"
+                                                           ozk-number
+                                                           min="0" max="1000"
+                                                           ng-model="pe.p.loan_interest_rate" ng-model-options="{debounce:300}">
+                                                    <span class="input-group-addon"><i class="fa fa-percent"></i> годовых</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-9 col-lg-9">
+                                                <p class="list-group--title text-primary">Желаемый срок займа</p>
+                                                <label class="project_edit--title_descr">На какой срок вам нужен займ. Помните,
+                                                    что займ нужно отдавать сразу после его получения равноценными частями, если в
+                                                    договоре не оговорена отсрочка выплат.</label>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3 col-lg-3 text-right">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control text-right"
+                                                           ozk-number
+                                                           min="0"
+                                                           ng-model="pe.p.loan_period">
+                                                    <span class="input-group-addon">мес</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-8 col-lg-9">
+                                                <p class="list-group--title text-info">Порядок выплаты процентов:</p>
+                                                <label class="project_edit--title_descr">С какой регулярностью вы хотите выплачивать проценты по сумме?</label>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 col-lg-3">
+                                                <ui-select class="select"
+                                                           ng-model="pe.p.loan_payment_order">
+                                                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                                    <ui-select-choices repeat="o.id as o in pe.temp.payment_order">
+                                                        <span>{{::o.name}}</span>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-8 col-lg-9">
+                                                <p class="list-group--title text-info">Возврат основного долга</p>
+                                                <label class="project_edit--title_descr">С какой регулярностью вы хотите выплачивать основную сумму?</label>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4 col-lg-3">
+                                                <ui-select class="select"
+                                                           ng-model="pe.p.loan_main_debt">
+                                                    <ui-select-match>{{$select.selected.name}}</ui-select-match>
+                                                    <ui-select-choices repeat="o.id as o in pe.temp.payment_order_body">
+                                                        <span>{{::o.name}}</span>
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                            <div class="btn-slidetoggle" data-toggle="collapse" href="#inv3" aria-expanded="true"><i class="fa fa-angle-up fa-fw"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- crowdlanding end -->
+            </section>
+        </div>
+    </div>
+</div>
+
+<section ng-if="pe.p.type_id==2">
+    <label class="title">Смета проекта</label>
+    <label class="alert alert-info"><i class="fa fa-info-circle"></i> В данном разделе отображены все сроки по проекту,
+        затраты проекта - капитальные и операционные, а также доходы. Заполните все графы, и наш калькулятор посчитает
+        вашу прибыль и сроки выхода на окупаемость.</label>
+
+
+    <label class="checkbox default">
+        <input type="checkbox" ng-model="pe.p.is_need_count_budget"
+               ng-true-value="1" ng-false-value="0">
+        <span></span>
+        Если вашему проекту необходим расчет сметы со всеми реальными показателями: ФОТ, налогов (НДФЛ и социальных
+        отчислений, налогов по прибыли), с учетом всех необходимых проекту ресурсов – специалисты CONSTART готовы
+        оказать такую услугу. Отметьте, если вам это необходимо.
+    </label>
+
+
+    <div class="section_block--content">
+        <div class="estimate--add">
+            <br>
+            <div class="title--small">Период времени, через который проект выйдет на самоокупаемость:</div>
+            <label class="alert alert-info"><i class="fa fa-info-circle"></i> Выход на самоокупаемость - момент,
+                когда выручка проекта начинает покрывать ежемесячные расходы на него. Укажите, сколько месяцев до этого момента. </label>
+
+            <div class="row">
+                <div class="col-xs-8 col-sm-4 col-lg-3 col-lgs-2">
+                    <div class="input-group">
+                        <input type="text" class="form-control text-center" ozk-number ng-model="pe.p.found_payback_period">
+                        <span class="input-group-addon">месяцев <i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="slideToggle" ng-click="pe.coll.one=!pe.coll.one">Необходимая сумма</div>
+
+            <label class="alert alert-info"><i class="fa fa-info-circle"></i> Подробно опишите затраты по проекту,
+                составляющие всю сумму необходимых инвестиций: капитальные затраты, операционные затраты за весь срок
+                до выхода на самоокупаемость (укажите этот срок в комментарии, в строке описания), дополнительные расходы.</label>
+            <div class="table_block edit" uib-collapse="pe.coll.one">
+                <table>
+                    <tr>
+                        <td><span>Расходная статья</span></td>
+                        <td><span>Стоимость. <i class="fa fa-rub"></i></span></td>
+                        <td><span>Описание</span></td>
+                        <td class="tdDelete"><span>&nbsp;</span></td>
+                    </tr>
+                    <tr ng-repeat="i in pe.p.current_yield track by $index">
+                        <td data-text="Расходная статья">
+                                <span class="textarea--edit">
+                                    <textarea class="form-control"
+                                              ozk-clean
+                                              ng-model="i.item" ng-model-options="{debounce:500}"></textarea>
+                                    <span>{{i.item}}</span>
+                                    <i ng-if="$index>0" class="icon pen_blue edit"></i>
+                                </span>
+                        </td>
+                        <td data-text="Стоимость">
+                                <span class="text--edit">
+                                    <input type="text" class="form-control text-right"
+                                           ng-model="i.amount" ng-model-options="{debounce:500}"
+                                           ozk-number
+                                           max="999000000000"
+                                           ng-change="pe.countSumTable('current_yield','founding_sum')">
+                                    <span>{{i.amount}}</span>
+                                    <i ng-if="$index>0" class="icon pen_blue edit"></i>
+                                </span>
+                        </td>
+                        <td data-text="Описание">
+                                <span class="textarea--edit">
+                                    <textarea class="form-control"
+                                              ozk-clean
+                                              ng-model="i.description" ng-model-options="{debounce:500}"></textarea>
+                                    <span>{{i.description}}</span>
+                                    <i ng-if="$index>0" class="icon pen_blue edit"></i>
+                                </span>
+                        </td>
+                        <td class="tdDelete">
+                            <button class="icon delete"
+                                    ng-if="$index>0"
+                                    ng-click="pe.deleteMoneyLine('current_yield', $index)">
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="last">
+                        <td>
+                            <button class="btn btn-info" ng-click="pe.addMoneyLine('current_yield')">
+                                <i class="fa fa-plus"></i> Добавить пункт
+                            </button>
+                        </td>
+                        <td>
+                            <div>
+                                <!--для совместимости с альфой оставил founding_sum для сохранения -->
+                                Всего: {{pe.p.current_yield_total = pe.p.founding_sum|thousand}}
+                                <span><i class="fa fa-rub"></i></span>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td class="tdDelete"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="slideToggle collapsed" ng-click="pe.coll.two=!pe.coll.two">Операционные затраты в месяц</div>
+            <label class="alert alert-info"><i class="fa fa-info-circle"></i> Ежемесячные траты по проекту после выхода на самоокупаемость.</label>
+            <div id="f2" class="table_block edit" uib-collapse="!pe.coll.two">
+                <table>
+                    <tr>
+                        <td><span>Расходная статья</span></td>
+                        <td><span>Стоимость, <i class="fa fa-rub"></i></span></td>
+                        <td><span>Описание</span></td>
+                        <td class="tdDelete"><span>&nbsp;</span></td>
+                    </tr>
+                    <tr ng-repeat="i in pe.p.estimate_monthly track by $index">
+                        <td data-text="Расходная статья">
+                                <span class="textarea--edit">
+                                    <textarea class="form-control"
+                                              ozk-clean
+                                              ng-model="i.item" ng-model-options="{debounce:300}"></textarea>
+                                    <span>{{i.item}}</span>
+                                    <i class="icon pen_blue edit"></i>
+                                </span>
+                        </td>
+                        <td data-text="Стоимость">
+                                <span class="text--edit">
+                                    <input type="text" class="form-control text-right"
+                                           ng-model="i.amount" ng-model-options="{debounce:300}"
+                                           ozk-number
+                                           max="999000000000"
+                                           ng-change="pe.countSumTable('estimate_monthly','estimate_monthly_total')">
+                                    <span>{{i.amount}}</span>
+                                    <i class="icon pen_blue edit"></i>
+                                </span>
+                        </td>
+                        <td data-text="Описание">
+                                <span class="textarea--edit">
+                                    <textarea class="form-control"
+                                              ozk-clean
+                                              ng-model="i.description" ng-model-options="{debounce:300}"></textarea>
+                                    <span>{{i.description}}</span>
+                                    <i class="icon pen_blue edit"></i>
+                                </span>
+                        </td>
+                        <td class="tdDelete">
+                            <button class="icon delete"
+                                    ng-click="pe.deleteMoneyLine('estimate_monthly', $index)">
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="last">
+                        <td>
+                            <button class="btn btn-info" ng-click="pe.addMoneyLine('estimate_monthly')"
+                            ><i class="fa fa-plus"></i> Добавить пункт</button>
+                        </td>
+                        <td>
+                            <div>
+                                Всего: {{pe.p.estimate_monthly_total|thousand}}
+                                <span><i class="fa fa-rub"></i></span>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td class="tdDelete"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="slideToggle collapsed" ng-click="pe.coll.three=!pe.coll.three">
+                Планируемая выручка в месяц
+            </div>
+            <label class="alert alert-info"><i class="fa fa-info-circle"></i> Выручка по проекту в месяц после выхода на самоокупаемость. Укажите, что именно будете продавать, в каком количестве и по какой цене. Если выручка будет расти, возьмите среднее значение за один год.</label>
+            <div id="f3" class="table_block edit" uib-collapse="!pe.coll.three">
+                <table>
+                    <tr>
+                        <td><span>Доходная статья</span></td>
+                        <td><span>Кол-во, <span>ед.</span></span></td>
+                        <td><span>Стоимость, <span><i class="fa fa-rub"></i></span></span></td>
+                        <td><span>Итого, <span><i class="fa fa-rub"></i></span></span></td>
+                        <td><span>Описание</span></td>
+                        <td class="tdDelete"><span>&nbsp;</span></td>
+                    </tr>
+                    <tr ng-repeat="i in pe.p.estimate_capital track by $index">
+                        <td data-text="Доходная статья">
+                                <span class="textarea--edit">
+                                    <textarea class="form-control"
+                                              ozk-clean
+                                              ng-model="i.item" ng-model-options="{debounce:300}"></textarea>
+                                    <span>{{i.item}}</span>
+                                    <i class="icon pen_blue edit"></i>
+                                </span>
+                        </td>
+                        <td data-text="Кол-во, ед.">
+                                <span class="text--edit">
+                                    <input type="text" class="form-control text-right"
+                                           ozk-number
+                                           max="1000000000"
+                                           ng-change="pe.countSumTable('estimate_capital','estimate_capital_total')"
+                                           ng-model="i.count" ng-model-options="{debounce:300}">
+                                    <span>{{i.count}}</span>
+                                    <i class="icon pen_blue edit"></i>
+                                </span>
+                        </td>
+                        <td data-text="Стоимость">
+                                <span class="text--edit">
+                                    <input type="text" class="form-control text-right"
+                                           ozk-number
+                                           max="999000000000"
+                                           ng-change="pe.countSumTable('estimate_capital','estimate_capital_total')"
+                                           ng-model="i.amount" ng-model-options="{debounce:300}">
+                                    <span>{{i.amount}}</span>
+                                    <i class="icon pen_blue edit"></i>
+                                </span>
+                        </td>
+                        <td data-text="Итого">
+                            <span data-id="inp1">{{i.count*i.amount}}</span>
+                        </td>
+                        <td>
+                                <span class="textarea--edit">
+                                    <textarea class="form-control"
+                                              ozk-clean
+                                              ng-model="i.description" ng-model-options="{debounce:300}"></textarea>
+                                    <span>{{i.description}}</span>
+                                    <i class="icon pen_blue edit"></i>
+                                </span>
+                        </td>
+                        <td class="tdDelete">
+                            <button class="icon delete"
+                                    ng-click="pe.deleteMoneyLine('estimate_capital', $index)">
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="last">
+                        <td>
+                            <button class="btn btn-info" ng-click="pe.addMoneyLine('estimate_capital')">
+                                <i class="fa fa-plus"></i> Добавить пункт
+                            </button>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div>
+                                Всего: {{pe.p.estimate_capital_total|thousand}}
+                                <span><i class="fa fa-rub"></i></span>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td class="tdDelete"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="divider"></div>
+
+
+    <div class="finance">
+        <div class="row">
+            <div class="col-xs-12 col-lg-6">
+                <div class="finance--block">
+                    <div class="estimate_total">
+                        <div class="list-group">
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8">
+                                        <!--считается из таблицы-->
+                                        <p class="text-success h4">Необходимая сумма:</p>
+                                        <label class="project_edit--title_descr">Сумма инвестиций, необходимая
+                                            проекту для выхода на самоокупаемость.</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 text-right">
+                                        <span class="text-success h4">
+                                            {{pe.p.founding_sum|thousand}} <i class="fa fa-rub"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8">
+                                        <p class="text-primary h4">Срок сбора средств:</p>
+                                        <label class="project_edit--title_descr">Укажите сроки сбора средств. Минимальный
+                                            рекомендуемый срок - 30 дней, максимально возможный - 180 дней.</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 text-right">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control text-right"
+                                                   ng-model="pe.p.found_period" ng-model-options="{debounce:500}"
+                                                   ozk-number  min="1" max="180">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8">
+                                        <p class="text-primary h4">Своих средств в проекте:</p>
+                                        <label class="project_edit--title_descr">Укажите, если вкладываете свои средства
+                                            в проект.</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 text-right">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control text-right"
+                                                   ng-disabled="pe.p.founding_sum==0"
+                                                   ozk-number
+                                                   max="{{pe.p.founding_sum}}"
+                                                   ng-model="pe.p.own_money" ng-model-options="{debounce:300}">
+                                            <span class="input-group-addon"><i class="fa fa-rub"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8">
+                                        <p class="text-primary h4">Осталось распределить:</p>
+                                        <label class="project_edit--title_descr"></label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 text-right">
+                                                <span class="text-danger h4">
+                                                    {{pe.p.founding_sum-pe.p.own_money-pe.p.investments_found_sum-
+                                                          pe.p.loan_found_sum -pe.p.reward_found_sum||0|thousand}}
+                                                    <i class="fa fa-rub"></i>
+                                                </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Контрольные значения -->
+            <div class="col-xs-12 col-lg-6">
+                <div class="finance--block">
+                    <div class="title--small">Контрольные значения</div>
+                    <div class="estimate_total">
+                        <div class="list-group">
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                                        <p class="text-info h4">Выручка</p>
+                                        <label class="project_edit--title_descr">Выручка по проекту в месяц.</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 col-lg-3 text-right">
+                                                <span class="text-info h4">
+                                                    {{pe.p.estimate_capital_total||0|thousand}} <i class="fa fa-rub"></i>
+                                                </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                                        <p class="text-info h4">Операционные затраты</p>
+                                        <label class="project_edit--title_descr">Операционные затраты в месяц.</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 col-lg-3 text-right">
+                                                <span class="text-info h4">
+                                                    {{pe.p.estimate_monthly_total||0|thousand}}<i class="fa fa-rub"></i>
+                                                </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                                        <p class="text-info h4">Ваша прибыль в месяц <span>(выручка - операционные затраты)</span></p>
+                                        <p class="text-danger" ng-if="pe.p.investments_dividends<1">
+                                            Плановая прибыль не может быть отрицательной или равна нулю. Проверьте пожалуйста правильность заполнения показателей.
+                                        </p>
+                                        <label class="project_edit--title_descr">Положительная разница между выручкой и операционными затратами.</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 col-lg-3 text-right">
+                                                <span class="h4" ng-class="pe.p.investments_dividends<1?'text-danger':'text-info'">
+                                                    {{pe.p.investments_dividends=((pe.p.estimate_capital_total||0)-(pe.p.estimate_monthly_total||0))|thousand}}
+                                                    <i class="fa fa-rub"></i>
+                                                </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                                        <p class="text-info h4">Срок окупаемости инвестиций</p>
+                                        <label class="project_edit--title_descr">Срок, когда проект окупит все вложенные инвестиции.</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 col-lg-3 text-right">
+                                                <span class="text-info h4">
+                                                    {{pe.temp.timeCoverExpend=pe.getTimeCoverExpend()}}
+                                                    {{pe.temp.timeCoverExpend|getNoun:'месяц':'месяца':'месяцев'}}
+                                                    <i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="list-group-item" ng-show="pe.temp.collInv">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                                        <p class="text-info h4">Размер минимальной доли</p>
+                                        <label class="project_edit--title_descr">
+                                            Минимальная доля в процентах от продаваемой доли.
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 col-lg-3 text-right">
+                                                <span class="text-info h4">
+                                                    {{pe.p.investments_min_share|myround:5:'math'}}
+                                                    <i class="fa fa-percent"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item" ng-show="pe.temp.collInv">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                                        <p class="text-info h4">Размер дивидендов на 1 минимальную долю в месяц</p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 col-lg-3 text-right">
+                                                <span class="text-info h4">
+                                                    {{pe.p.investments_min_dividends | myround | thousand}} <i class="fa fa-rub"></i>
+                                                </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item" ng-show="pe.temp.collInv">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                                        <p class="text-info h4">Общая выплата по дивидендам в месяц</p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 col-lg-3 text-right">
+                                        <span class="text-info h4">
+                                            {{pe.p.investments_dividends | myround | thousand}}<i class="fa fa-rub"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-item" ng-show="pe.temp.collInv">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-8 col-lg-9">
+                                        <p class="text-info h4">Годовая доходность инвестиций</p>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 col-lg-3 text-right">
+                                                <span class="text-info h4">
+                                                    {{pe.temp.ci_invest_profit_per_year | myround:2}}
+                                                    <i class="fa fa-percent"></i> годовых
+                                                </span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Контрольные значения end -->
+
+        </div>
+    </div>
+</section>
+
+<div class="project_edit--footer text-center">
+    <div class="alert alert-info">Перед отправкой на модерацию необходимо сохранить проект.</div>
+
+    <button class="btn btn-success btn-animated"
+            ng-disabled="pe.pend.save"
+            ng-class="{'animated':pe.pend.save}"
+            ng-click="pe.tryChangeState('team')">
+        <span class="btn-visible"><i class="fa fa-angle-left"></i> Команда проекта </span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+    &nbsp;
+    <button class="btn btn-success btn-animated"
+            ng-disabled="pe.pend.save"
+            ng-class="{'animated':pe.pend.save}"
+            ng-click="pe.saveProject()">
+        <span class="btn-visible"> Сохранить </span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+    &nbsp;
+    <button class="btn btn-warning btn-animated"
+            ng-class="{'animated':pe.pend.save}"
+            ng-click="pe.prePublicate()">
+        <span class="btn-visible"> На модерацию</span>
+        <span class="btn-hidden"><i class="fa fa-spinner fa-lg fa-spin"></i></span>
+    </button>
+    <br><br>
+    <div class="alert alert-success" ng-if="pe.temp.publicateSuccess">
+        Проект успешно отправлен на модерацию.<br>
+        Сейчас будет осуществлен переход на просмотр проекта.
+    </div>
+    <div class="alert alert-danger" ng-if="pe.temp.prePublicateError.length"
+         ng-repeat="err in pe.temp.prePublicateError">
+        {{err}}
+    </div>
+    <div class="alert alert-danger" ng-if="pe.temp.publicateError">
+        {{pe.temp.publicateError}}
+    </div>
+    <div class="text-success" ng-if="ue.temp.saveSuccess">
+        <i class="fa fa-exclamation-triangle"></i> Сохранено</div>
+    <div class="text-success" ng-if="ue.temp.saveError">
+        <i class="fa fa-exclamation-triangle"></i> {{ue.temp.saveError}}</div>
+</div>
+
